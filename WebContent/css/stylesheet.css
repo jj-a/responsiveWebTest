@@ -33,7 +33,6 @@ p {
 	color: #fff;
 }
 
-
 .container-fluid {
 	padding-top: 70px;
 	padding-bottom: 70px;
@@ -54,20 +53,18 @@ p {
 }
 
 *:focus {
-/* 마우스 포커싱 방지 */
-    outline: none;
+	/* 마우스 포커싱 방지 */
+	outline: none;
 }
-
 
 #clock-box {
 	display: block;
 	margin: 0 auto;
 	text-align: center;
-	
 }
 
 .time {
-	display: block;	/* div option */
+	display: block; /* div option */
 	width: 100%;
 	line-height: 70px;
 	background-color: white;
@@ -78,4 +75,53 @@ p {
 	margin: 0 auto;
 	border: 0 none;
 	cursor: default;
+}
+
+th, td {
+	text-align: center;
+}
+
+.list {
+	width: 80%;
+	margin: 0 auto;
+	border: 0px none;
+}
+
+.list td, .list th {
+	font-size: 80%;
+	padding: 5px 20px 5px 20px;
+}
+
+.list th {
+	white-space: nowrap;
+	font-weight: bold;
+	background-color: #ffddcc;
+}
+
+.list td {
+	background-color: #fff9e7e5;
+	border-color: #cccccc;
+}
+
+.list td:hover {
+	background-color: blanchedalmond;
+	cursor: pointer;
+}
+
+a:link {
+	color: black;
+	font-style: normal;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	font-style: normal;
+	text-decoration: none;
+}
+
+a:hover {
+	color: lightpink;
+	font-style: normal;
+	text-decoration: underline;
 }

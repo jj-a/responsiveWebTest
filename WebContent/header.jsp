@@ -7,16 +7,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css?family=Montserrat&after">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?after">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css?family=Montserrat&after">
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 <script src="${pageContext.request.contextPath}/js/clock.js"></script>
+<script src="${pageContext.request.contextPath}/js/nodrag.js"></script>
 <style>
 </style>
 </head>
 
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<!-- <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false"> 드래그 방지-->
+<body>
 
 	<!--Main Category start -->
 		<!-- Navbar -->
