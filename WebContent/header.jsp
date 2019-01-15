@@ -1,6 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="/header.jsp" %>
-<%@ include file="/footer.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -8,20 +6,20 @@
 <title>* * Jina * *</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./css/bootstrap.min.css">
-<link rel="stylesheet" href="./css/css?family=Montserrat&after">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/css?family=Montserrat&after">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?after">
-<script src="./js/jquery-3.3.1.min.js"></script>
-<script src="./js/bootstrap.min.js"></script>
-<script src="./js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/clock.js"></script>
 <style>
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
 	<!--Main Category start -->
-	<!-- Navbar -->
+		<!-- Navbar -->
 	<nav class="navbar navbar-default">
 		<div class="container">
 			<div class="navbar-header">
@@ -32,7 +30,7 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">BOARD</a></li>
+					<li><a href="${pageContext.request.contextPath}/bbs/bbsList.jsp">BOARD</a></li>
 					<li><a href="#">NOTICE</a></li>
 					<li><a href="#">LOGIN</a></li>
 					<li><a href="#">PHOTO</a></li>
@@ -43,29 +41,26 @@
 			</div>
 		</div>
 	</nav>
+
+		<!-- clock-box 시계 -->
+	<div id="clock-box">
+		<form name="clockform">
+			<input type="text" name="clock" id="clock" class="time" size=25 readonly>
+			<!-- 
+			<p />
+			<input type="button" value="▶" onclick="starttime()">&nbsp; 
+			<input type="button" value="▶■" onclick="killtime()">&nbsp;
+			<input type="button" value="■" onclick="endtime()">
+				 -->
+		</form>
+	</div>
 	<!--Main Category end -->
 
 
 	<!-- Contents start -->
 
-	<!-- Third Container (Grid) -->
+		<!-- Container (Grid) -->
 	<div class="container-fluid bg-3 text-center">
 		<div class="row">
 			<div class="col-sm-12">
-				<p>&nbsp;</p>
-			</div>
-		</div>
-	</div>
-	<!-- Contents end -->
-
-
-	<!-- Footer start -->
-	<footer class="container-fluid bg-4 text-center">
-		<p>
-			copyright <a href="<%=request.getContextPath()%>/index.jsp">myWeb</a> since 2019. All rights reserved.
-		</p>
-	</footer>
-	<!-- Footer end -->
-
-</body>
-</html>
+			

@@ -57,3 +57,25 @@ p {
 /* 마우스 포커싱 방지 */
     outline: none;
 }
+
+
+#clock-box {
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	
+}
+
+.time {
+	display: block;	/* div option */
+	width: 100%;
+	line-height: 70px;
+	background-color: white;
+	color: black;
+	font-weight: bold;
+	font-size: 20pt;
+	text-align: center;
+	margin: 0 auto;
+	border: 0 none;
+	cursor: default;
+}
