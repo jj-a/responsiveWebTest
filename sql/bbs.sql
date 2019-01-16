@@ -51,6 +51,44 @@ VALUES(bbsno_seq.nextval,'김용택','달이 떴다고 전화를 주시다니요
 
 
 
+
+-- 글목록 (bbsList.jsp / list()함수)
+SELECT bbsno, wname, subject, readcnt, indent, regdt
+FROM tb_bbs
+ORDER BY grpno DESC, ansnum ASC
+;
+
+-- 상세보기 (bbsRead.jsp / read()함수)
+SELECT bbsno, wname, subject, content, readcnt, grpno, ip, regdt
+FROM tb_bbs
+WHERE bbsno=?
+;
+
+
+-- 조회수 증가 (incrementCnt() 함수)
+UPDATE tb_bbs
+SET readcnt=readcnt+1
+WHERE bbsno=?
+;
+
+-- 답변쓰기
+1) 부모글 정보 가져오기 (select)
+SELECT grpno, indent, ansnum
+FROM tb_bbs
+WHERE bbsno=?
+
+2) 글순서 재조정 (update)
+UPDATE tb_bbs
+SET ansnum=ansnum+1
+WHERE grpno=? AND ansnum>=?
+;
+
+-- 일련번호(seq), 작성자, 글제목, 글내용, 비밀번호, 그룹번호, IP
+INSERT INTO tb_bbs(bbsno,wname,subject,content,passwd,grpno,indent,ansnum,ip)
+VALUES(bbsno_seq.nextval,?,?,?,?,(SELECT nvl(MAX(bbsno),0)+1 FROM tb_bbs)),?,?,?)
+;
+
+
 ---------- 삭제 ----------
 
 --시퀀스 삭제 (**주의**)

@@ -9,13 +9,15 @@
 
 	<table border="1" class="list">
 		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>내용<br>(삭제예정)</th>
-			<th>그룹번호<br>(삭제예정)</th>
-			<th>등록일</th>
-			<th>IP<br>(삭제예정)</th>
+			<th class="list-no">번호</th>
+			<th class="list-subj">제목</th>
+			<th class="list-name">작성자</th>
+			<th class="list-no">그룹번호<br>(삭제예정)</th>
+			<th class="list-no">indent<br>(삭제예정)</th>
+			<th class="list-no">ansnum<br>(삭제예정)</th>
+			<th class="list-date">등록일</th>
+			<th class="list-no">조회수</th>
+			<th class="list-ip">IP<br>(삭제예정)</th>
 		</tr>
 		<%
 			// 전체 목록
@@ -25,18 +27,40 @@
 				out.println("<tr><td colspan='5'>자료가 존재하지 않습니다.</td></tr>");
 				out.println("</tr>");
 			} else {
-
+				// 오늘 날짜를 yyyy-mm-dd 문자열로 저장
+				String today=Utility.getDate();
+				
 				for (int i = 0; i < list.size(); i++) {
 					dto = list.get(i);		
 		%>
-		<tr onclick="window.location='bbsRead.jsp?bbsno=<%=dto.getBbsno()%>'" onmouseover="style='cursor:pointer;'">
-			<td><%=dto.getBbsno()%></td>
-			<td><a href="bbsRead.jsp?bbsno=<%=dto.getBbsno()%>"><%=dto.getSubject()%></a></td>
-			<td><%=dto.getWname()%></td>
-			<td><%=dto.getContent()%></td>
-			<td><%=dto.getGrpno()%></td>
-			<td><%=dto.getRegdt().substring(0, 10)%></td>
-			<td><%=dto.getIp()%></td>
+		<tr onclick="window.location='bbsRead.jsp?bbsno=<%=dto.getBbsno()%>'">
+			<td class="list-no"><%=dto.getBbsno()%></td>
+			<td class="list-subj" onmouseover="style='cursor:pointer;'">
+				<%
+					// 답변 글 = Re icon 출력
+						for(int j=0;j<dto.getIndent();j++) out.println("<img src='../images/icon_re.png'>");
+				%>
+				<a href="bbsRead.jsp?bbsno=<%=dto.getBbsno()%>"><%=dto.getSubject()%></a>
+				<%
+				// 오늘 작성한 글 = New icon 출력
+				String regdt=dto.getRegdt().substring(0,10);
+				if(regdt.equals(today)) out.println("<img src='../images/icon_new.png'>");
+
+				// 조회수 20 이상인 글 = Hot icon 출력
+				if(dto.getReadcnt()>=20) out.println("<img src='../images/icon_hot.png'>");
+				%>
+			</td>
+			<td class="list-name"><%=dto.getWname()%></td>
+			<td class="list-no"><%=dto.getGrpno()%></td>
+			<td class="list-no"><%=dto.getIndent()%></td>
+			<td class="list-no"><%=dto.getAnsnum()%></td>
+			<td class="list-date"><%=dto.getRegdt().substring(0, 10)%></td>
+			<td class="list-no"><%=dto.getReadcnt()%></td>
+			<td class="list-ip">
+			<%
+				if(dto.getIp().equals("127.0.0.1")) out.println("Admin");
+				else out.println(dto.getIp());
+			%></td>
 		</tr>
 		<%
 				} // for end
@@ -47,3 +71,4 @@
 <!-- bbsList end -->
 
 <%@ include file="../footer.jsp" %>
+

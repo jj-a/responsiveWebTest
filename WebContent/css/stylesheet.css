@@ -1,13 +1,55 @@
 /* stylesheet.css */
+
+
+/*  default tag style  */
+
 body {
 	font: 20px Montserrat, sans-serif;
 	line-height: 1.8;
 	color: #f5f6f7;
 }
 
+table {
+	margin: auto;
+}
+
+th, td {
+	text-align: center;
+}
+
 p {
 	font-size: 16px;
 }
+
+
+/*  link style  */
+
+a:link {
+	color: black;
+	font-style: normal;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	font-style: normal;
+	text-decoration: none;
+}
+
+a:hover {
+	color: lightpink;
+	font-style: normal;
+	text-decoration: underline;
+}
+
+*:focus {
+	/* 마우스 포커싱 방지 */
+	outline: none;
+}
+
+
+
+/*  class style  */
 
 .margin {
 	margin-bottom: 45px;
@@ -52,11 +94,6 @@ p {
 	color: #1abc9c !important;
 }
 
-*:focus {
-	/* 마우스 포커싱 방지 */
-	outline: none;
-}
-
 #clock-box {
 	display: block;
 	margin: 0 auto;
@@ -77,9 +114,9 @@ p {
 	cursor: default;
 }
 
-th, td {
-	text-align: center;
-}
+
+/*  list(bbs) class style  */
+
 
 .list {
 	width: 80%;
@@ -88,7 +125,7 @@ th, td {
 }
 
 .list td, .list th {
-	font-size: 80%;
+	font-size: 70%;
 	padding: 5px 20px 5px 20px;
 }
 
@@ -103,25 +140,34 @@ th, td {
 	border-color: #cccccc;
 }
 
-.list td:hover {
+.list tr:hover td {
 	background-color: blanchedalmond;
-	cursor: pointer;
+	/*cursor: default;*/
 }
 
-a:link {
-	color: black;
-	font-style: normal;
-	text-decoration: none;
+.list-date, .list-no, .list-ip {
+	white-space: nowrap;
 }
 
-a:visited {
-	color: black;
-	font-style: normal;
-	text-decoration: none;
+.list-subj {
+	width: 40%;
+	text-align: left;
+	
 }
 
-a:hover {
-	color: lightpink;
-	font-style: normal;
-	text-decoration: underline;
+/*  writefrm(bbs) class style  */
+
+.writefrm {
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	border: 0px none;
 }
+
+.writefrm td, .writefrm th {
+	font-size: 70%;
+	padding: 5px 20px 5px 20px;
+	white-space: nowrap;
+}
+

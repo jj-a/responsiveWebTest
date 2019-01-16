@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/css?family=Montserrat&after">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?after">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.01">
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/clock.js"></script>
@@ -49,13 +49,13 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="./bbs/bbsList.jsp">BOARD</a></li>
-					<li><a href="#">NOTICE</a></li>
-					<li><a href="#">LOGIN</a></li>
-					<li><a href="#">PHOTO</a></li>
-					<li><a href="#">MAIL</a></li>
-					<li><a href="#">BOARD(mvc)</a></li>
-					<li><a href="#">LOGIN(mvc)</a></li>
+					<li><a href="${pageContext.request.contextPath}/bbs/bbsList.jsp">BOARD</a></li>
+					<li><a href="${pageContext.request.contextPath}#">NOTICE</a></li>
+					<li><a href="${pageContext.request.contextPath}#">LOGIN</a></li>
+					<li><a href="${pageContext.request.contextPath}#">PHOTO</a></li>
+					<li><a href="${pageContext.request.contextPath}#">MAIL</a></li>
+					<li><a href="${pageContext.request.contextPath}#">BOARD(mvc)</a></li>
+					<li><a href="${pageContext.request.contextPath}#">LOGIN(mvc)</a></li>
 				</ul>
 			</div>
 		</div>

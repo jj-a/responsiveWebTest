@@ -184,7 +184,7 @@ public class Utility {
     str = str.replaceAll("<", "&lt;");
     str = str.replaceAll(">", "&gt;");
     str = str.replaceAll("'", "&apos;");   // '
-    str = str.replaceAll("\"", "&quots;"); // "
+    str = str.replaceAll("\"", "&quot;"); // "
     str = str.replaceAll("\r\n", "<BR>");  // 라인 변경
     
     return str;
@@ -195,7 +195,7 @@ public class Utility {
     str = str.replaceAll("<", "&lt;");
     str = str.replaceAll(">", "&gt;");
     str = str.replaceAll("'", "&apos;");   // '
-    str = str.replaceAll("\"", "&quots;"); // "
+    str = str.replaceAll("\"", "&quot;"); // "
     
     return str;
   }
