@@ -8,7 +8,7 @@
 	<a href="bbsList.jsp">[글 목록]</a>
 </p>
 
-<form method="post" action="bbsDeleteProc.jsp" onsubmit="return delPwCheck(this)">
+<form method="post" action="bbsDeleteProc.jsp" onsubmit="return pwCheck(this)">
 	<input type="hidden" name="bbsno" value="<%=request.getParameter("bbsno")%>">
 	<table class="writefrm" border=1>
 		<tr>

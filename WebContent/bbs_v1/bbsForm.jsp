@@ -21,7 +21,6 @@
 			<th>비밀번호</th>
 			<td><input type="password" name="passwd" size="10"></td>
 		</tr>
-		<tr class="checkbox-line"><td colspan="2"><input type="checkbox" class="chk_notice" > 공지여부</td></tr>
 		<tr>
 			<td colspan="2" align="center"><input type="submit" value="등록"> <input type="reset" value="지우기"> <input type="button" value="취소" onclick="javascript:history.back()"></td>
 		</tr>
@@ -29,20 +28,5 @@
 </form>
 
 <!-- Contents end -->
-<script>
-// 공지체크박스 오픈 여부
-$(document).ready(function() { 
-	alert("로딩 완료");
-	var ip = request.getRemoteAddr();
-	alert(ip);
-	var chkbox=document.getElementByClass("checkbox-line");
-	if(ip=="127.0.0.1"){
-		alert("관리자입니다");
-		chkbox.style.display="table-row";
-	}
-	
-});
 
-
-</script>
 <%@ include file="../footer.jsp"%>

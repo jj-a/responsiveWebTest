@@ -21,6 +21,10 @@ p {
 	font-size: 16px;
 }
 
+textarea {
+	resize: none;
+}
+
 
 /*  link style  */
 
@@ -118,15 +122,19 @@ a:hover {
 /*  list(bbs) class style  */
 
 
+.list-ip {
+	font-size: 1vw;
+}
+
 .list {
 	width: 80%;
 	margin: 0 auto;
 	border: 0px none;
 }
 
-.list td, .list th {
-	font-size: 70%;
-	padding: 5px 20px 5px 20px;
+.list td, .list th {                                                            
+	font-size: 65%;
+	padding: 5px 10px 5px 10px;
 }
 
 .list th {
@@ -152,6 +160,7 @@ a:hover {
 .list-subj {
 	width: 40%;
 	text-align: left;
+	min-width: 120px;
 	
 }
 
@@ -169,5 +178,30 @@ a:hover {
 	font-size: 70%;
 	padding: 5px 20px 5px 20px;
 	white-space: nowrap;
+}
+
+
+.search {
+	text-align: center;
+	vertical-align: middle;
+	height: 30px;
+}
+
+.button-box {
+	display: inline;
+	margin: 0 0 0 100% auto;
+	text-align: right;
+	vertical-align: middle;
+	height: 30px;
+}
+
+.button {
+	text-align: left;
+	vertical-align: middle;
+	height: 30px;
+}
+
+.checkbox-line {
+	display: none;
 }
 

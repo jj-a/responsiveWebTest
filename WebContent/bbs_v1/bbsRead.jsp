@@ -3,8 +3,10 @@
 <%@ include file="../header.jsp"%>
 
 <!-- Contents -->
-<h3>* 게시글 *</h3>
-<p>&nbsp;</p>
+<h1>* 게시글 *</h1>
+<p>
+	<a href="bbsList.jsp">[글 목록]</a> <a href="bbsForm.jsp">[글쓰기]</a>
+</p>
 <%
 	int bbsno = Integer.parseInt(request.getParameter("bbsno"));
 	dto = dao.read(bbsno);
@@ -13,44 +15,34 @@
 		out.println("<tr><td colspan='7'>자료가 존재하지 않습니다.</td></tr>");
 		out.println("</tr>");
 	} else {
-		
-		int res = dao.incrementCnt(bbsno);	// 조회수 증가
-		int cnt = dao.replyCnt(bbsno);	// 답글수 확인
-		
+		// 조회수 증가
+		int res = dao.incrementCnt(bbsno);
 %>
 
 <table border="1" class="list">
 	<tr>
+		<th colspan=1>그룹번호</th>
+		<td colspan=1><%=dto.getGrpno()%></td>
 		<th colspan=1>제목</th>
-		<td colspan=7><%=dto.getSubject()%></td>
+		<td colspan=4><%=dto.getSubject()%></td>
 	</tr>
 	<tr>
-		<th>작성자</th>
-		<td colspan=2><%=dto.getWname()%></td>
-		<th>등록일</th>
-		<td colspan=4><%=dto.getRegdt()%></td>
+		<th style="width: 15%;">작성자</th>
+		<td colspan=2 style="width: 25%;"><%=dto.getWname()%></td>
+		<th style="width: 15%;">등록일</th>
+		<td colspan=2 style="width: 45%;"><%=dto.getRegdt()%></td>
 	</tr>
 	<tr>
-		<th style="width: 10%;">IP</th>
-		<td colspan=2 style="width: 30%;" onclick="window.open('http://<%=dto.getIp()%>:9090/myweb/index.jsp')">
-			<%
-				//관리자
-					if (dto.getIp().equals("127.0.0.1"))
-						out.println("Admin");
-					else
-						out.println(dto.getIp());
-			%>
-		</td>
-		<th style="width: 10%;">조회수</th>
-		<td colspan=2 style="width: 15%;"><%=dto.getReadcnt()%></td>
-		<th style="width: 10%;">답글수</th>
-		<td colspan=2 style="width: 15%;"><%=cnt%></td>
+		<th>조회수</th>
+		<td colspan=2><%=dto.getReadcnt()%></td>
+		<th>indent</th>
+		<td colspan=2><%=dto.getIndent()%></td>
 	</tr>
 	<tr>
-		<th colspan=8>내용</th>
+		<th colspan=6>내용</th>
 	</tr>
 	<tr>
-		<td colspan=8 height="100px">
+		<td colspan=6 height="100px">
 			<%
 				//	특수문자 그대로 입력되게 변경
 					String content = Utility.convertChar(dto.getContent());
@@ -60,7 +52,7 @@
 	</tr>
 	<tr>
 		<th colspan=2>IP</th>
-		<td colspan=6 onclick="window.open('http://<%=dto.getIp()%>:9090/myweb/index.jsp')">
+		<td colspan=4>
 			<%
 				//관리자
 					if (dto.getIp().equals("127.0.0.1"))

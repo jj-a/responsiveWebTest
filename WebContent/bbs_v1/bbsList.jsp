@@ -4,12 +4,9 @@
 
 <!-- bbsList -->
 
-<%
-try {
-	// throw new Exception("수리중");
-%>
 <h3> * 게시판 목록 * </h3>
-	<p>&nbsp;</p>
+<p><a href="bbsForm.jsp">[글쓰기]</a></p>
+
 	<table border="1" class="list">
 		<tr>
 			<th class="list-no">번호</th>
@@ -25,25 +22,11 @@ try {
 			<th class="list-ip">IP<br>(삭제예정)</th>
 		</tr>
 		<%
-			
-			// 검색 목록 페이지
-			String col=request.getParameter("col");	// 검색칼럼
-			String word=request.getParameter("word");	// 검색어
-			
-			if(col==null) col="";
-			if(word==null) word="";
-			
-			
-			// 글수 카운트 변수
-			int totalRecord=dao.count(col, word);
-			
-		
-			
 			// 전체 목록
-			ArrayList<BbsDTO> list = dao.list(col,word);
+			ArrayList<BbsDTO> list = dao.list();
 			if (list == null) {
 				out.println("<tr>");
-				out.println("<tr><td colspan='6'>자료가 존재하지 않습니다.</td></tr>");
+				out.println("<tr><td colspan='5'>자료가 존재하지 않습니다.</td></tr>");
 				out.println("</tr>");
 			} else {
 				// 오늘 날짜를 yyyy-mm-dd 문자열로 저장
@@ -91,40 +74,10 @@ try {
 		</tr>
 		<%
 				} // for end
-				
-				// 글수 카운트
-				out.println("<tr><td colspan='6'>");
-				out.println(totalRecord+"개의 글이 있습니다.");
-				out.println("</td></tr>");
-		%>
-		<!-- 검색 시작 -->
-		<tr><td colspan="6">
-		<form method="get" action="bbsList.jsp" onsubmit="return searchCheck(this)" class="search" style="display:inline;'">
-		<select name="col">
-			<option value="wname">작성자
-			<option value="subject">제목
-			<option value="content">내용
-			<option value="subj_cont">제목+내용
-		</select>
-		<input type="text" name="word" class="search">
-		<input type="submit" value="검색" class="search">
-		</form>
-		
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<div class="button-box">
-		<input type="button" value="글쓰기" class="button" onclick="window.location='bbsForm.jsp'">
-		</div>
-		</td></tr>
-		<%
 			} // else end
-
 		%>
 	</table>
-<%
-} catch(Exception e) {
-	out.println("공사중입니다. 이따 방문해주세요.");
-}
-%>
+
 <!-- bbsList end -->
 
 <%@ include file="../footer.jsp" %>

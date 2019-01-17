@@ -33,9 +33,11 @@ public class BbsDAO {
 	//////////////////////////////////////////////
 	
 	public int insert(BbsDTO dto) {
+		/*
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		StringBuilder sql = null;
+		*/
 		int res = 0;
 
 		try {
@@ -43,7 +45,7 @@ public class BbsDAO {
 			sql = new StringBuilder();
 
 			sql.append("INSERT INTO tb_bbs(bbsno,wname,subject,content,passwd,grpno,ip) ");
-			sql.append(" VALUES(SELECT NVL(MAX(bbsno),0)+1 FROM tb_bbs),?,?,?,?,(SELECT NVL(MAX(bbsno),0)+1 FROM tb_bbs),?) ");
+			sql.append("VALUES((SELECT NVL(MAX(bbsno),0)+1 FROM tb_bbs),?,?,?,?,(SELECT NVL(MAX(bbsno),0)+1 FROM tb_bbs),?) ");
 
 			/*
 			 * INSERT INTO tb_bbs(bbsno,wname,subject,content,passwd,grpno,ip) VALUES(bbsno_seq.nextval,'김용택','달이 떴다고 전화를
@@ -72,11 +74,12 @@ public class BbsDAO {
 
 	
 	public synchronized  ArrayList<BbsDTO> list() { 
-
+		/*
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		StringBuilder sql = null;
+		*/
 		ArrayList<BbsDTO> list = null;
 		
 		/*
@@ -88,9 +91,9 @@ public class BbsDAO {
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			sql.append(" SELECT bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip");
-			sql.append(" FROM tb_bbs");
-			sql.append(" ORDER BY grpno, indent, ansnum DESC");
+			sql.append("SELECT bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip ");
+			sql.append("FROM tb_bbs ");
+			sql.append("ORDER BY grpno DESC,indent ASC, ansnum ASC ");
 
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
@@ -114,6 +117,10 @@ public class BbsDAO {
 
 				} while (rs.next());
 			}
+			else {
+				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
+				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
 
 		} catch (Exception e) {
 			System.out.println("*Error* 자료 조회를 실패했습니다. \n" + e);
@@ -125,13 +132,128 @@ public class BbsDAO {
 
 	} // list() end ////////////////////////////////////////////
 	
+	
 
-	public BbsDTO read(int bbsno) {
-
+	public synchronized  ArrayList<BbsDTO> list(String col, String word) { 
+		/*
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		StringBuilder sql = null;
+		*/
+		ArrayList<BbsDTO> list = null;
+		
+		/*
+		 * SELECT bbsno, wname, subject, readcnt, indent, regdt 
+		 * FROM tb_bbs 
+		 * ORDER BY grpno DESC, ansnum ASC ;
+		 */
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			sql.append("SELECT bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip ");
+			sql.append("FROM tb_bbs ");
+
+			if(word.length()>=1) {	// 검색어 유무 확인
+				String search="";
+				if(col.equals("wname")) search+="WHERE wname LIKE '%"+word+"%' ";
+				else if(col.equals("subject")) search+="WHERE subject LIKE '%"+word+"%' ";
+				else if(col.equals("content")) search+="WHERE content LIKE '%"+word+"%' ";
+				else if(col.equals("subj_cont")) search+="WHERE subject LIKE '%"+word+"%' OR content LIKE '%"+word+"%' ";
+				sql.append(search);
+			}
+
+			sql.append("ORDER BY grpno DESC,indent ASC, ansnum ASC ");
+			
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				list = new ArrayList<>();
+				do {
+
+					BbsDTO dto = new BbsDTO(); // 한줄 저장
+					dto.setBbsno(rs.getInt("bbsno"));
+					dto.setWname(rs.getString("wname"));
+					dto.setSubject(rs.getString("subject"));
+					dto.setContent(rs.getString("content"));
+					dto.setPasswd(rs.getString("passwd"));
+					dto.setReadcnt(rs.getInt("readcnt"));
+					dto.setRegdt(rs.getString("regdt"));
+					dto.setGrpno(rs.getInt("grpno"));
+					dto.setIndent(rs.getInt("indent"));
+					dto.setAnsnum(rs.getInt("ansnum"));
+					dto.setIp(rs.getString("ip"));
+					list.add(dto);
+
+				} while (rs.next());
+			}
+			else {
+				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
+				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("*Error* 자료 조회를 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return list;
+
+	} // list(col,word) end ////////////////////////////////////////////
+	
+	
+	
+	public int count(String col, String word) {
+		
+		int cnt=0;
+		
+		try {
+			con=dbopen.getConnection();
+			
+			sql=new StringBuilder();
+			sql.append("SELECT COUNT(*) AS cnt ");
+			sql.append("FROM tb_bbs ");
+			
+			if(word.length()>=1) {	// 검색어 유무 확인
+				String search="";
+				if(col.equals("wname")) search+="WHERE wname LIKE '%"+word+"%' ";
+				else if(col.equals("subject")) search+="WHERE subject LIKE '%"+word+"%' ";
+				else if(col.equals("content")) search+="WHERE content LIKE '%"+word+"%' ";
+				else if(col.equals("subj_cont")) search+="WHERE subject LIKE '%"+word+"%' OR content LIKE '%"+word+"%' ";
+				sql.append(search);
+				System.out.println("cnt함수에서 검색어 있는거 확인함");
+			}
+			
+			pstmt=con.prepareStatement(sql.toString());
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				cnt=rs.getInt("cnt");
+			}else {
+				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
+					 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
+			
+		}catch(Exception e) {
+			System.out.println("*Error* 글수 카운트를 실패했습니다. \n" + e);
+		}finally {
+			dbclose.close(con, pstmt, rs);
+		}
+		
+		return cnt;
+	} // count() end ////////////////////////////////////////////
+	
+
+	public BbsDTO read(int bbsno) {
+		/*
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = null;
+		*/
 		BbsDTO dto = null;
 
 		/*
@@ -143,9 +265,10 @@ public class BbsDAO {
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			sql.append(" SELECT bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip");
-			sql.append(" FROM tb_bbs");
-			sql.append(" WHERE bbsno=?");
+			
+			sql.append("SELECT bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip ");
+			sql.append("FROM tb_bbs ");
+			sql.append("WHERE bbsno=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1, bbsno);
@@ -166,6 +289,10 @@ public class BbsDAO {
 				dto.setIp(rs.getString("ip"));
 
 			}
+			else {
+				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
+				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
 
 		} catch (Exception e) {
 			System.out.println("*Error* 상세 보기를 실패했습니다. \n" + e);
@@ -178,12 +305,81 @@ public class BbsDAO {
 	} // read() end ////////////////////////////////////////////
 	
 	
+	
+	public int replyCnt(int bbsno) {	// 답글수 계산
+		/*
+		StringBuilder sql = null;
+		*/
+		int cnt = 0;
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+
+			// 답글수 계산 (하는중)
+
+			// 1) 현재 게시글의 grpno, indent, ansnum 불러오기
+			int grpno = 0, indent = 0, ansnum = 0;
+			sql.append("SELECT grpno, indent, ansnum ");
+			sql.append("FROM tb_bbs ");
+			sql.append("WHERE bbsno=? ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, bbsno);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				grpno = rs.getInt("grpno");
+				indent = rs.getInt("indent");
+				ansnum = rs.getInt("ansnum");
+
+				System.out.println("전달값 확인: " + "grpno=" + grpno + " indent=" + indent + " ansnum=" + ansnum);
+
+			} else {
+				System.out.println("Error1 : 값이 없거나 오류");
+			}
+
+			// 2) 같은 그룹 게시물 중 indent가 높은 글만 select
+			sql.delete(0, sql.length());
+			sql.append("SELECT COUNT(*) AS cnt  ");
+			sql.append("FROM tb_bbs ");
+			sql.append("WHERE grpno=? AND indent>? ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, grpno);
+			pstmt.setInt(2, indent);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			} else {
+				System.out.println("Error2 : 값이 없거나 오류");
+			}
+
+			sql.delete(0, sql.length());
+			// 여기까지 답글수 계산
+
+		} catch (Exception e) {
+			System.out.println("*Error* 답글수 확인을 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return cnt;
+
+	} // replyCnt() end ////////////////////////////////////////////
+	
+	
+	
 	public int incrementCnt(int bbsno) {
 		// readcnt(조회수) 증가
-		
+		/*
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		StringBuilder sql = null;
+		*/
 		int res = 0;
 
 		/*
@@ -195,9 +391,9 @@ public class BbsDAO {
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			sql.append(" UPDATE tb_bbs ");
-			sql.append(" SET readcnt=readcnt+1 ");
-			sql.append(" WHERE bbsno=? ");
+			sql.append("UPDATE tb_bbs ");
+			sql.append("SET readcnt=readcnt+1 ");
+			sql.append("WHERE bbsno=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1, bbsno);
@@ -245,12 +441,12 @@ public class BbsDAO {
 				indent=rs.getInt("indent")+1;
 				ansnum=rs.getInt("ansnum")+1;
 
-				System.out.println(grpno);
-				System.out.println(indent);
-				System.out.println(ansnum);
+				System.out.println("전달값 확인: "+"grpno="+grpno+" indent="+indent+" ansnum="+ansnum);
+				
 			}
 			else {
-				System.out.println("rs.next가 없어염");
+				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
+				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
 			}
 			
 			// 2) 글순서 재조정
@@ -271,7 +467,7 @@ public class BbsDAO {
 
 			sql.delete(0,sql.length());	// 이전에 사용한 sql문 삭제
 			sql.append("INSERT INTO tb_bbs(bbsno,wname,subject,content,passwd,ip,grpno,indent,ansnum) ");
-			sql.append(" VALUES((SELECT nvl(MAX(bbsno),0)+1 FROM tb_bbs),?,?,?,?,?,?,?,?) ");
+			sql.append("VALUES((SELECT nvl(MAX(bbsno),0)+1 FROM tb_bbs),?,?,?,?,?,?,?,?) ");
 
 			/*
 			 * INSERT INTO tb_bbs(bbsno,wname,subject,content,passwd,grpno,indent,ansnum,ip)
@@ -301,25 +497,27 @@ public class BbsDAO {
 	} // reply() end ////////////////////////////////////////////
 	
 	
-	public BbsDTO update(int bbsno) {
-
+	public BbsDTO update(BbsDTO dto) {
+		/*
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		StringBuilder sql = null;
-		BbsDTO dto = null;
+		*/
+		//BbsDTO dto = null;
 
 		try {
 
 			con = dbopen.getConnection();
 
 			sql = new StringBuilder();
-			sql.append(" SELECT bbsno, wname, subject, content, passwd, ip, regdt");
-			sql.append(" FROM tb_bbs");
-			sql.append(" WHERE bbsno=?");
+			sql.append("SELECT bbsno, wname, subject, content, passwd, ip, regdt ");
+			sql.append("FROM tb_bbs ");
+			sql.append("WHERE bbsno=?AND passwd=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setInt(1, bbsno);
+			pstmt.setInt(1, dto.getBbsno());
+			pstmt.setString(2, dto.getPasswd());
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -332,9 +530,14 @@ public class BbsDAO {
 				dto.setIp(rs.getString("ip"));
 				dto.setRegdt(rs.getString("regdt"));
 			}
+			else {
+				 dto=null;
+				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
+				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
 
 		} catch (Exception e) {
-			System.out.println("*Error* 수정할 자료가 존재하지 않습니다. \n" + e);
+			System.out.println("*Error* 수정할 자료가 존재하지 않거나 비밀번호 오류입니다. \n" + e);
 		} finally {
 			dbclose.close(con, pstmt, rs);
 		}
@@ -345,25 +548,26 @@ public class BbsDAO {
 	
 
 	public int updateProc(BbsDTO dto) {
-
+		/*
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		StringBuilder sql = null;
+		*/
 		int res = 0;
 
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			sql.append(" UPDATE tb_bbs ");
-			sql.append(" SET wname=?, subject=?, content=?, passwd=?, regdt=sysdate ");
-			sql.append(" WHERE bbsno=? ");
+			sql.append("UPDATE tb_bbs ");
+			sql.append("SET wname=?, subject=?, content=?, passwd=?, ip=?, regdt=sysdate ");
+			sql.append("WHERE bbsno=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, dto.getWname());
 			pstmt.setString(2, dto.getSubject());
 			pstmt.setString(3, dto.getContent());
 			pstmt.setString(4, dto.getPasswd());
-			pstmt.setString(5, dto.getRegdt());
+			pstmt.setString(5, dto.getIp());
 			pstmt.setInt(6, dto.getBbsno());
 
 			res = pstmt.executeUpdate();
@@ -379,21 +583,23 @@ public class BbsDAO {
 
 
 	
-	public int delete(int bbsno) {
-
+	public int delete(BbsDTO dto) {
+		/*
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		StringBuilder sql = null;
+		*/
 		int res = 0;
 
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			sql.append(" DELETE FROM tb_bbs");
-			sql.append(" WHERE bbsno=?");
+			sql.append("DELETE FROM tb_bbs ");
+			sql.append("WHERE bbsno=?AND passwd=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setInt(1, bbsno);
+			pstmt.setInt(1, dto.getBbsno());
+			pstmt.setString(2, dto.getPasswd());
 
 			res = pstmt.executeUpdate();
 

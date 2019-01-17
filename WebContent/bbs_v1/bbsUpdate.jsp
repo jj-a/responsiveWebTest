@@ -3,12 +3,12 @@
 <%@ include file="../header.jsp"%>
 
 <!-- Contents -->
-<h1>* 게시글 삭제 *</h1>
+<h1>* 게시글 수정 *</h1>
 <p>
 	<a href="bbsList.jsp">[글 목록]</a>
 </p>
 
-<form method="post" action="bbsDeleteProc.jsp" onsubmit="return delPwCheck(this)">
+<form method="post" action="bbsUpdateForm.jsp" onsubmit="return pwCheck(this)">
 	<input type="hidden" name="bbsno" value="<%=request.getParameter("bbsno")%>">
 	<table class="writefrm" border=1>
 		<tr>

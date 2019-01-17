@@ -89,6 +89,38 @@ VALUES(bbsno_seq.nextval,?,?,?,?,(SELECT nvl(MAX(bbsno),0)+1 FROM tb_bbs)),?,?,?
 ;
 
 
+
+-- 수정
+-- 비밀번호가 일치하면 수정하고자 하는 글을 가져와서 수정폼에 출력 후 작성자,제목,내용,비밀번호 수정
+
+-- 1) bbsUpdate.jsp
+-- 비밀번호 입력폼 작성
+
+-- 2) bbsUpdateForm.jsp
+-- 비밀번호와 글번호가 일치하는 글을  DB가져오기
+SELECT wname, subject, content, passwd 
+FROM tb_bbs 
+WHERE passwd=? AND bbsno=?
+;
+
+--3) 해당 정보를 수정폼에 출력
+
+-- 4) bbsUpdateProc.jsp
+-- 사용자가 다시 입력한 내용을 DB에서 수정
+UPDATE tb_bbs 
+SET wname, subject, content, passwd, ip=? 
+WHERE bbsno=?
+;
+
+
+-- 검색
+-- 제목에 무궁화 단어가 있는 레코드 검색
+SELECT * 
+FROM tb_bbs
+WHERE subject LIKE '%무궁화%'
+;
+
+
 ---------- 삭제 ----------
 
 --시퀀스 삭제 (**주의**)
