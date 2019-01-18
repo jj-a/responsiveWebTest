@@ -121,6 +121,71 @@ WHERE subject LIKE '%무궁화%'
 ;
 
 
+-- 페이징
+-- rownum 활용
+
+-- 1)
+SELECT bbsno, subject, grpno, ansnum 
+FROM tb_bbs 
+ORDER BY grpno DESC, ansnum ASC
+;
+
+--2) ROWNUM 추가
+SELECT ROWNUM, tb.bbsno, tb.subject, tb.grpno, tb.ansnum FROM(
+	SELECT bbsno, subject, grpno, ansnum 
+	FROM tb_bbs 
+	ORDER BY grpno DESC, ansnum ASC
+) TB
+;
+
+--3) 조건 추가
+SELECT ROWNUM, bbsno, subject, grpno, ansnum FROM(
+	SELECT bbsno, subject, grpno, ansnum 
+	FROM tb_bbs 
+	ORDER BY grpno DESC, ansnum ASC
+)
+WHERE ROWNUM>=1 AND ROWNUM<=5
+;
+
+-- 4) 중간 자료도 검색되도록 수정
+SELECT rnum, bbsno, subject, grpno, ansnum FROM(
+	SELECT ROWNUM rnum, bbsno, subject, grpno, ansnum FROM(
+		SELECT bbsno, subject, grpno, ansnum 
+		FROM tb_bbs 
+		ORDER BY grpno DESC, ansnum ASC
+	)
+)
+WHERE rnum>=6 AND rnum<=10
+;
+
+-- 5) (최종) 페이징 + 검색
+SELECT rnum, bbsno, subject, grpno, ansnum FROM( 
+	SELECT ROWNUM rnum, bbsno, subject, grpno, ansnum FROM( 
+		SELECT bbsno, subject, grpno, ansnum FROM tb_bbs 
+		WHERE wname LIKE '%테스트%' 
+		ORDER BY grpno DESC, ansnum ASC 
+	) 
+) 
+WHERE rnum>=1 AND rnum<=5 
+;
+
+---- 페이징 로직 (설계 참고용)
+
+for(int i=1;i<=MAX(rnum);i+=5){	
+		SELECT rnum, bbsno, subject, grpno, ansnum FROM( 
+			SELECT ROWNUM rnum, bbsno, subject, grpno, ansnum FROM( 
+				SELECT bbsno, subject, grpno, ansnum FROM tb_bbs 
+				WHERE wname LIKE '%테스트%' 
+				ORDER BY grpno DESC, ansnum ASC 
+			) 
+		) 
+		WHERE rnum>=i AND rnum<=i+5 
+}
+
+
+
+
+
 ---------- 삭제 ----------
 
 --시퀀스 삭제 (**주의**)

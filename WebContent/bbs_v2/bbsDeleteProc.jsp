@@ -33,10 +33,10 @@
 			out.print("<a href='bbsList.jsp'> [글 목록] </a></p>");
 		}
 		else {
-			out.print("<script>");
-			out.print("   alert('게시글이 삭제되었습니다');");
-			out.print("  window.location='bbsList.jsp?col="+col+"&word="+word+"&nowPage="+nowPage+"';");//페이지 이동      
-			out.print("</script>");
+			out.println("<script>");
+			out.println("   alert('게시글이 삭제되었습니다');");
+			out.print("  window.location='bbsList.jsp?col="+col+"&word="+word+"';");//페이지 이동      
+			out.println("</script>");
 		}
 	%>
 	

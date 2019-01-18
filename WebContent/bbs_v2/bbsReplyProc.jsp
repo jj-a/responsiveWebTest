@@ -6,10 +6,9 @@
 
 <%
 	// 1) 사용자가 입력한 정보를 변수에 저장
-	int bbsno=Integer.parseInt(request.getParameter("bbsno"));/*
+	int bbsno=Integer.parseInt(request.getParameter("bbsno"));
 	col=request.getParameter("col");
 	word=request.getParameter("word");
-	word=request.getParameter("reply");*/
 	String wname = request.getParameter("wname").trim();
 	String subject = request.getParameter("subject").trim();
 	String content = request.getParameter("content").trim();
@@ -35,7 +34,7 @@
 	} else {
 		out.print("<script>");
 		out.print("  alert('답변이 등록되었습니다.');");
-		out.print("  window.location='bbsList.jsp?col="+col+"&word="+word+"&nowPage="+nowPage+"';");
+		out.print("  window.location='bbsList.jsp?col="+col+"&word="+word+"';");
 		out.print("</script>");
 	}
 %>

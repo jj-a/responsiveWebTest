@@ -3,15 +3,13 @@
 <%@ include file="../header.jsp"%>
 
 <!-- Contents -->
-<h3><a href="bbsList.jsp"> 게시글 수정 </a></h3>
-<p>&nbsp;</p>
+<h3><a href="bbsList.jsp"> 게시글 삭제 </a></h3>
 <p><a href="bbsList.jsp">[글 목록]</a></p>
 
-<form method="get" action="bbsUpdateForm.jsp" onsubmit="return upPwCheck(this)">
+<form method="post" action="bbsDeleteProc.jsp" onsubmit="return delPwCheck(this)">
 	<input type="hidden" name="bbsno" value="<%=request.getParameter("bbsno")%>">
 	<input type="hidden" name="col" value="<%=request.getParameter("col")%>">
-	<input type="hidden" name="word" value="<%=request.getParameter("word")%>">
-	<input type="hidden" name="nowPage" value="<%=nowPage%>">
+	<input type="hidden" name="word" value="<%=word%>">
 	<table class="writefrm" border=1>
 		<tr>
 			<td colspan="2">비밀번호를 입력해주세요.</td>

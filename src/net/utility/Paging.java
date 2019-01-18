@@ -43,7 +43,8 @@ public class Paging {
         str.append("<span style='font-size: 1.2em; font-weight: bold;'>"+i+"</span>&nbsp;");  
       }else{
         str.append("<A href='./"+filenm+"?col="+col+"&word="+word+"&nowPage="+i+"'>"+i+"</A>&nbsp;");
-      }      
+      }
+      
     }
     
     _nowPage = (nowGrp * pagePerBlock)+1; // 10개 다음 페이지로 이동

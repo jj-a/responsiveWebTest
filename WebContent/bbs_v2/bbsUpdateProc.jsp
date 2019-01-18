@@ -7,10 +7,7 @@
 	<p>&nbsp;</p>
 	<p><a href="bbsList.jsp">[글 목록]</a></p>
 	<%
-	
 		int bbsno = Integer.parseInt(request.getParameter("bbsno"));
-		col = request.getParameter("col");
-		word = request.getParameter("word");
 		String wname = request.getParameter("wname").trim();
 		String subject = request.getParameter("subject").trim();
 		String content = request.getParameter("content").trim();
@@ -31,10 +28,10 @@
 			out.print("<p><a href='javascript:history.back();'>[다시시도]</a>");
 			out.print("<a href='bbsList.jsp'> [글 목록] </a></p>");
 		} else {
-			out.print("<script>");
-			out.print("alert('게시글이 수정되었습니다.');");
-			out.print("  window.location='bbsList.jsp?col="+col+"&word="+word+"&nowPage="+nowPage+"';");//페이지 이동
-			out.print("</script>");
+			out.println("<script>");
+			out.println("alert('게시글이 수정되었습니다.');");
+			out.println("   location.href='bbsList.jsp';");//페이지 이동      
+			out.println("</script>");
 		}
 	%>
 	

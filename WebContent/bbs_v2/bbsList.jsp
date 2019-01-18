@@ -1,4 +1,3 @@
-<%@page import="net.utility.Paging"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./ssi.jsp"%>
 <%@ include file="../header.jsp" %>
@@ -10,10 +9,7 @@ try {
 	// throw new Exception("수리중");
 %>
 <h3><a href="bbsList.jsp"> 게시판 </a></h3>
-	<p><h6><%
-	out.println(dao.ipCheck(request.getRemoteAddr())+" 님, 안녕하세요! ");
-	%></h6></p>
-<p><a href="bbsComment.jsp">[새로운 목록]</a></p>
+	<p>&nbsp;</p>
 	<table border="1" class="list">
 		<tr>
 			<th class="list-no">번호</th>
@@ -32,14 +28,9 @@ try {
 		
 			// 글수 카운트 변수
 			int totalRecord=dao.count(col, word);
-
-			// 페이지당 게시글수
-			int recordPerPage=10;			
-			
 			
 			// 전체 목록
-			ArrayList<BbsDTO> list = dao.list(col,word,nowPage,recordPerPage);
-			
+			ArrayList<BbsDTO> list = dao.list(col,word);
 			if (list == null) {
 				out.println("<tr>");
 				out.println("<tr><td colspan='6'>자료가 존재하지 않습니다.</td></tr>");
@@ -51,7 +42,7 @@ try {
 				for (int i = 0; i < list.size(); i++) {
 					dto = list.get(i);		
 		%>
-		<tr onclick="window.location='bbsRead.jsp?bbsno=<%=dto.getBbsno()%>&col=<%=col%>&word=<%=word%>&nowPage=<%=nowPage%>'">
+		<tr onclick="window.location='bbsRead.jsp?bbsno=<%=dto.getBbsno()%>&col=<%=col%>&word=<%=word%>'">
 			<td class="list-no"><%=dto.getBbsno()%></td>
 			<%
 				if(dto.getIndent()!=0){
@@ -67,9 +58,8 @@ try {
 					// 답변 글 = Re icon 출력
 						for(int j=0;j<dto.getIndent();j++) out.println("<img src='../images/icon_re.png'>");
 				%>
-				<a href="bbsRead.jsp?bbsno=<%=dto.getBbsno()%>&col=<%=col%>&word=<%=word%>&nowPage=<%=nowPage%>"><%=dto.getSubject()%></a>
+				<a href="bbsRead.jsp?bbsno=<%=dto.getBbsno()%>&col=<%=col%>&word=<%=word%>"><%=dto.getSubject()%></a>
 				<%
-				
 				// 오늘 작성한 글 = New icon 출력
 				String regdt=dto.getRegdt().substring(0,10);
 				if(regdt.equals(today)) out.println("<img src='../images/icon_new.png'>");
@@ -88,8 +78,14 @@ try {
 			<td class="list-no"><%=dto.getReadcnt()%></td>
 			<td class="list-ip">
 			<%	// IP 변환
-			String ip=dto.getIp();
-			out.println(dao.ipConvent(ip));
+				if(dto.getIp().equals("127.0.0.1")) out.println("Admin");
+				else if(dto.getIp().equals("172.16.10.6")) out.println("장민수");
+				else if(dto.getIp().equals("172.16.10.8")) out.println("누리누리");
+				else if(dto.getIp().equals("172.16.10.16")) out.println("계석준");
+				else if(dto.getIp().equals("172.16.10.22")) out.println("나기범");
+				else if(dto.getIp().equals("172.16.10.100")) out.println("강사님");
+				else if(dto.getIp().equals("172.16.10.253")) out.println("Mobile");
+				else out.println(dto.getIp());
 			%></td>
 		</tr>
 		<%
@@ -100,13 +96,8 @@ try {
 				out.println(totalRecord+"개의 글이 있습니다.");
 				out.println("</td></tr>");
 		%>
-		<tr><td colspan="6">
-		<!-- 페이지 리스트 -->
-		<%
-		String paging=new Paging().paging(totalRecord,nowPage,recordPerPage,col,word,"bbsList.jsp");
-		out.print(paging);
-		 %>
 		<!-- 검색 시작 -->
+		<tr><td colspan="6">
 		<form method="get" action="bbsList.jsp" onsubmit="return searchCheck(this)" class="search" style="display:inline;'">
 		<select name="col">
 			<option value="wname">작성자
@@ -130,7 +121,7 @@ try {
 	</table>
 <%
 } catch(Exception e) {
-	out.println("</table><div>공사중입니다. 이따 방문해주세요.</div>");
+	out.println("공사중입니다. 이따 방문해주세요.");
 }
 %>
 <!-- bbsList end -->

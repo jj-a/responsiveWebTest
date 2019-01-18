@@ -82,6 +82,10 @@ function searchCheck(f) {
 } // searchCheck() end
 
 
+// 방문자수 체크
+function visitCheck(f) {
+	
+}
 
 
 

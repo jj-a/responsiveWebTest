@@ -8,7 +8,6 @@
 	int bbsno = Integer.parseInt(request.getParameter("bbsno"));
 	col=request.getParameter("col");
 	word=request.getParameter("word");
-	word=request.getParameter("nowpage");
 	
 	dto.setPasswd(passwd);
 	dto.setBbsno(bbsno);
@@ -31,11 +30,10 @@
 <!-- bbsno, wname, subject, content, passwd, ip -->
 
 
-<form method="get" action="bbsUpdateProc.jsp" onsubmit="return bbsCheck(this)">
+<form method="post" action="bbsUpdateProc.jsp" onsubmit="return bbsCheck(this)">
 	<input type="hidden" name="bbsno" value="<%=bbsno%>">
 	<input type="hidden" name="col" value="<%=col%>">
 	<input type="hidden" name="word" value="<%=word%>">
-	<input type="hidden" name="nowPage" value="<%=nowPage%>">
 	<table class="writefrm" border=1>
 		<tr>
 			<th>작성자</th>

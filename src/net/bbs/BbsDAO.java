@@ -203,6 +203,104 @@ public class BbsDAO {
 		return list;
 
 	} // list(col,word) end ////////////////////////////////////////////
+
+	
+	
+	public ArrayList<BbsDTO> list(String col, String word, int nowPage, int recordPerPage) {
+		/*
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		*/
+		ArrayList<BbsDTO> list = null;
+
+		// 10: 페이지당 출력할 레코드 갯수
+		int startRow = ((nowPage - 1) * recordPerPage) + 1; // (0 * 10) + 1 = 1, 11, 21
+		int endRow = nowPage * recordPerPage; // 1 * 10 = 10, 20, 30
+
+		/*
+		 * 1 page: WHERE r >= 1 AND r <= 10; 2 page: WHERE r >= 11 AND r <= 20; 3 page: WHERE r >= 21 AND r <= 30;
+		 */
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+
+			word = word.trim(); // 문자열 좌우 공백 제거
+
+			if (word.length() == 0) { // 검색을 안하는 경우
+				sql.append(" SELECT  bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip, r");
+				sql.append(" FROM(");
+				sql.append("      SELECT  bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip, rownum as r");
+				sql.append("      FROM (");
+				sql.append("           SELECT  bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip");
+				sql.append("           FROM tb_bbs ");
+				sql.append("           WHERE indent=0 ");	//	*** Comment.jsp에서 답글 숨기기 조건 --list에서는 안보이게
+				sql.append("           ORDER BY grpno DESC, ansnum ASC");
+				sql.append("      )");
+				sql.append(" )     ");
+				sql.append(" WHERE r >= " + startRow + " AND r <= " + endRow);
+
+				pstmt = con.prepareStatement(sql.toString());
+
+			} else { // 검색을 하는 경우
+				sql.append("SELECT  bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip, r ");
+				sql.append("FROM(");
+				sql.append("SELECT  bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip, rownum as r ");
+				sql.append("FROM ( ");
+				sql.append("SELECT  bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip ");
+				sql.append("FROM tb_bbs ");
+
+				//검색
+				if (word.length() >= 1) {
+					String search = " WHERE " + col + " LIKE '%" + word + "%' ";
+					sql.append(search);
+					sql.append("AND indent=0 ");	//	*** Comment.jsp에서 답글 숨기기 조건 --list에서는 안보이게
+				}
+
+				sql.append("ORDER BY grpno DESC, ansnum ASC ");
+				sql.append(") ");
+				sql.append(") ");
+				sql.append("WHERE r >= " + startRow + " AND r <= " + endRow+" ");
+
+				pstmt = con.prepareStatement(sql.toString());
+
+			}
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				list = new ArrayList<BbsDTO>();
+				BbsDTO dto = null; //레코드 1개보관
+				do {
+					dto = new BbsDTO();
+					dto.setBbsno(rs.getInt("bbsno"));
+					dto.setWname(rs.getString("wname"));
+					dto.setSubject(rs.getString("subject"));
+					dto.setContent(rs.getString("content"));
+					dto.setPasswd(rs.getString("passwd"));
+					dto.setReadcnt(rs.getInt("readcnt"));
+					dto.setRegdt(rs.getString("regdt"));
+					dto.setGrpno(rs.getInt("grpno"));
+					dto.setIndent(rs.getInt("indent"));
+					dto.setAnsnum(rs.getInt("ansnum"));
+					dto.setIp(rs.getString("ip"));
+					list.add(dto);
+				} while (rs.next());
+			}
+			else {
+				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
+				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("*Error* 자료 조회를 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return list;
+
+	} // list(col,word,nowPage,recordPerPage) end ////////////////////////////////////////////
 	
 	
 	
@@ -223,6 +321,7 @@ public class BbsDAO {
 				else if(col.equals("subject")) search+="WHERE subject LIKE '%"+word+"%' ";
 				else if(col.equals("content")) search+="WHERE content LIKE '%"+word+"%' ";
 				else if(col.equals("subj_cont")) search+="WHERE subject LIKE '%"+word+"%' OR content LIKE '%"+word+"%' ";
+				search+="AND indent=0 ";
 				sql.append(search);
 				System.out.println("cnt함수에서 검색어 있는거 확인함");
 			}
@@ -246,7 +345,38 @@ public class BbsDAO {
 		return cnt;
 	} // count() end ////////////////////////////////////////////
 	
+	
+	public String ipConvent(String ip) {
+		
+		String iplist[]= {"127.0.0.1", "172.16.10.253", "172.16.10.100", "172.16.10.6", "172.16.10.8", "172.16.10.16", "172.16.10.22", "172.16.10.10"};
+		String name[]= {"Admin", "Mobile", "강사님", "장민수", "누리누리", "계석준", "나기범", "소연"};
+		String ipname=ip;
+		
+		for(int i=0;i<iplist.length;i++) {
+			if(ip.equals(iplist[i])) {
+				ipname=name[i];
+				break;
+			}
+		}
+		
+		return ipname;
+		
+	} // ipConvent() end ////////////////////////////////////////////
+	
+	
+	public String ipCheck(String ip) {		// ip 확인 (방문자 확인, 방문수 체크용)
+		System.out.print("방문자 IP Check중... ");
+		System.out.println("IP: "+ip);
+		return ip;
+	} // ipConvent() end ////////////////////////////////////////////
 
+	
+	public String ipCheck(String ip, String page) {
+		System.out.println("IP: "+ip+" / 방문 페이지: "+page);
+		return ip;
+	} // ipConvent() end ////////////////////////////////////////////
+
+	
 	public BbsDTO read(int bbsno) {
 		/*
 		Connection con = null;
@@ -333,8 +463,6 @@ public class BbsDAO {
 				grpno = rs.getInt("grpno");
 				indent = rs.getInt("indent");
 				ansnum = rs.getInt("ansnum");
-
-				System.out.println("전달값 확인: " + "grpno=" + grpno + " indent=" + indent + " ansnum=" + ansnum);
 
 			} else {
 				System.out.println("Error1 : 값이 없거나 오류");

@@ -13,7 +13,7 @@ try {
 	<p><h6><%
 	out.println(dao.ipCheck(request.getRemoteAddr())+" 님, 안녕하세요! ");
 	%></h6></p>
-<p><a href="bbsComment.jsp">[새로운 목록]</a></p>
+<p><a href="bbsList.jsp">[기존 목록]</a></p>
 	<table border="1" class="list">
 		<tr>
 			<th class="list-no">번호</th>
@@ -69,7 +69,9 @@ try {
 				%>
 				<a href="bbsRead.jsp?bbsno=<%=dto.getBbsno()%>&col=<%=col%>&word=<%=word%>&nowPage=<%=nowPage%>"><%=dto.getSubject()%></a>
 				<%
-				
+				// 답글수 출력
+				int cnt = dao.replyCnt(dto.getBbsno());
+				out.println("<reply> ( "+cnt+" ) </reply>");
 				// 오늘 작성한 글 = New icon 출력
 				String regdt=dto.getRegdt().substring(0,10);
 				if(regdt.equals(today)) out.println("<img src='../images/icon_new.png'>");

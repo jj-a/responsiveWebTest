@@ -38,7 +38,7 @@
 	</tr>
 	<tr>
 		<th style="width: 10%;">IP</th>
-		<td colspan=2 style="width: 30%;" onclick="window.open('http://<%=dto.getIp()%>:9090/myweb/index.jsp')" onmouseover="style='cursor:pointer;'">
+		<td colspan=2 style="width: 30%;" onclick="window.open('http://<%=dto.getIp()%>:9090/myweb/index.jsp')">
 			<%
 				//관리자
 					if (dto.getIp().equals("127.0.0.1"))
@@ -83,7 +83,6 @@
 	<input type="hidden" name="bbsno" value="<%=bbsno%>">
 	<input type="hidden" name="col" value="<%=col%>">
 	<input type="hidden" name="word" value="<%=word%>">
-	<input type="hidden" name="nowPage" value="<%=nowPage%>">
 	<input type="button" value="목록" onclick="move(this.form,'bbsList.jsp');">
 	<input type="button" value="답변" onclick="move(this.form,'bbsReply.jsp')">
 	<input type="button" value="수정" onclick="move(this.form,'bbsUpdate.jsp')">

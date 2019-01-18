@@ -24,11 +24,4 @@ String word=request.getParameter("word");	// 검색어
 col=Utility.checkNull(col);
 word=Utility.checkNull(word);
 
-// 현재 페이지
-int nowPage=1;
-if(request.getParameter("nowPage")!=null) 
-	nowPage=Integer.parseInt(request.getParameter("nowPage"));
-
-int visit;
-
 %>

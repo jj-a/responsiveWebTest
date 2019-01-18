@@ -1,10 +1,11 @@
 /* stylesheet.css */
-
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 /*  default tag style  */
 
 body {
-	font: 20px Montserrat, sans-serif;
+	/*font: 20px Montserrat, sans-serif;*/
+	font: 20px 'Noto Sans KR';
 	line-height: 1.8;
 	color: #f5f6f7;
 }
@@ -15,6 +16,17 @@ table {
 
 th, td {
 	text-align: center;
+}
+
+h1,h2,h3 {
+	font-family: 'Noto Sans KR';
+	font-weight: 900;
+	margin-bottom: 30px;
+}
+
+h4,h5,h6 {
+	font-family: 'Noto Sans KR';
+	font-weight: 500;
 }
 
 p {
@@ -42,13 +54,25 @@ a:visited {
 
 a:hover {
 	color: lightpink;
-	font-style: normal;
+	font-style: normal; 
 	text-decoration: underline;
+}
+
+h3 a:hover {
+	color: black;
+	font-style: normal;
+	text-decoration: none;
 }
 
 *:focus {
 	/* 마우스 포커싱 방지 */
 	outline: none;
+}
+
+
+reply {
+	font-size: 50%;
+	font-weight: bold;
 }
 
 
@@ -162,6 +186,10 @@ a:hover {
 	text-align: left;
 	min-width: 120px;
 	
+}
+
+td.list-subj.re a {
+	color: 	#ef998f;
 }
 
 /*  writefrm(bbs) class style  */
