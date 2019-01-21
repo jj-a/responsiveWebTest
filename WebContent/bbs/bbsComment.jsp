@@ -9,11 +9,13 @@
 try {
 	// throw new Exception("수리중");
 %>
-<h3><a href="bbsList.jsp"> 게시판 </a></h3>
+<h3><a href="bbsComment.jsp"> 게시판 (댓글 목록) </a></h3>
 	<p><h6><%
-	out.println(dao.ipCheck(request.getRemoteAddr())+" 님, 안녕하세요! ");
+	String ip=request.getRemoteAddr();
+	out.println(ip+" 님, 안녕하세요! ");
+	out.println("&nbsp;&nbsp;오늘의 방문자 수: "+dao.ipCheck(ip)+"<br> 카운트를 어떡해야하는걸까,,,");
 	%></h6></p>
-<p><a href="bbsList.jsp">[기존 목록]</a></p>
+<p><a href="bbsList.jsp">[기존 게시판 목록]</a></p>
 	<table border="1" class="list">
 		<tr>
 			<th class="list-no">번호</th>
@@ -31,14 +33,14 @@ try {
 		<%
 		
 			// 글수 카운트 변수
-			int totalRecord=dao.count(col, word);
+			int totalRecord=dao.cmtcount(col, word);
 
 			// 페이지당 게시글수
 			int recordPerPage=10;			
 			
 			
 			// 전체 목록
-			ArrayList<BbsDTO> list = dao.list(col,word,nowPage,recordPerPage);
+			ArrayList<BbsDTO> list = dao.cmtlist(col,word,nowPage,recordPerPage);
 			
 			if (list == null) {
 				out.println("<tr>");
@@ -70,8 +72,9 @@ try {
 				<a href="bbsRead.jsp?bbsno=<%=dto.getBbsno()%>&col=<%=col%>&word=<%=word%>&nowPage=<%=nowPage%>"><%=dto.getSubject()%></a>
 				<%
 				// 답글수 출력
-				int cnt = dao.replyCnt(dto.getBbsno());
-				out.println("<reply> ( "+cnt+" ) </reply>");
+				//int cnt = dao.replyCnt(dto.getBbsno());	// replyCnt()이용
+				//out.println("<reply> ( "+cnt+" ) </reply>");
+				out.println("<reply> ( "+dto.getCnt()+" ) </reply>");	// cmtlist() 자체 컬럼 이용
 				// 오늘 작성한 글 = New icon 출력
 				String regdt=dto.getRegdt().substring(0,10);
 				if(regdt.equals(today)) out.println("<img src='../images/icon_new.png'>");
@@ -90,7 +93,7 @@ try {
 			<td class="list-no"><%=dto.getReadcnt()%></td>
 			<td class="list-ip">
 			<%	// IP 변환
-			String ip=dto.getIp();
+			ip=dto.getIp();
 			out.println(dao.ipConvent(ip));
 			%></td>
 		</tr>
@@ -105,11 +108,11 @@ try {
 		<tr><td colspan="6">
 		<!-- 페이지 리스트 -->
 		<%
-		String paging=new Paging().paging(totalRecord,nowPage,recordPerPage,col,word,"bbsList.jsp");
+		String paging=new Paging().paging(totalRecord,nowPage,recordPerPage,col,word,"bbsComment.jsp");
 		out.print(paging);
 		 %>
 		<!-- 검색 시작 -->
-		<form method="get" action="bbsList.jsp" onsubmit="return searchCheck(this)" class="search" style="display:inline;'">
+		<form method="get" action="bbsComment.jsp" onsubmit="return searchCheck(this)" class="search" style="display:inline;'">
 		<select name="col">
 			<option value="wname">작성자
 			<option value="subject">제목

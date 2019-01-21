@@ -39,12 +39,10 @@
 	<tr>
 		<th style="width: 10%;">IP</th>
 		<td colspan=2 style="width: 30%;" onclick="window.open('http://<%=dto.getIp()%>:9090/myweb/index.jsp')" onmouseover="style='cursor:pointer;'">
-			<%
-				//관리자
-					if (dto.getIp().equals("127.0.0.1"))
-						out.println("Admin");
-					else
-						out.println(dto.getIp());
+			<%	// IP 변환
+			String ip=dto.getIp();
+			out.println(dao.ipConvent(ip));
+			out.println(" ("+ip+")");
 			%>
 		</td>
 		<th style="width: 10%;">조회수</th>
@@ -67,12 +65,10 @@
 	<tr>
 		<th colspan=2>IP</th>
 		<td colspan=6 onclick="window.open('http://<%=dto.getIp()%>:9090/myweb/index.jsp')">
-			<%
-				//관리자
-					if (dto.getIp().equals("127.0.0.1"))
-						out.println("Admin");
-					else
-						out.println(dto.getIp());
+			<%	// IP 변환
+			ip=dto.getIp();
+			out.println(dao.ipConvent(ip));
+			out.println("  ("+ip+")");
 			%>
 		</td>
 	</tr>

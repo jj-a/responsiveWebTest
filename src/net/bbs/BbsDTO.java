@@ -9,6 +9,7 @@ public class BbsDTO {
 	private String regdt;
 	private int grpno, indent, ansnum;
 	private String ip;
+	private int cnt;	// 답글(댓글)수 확인
 
 	
 	// -- Constructor
@@ -131,6 +132,14 @@ public class BbsDTO {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 
 	

@@ -84,7 +84,7 @@ function searchCheck(f) {
 
 // 방문자수 체크
 function visitCheck(f) {
-	
+	var visited;
 }
 
 

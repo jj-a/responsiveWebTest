@@ -11,9 +11,11 @@ try {
 %>
 <h3><a href="bbsList.jsp"> 게시판 </a></h3>
 	<p><h6><%
-	out.println(dao.ipCheck(request.getRemoteAddr())+" 님, 안녕하세요! ");
+	String ip=request.getRemoteAddr();
+	out.println(ip+" 님, 안녕하세요! ");
+	out.println("&nbsp;&nbsp;오늘의 방문자 수: "+dao.ipCheck(ip)+"<br> 카운트를 어떡해야하는걸까,,,");
 	%></h6></p>
-<p><a href="bbsComment.jsp">[새로운 목록]</a></p>
+<p><a href="bbsComment.jsp">[댓글 목록]</a></p>
 	<table border="1" class="list">
 		<tr>
 			<th class="list-no">번호</th>
@@ -88,7 +90,7 @@ try {
 			<td class="list-no"><%=dto.getReadcnt()%></td>
 			<td class="list-ip">
 			<%	// IP 변환
-			String ip=dto.getIp();
+			ip=dto.getIp();
 			out.println(dao.ipConvent(ip));
 			%></td>
 		</tr>
@@ -99,6 +101,7 @@ try {
 				out.println("<tr><td colspan='6'>");
 				out.println(totalRecord+"개의 글이 있습니다.");
 				out.println("</td></tr>");
+				
 		%>
 		<tr><td colspan="6">
 		<!-- 페이지 리스트 -->
