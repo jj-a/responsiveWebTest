@@ -19,8 +19,6 @@ public class BbsDAO {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	private StringBuilder sql = null;
-	
-	private int visited;	// 방문자수
 
 	
 	// -- Constructor
@@ -326,7 +324,30 @@ public class BbsDAO {
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
+			
+			/*
 
+		-- rownum 순으로 페이징
+		SELECT rnum, bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip
+		FROM (
+			-- rownum 번호 매기기
+			SELECT bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip, rownum AS rnum
+			FROM (
+				-- CNT_TB & tb_bbs 원본 join: 새글만 select
+				SELECT TB.*, CNT_TB.cnt FROM (
+					-- CNT_TB: grpno별로 답글 count
+					SELECT grpno, COUNT(grpno)-1 AS cnt FROM tb_bbs 
+					GROUP BY grpno
+				)CNT_TB  JOIN  tb_bbs TB
+				ON CNT_TB.grpno=TB.grpno 
+				WHERE TB.indent=0
+				ORDER BY TB.grpno DESC 
+			)
+		)
+		WHERE rnum>=6 AND rnum<=10
+		;
+			 */
+			
 			word = word.trim(); // 문자열 좌우 공백 제거
 
 			if (word.length() == 0) { // 검색을 안하는 경우
@@ -531,12 +552,10 @@ public class BbsDAO {
 	} // ipConvent() end ////////////////////////////////////////////
 	
 	
-	public int ipCheck(String ip) {		// ip 확인 (방문자 확인, 방문수 체크용)
+	public void ipCheck(String ip) {		// ip 확인 (방문자 확인, 방문수 체크용)
 		System.out.print("방문자 IP Check중... ");
 		System.out.println("IP: "+ip);
-		visited++;
-		System.out.println("방문자수 :"+visited);
-		return visited;
+		
 	} // ipConvent() end ////////////////////////////////////////////
 
 	

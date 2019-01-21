@@ -185,6 +185,139 @@ for(int i=1;i<=MAX(rnum);i+=5){
 
 
 
+-- 댓글수
+
+SELECT grpno, indent, ansnum
+FROM tb_bbs
+WHERE bbsno=39
+;
+
+
+-- grpno가 동일한 레코드를 그룹화하고 갯수구하기
+
+SELECT COUNT(*) AS cnt
+FROM tb_bbs
+WHERE grpno=39 AND indent>0
+;
+
+
+-- 내껄로 수정중
+-- 답글(indent>0)도 체크되도록 작성
+SELECT COUNT(tb.grpno) AS cnt 
+FROM tb_bbs AS TB JOIN (
+	SELECT * 
+	FROM tb_bbs 
+) PNO
+ON tb.grpno=pno.grpno 
+;
+
+SELECT grpno, COUNT(indent) AS cnt 
+FROM tb_bbs BB JOIN (SELECT * FROM tb_bbs) TB 
+ON bb.bbsno 
+GROUP BY GRPNO;
+
+
+SELECT COUNT(tb.grpno) AS cnt 
+FROM tb_bbs AS TB JOIN (
+	SELECT grpno, indent, ansnum 
+	FROM tb_bbs 
+	WHERE bbsno=39 
+) PNO
+ON tb.grpno=pno.grpno 
+WHERE grpno=39 AND indent>0
+;
+
+
+
+-- 전체조회
+SELECT * FROM tb_bbs
+ORDER BY grpno DESC, indent ASC
+;
+
+
+SELECT grpno, COUNT(grpno) AS cnt
+FROM TB_BBS
+GROUP BY grpno
+;
+
+SELECT grpno, COUNT(grpno)-1 AS cnt
+FROM TB_BBS
+GROUP BY grpno
+;
+
+
+
+-- 최종 답글수
+-- indent=0인 새글만 체크됨
+SELECT bbsno, subject, content, cnt, readcnt, regdt, ip FROM (
+	SELECT grpno, COUNT(grpno)-1 AS cnt
+	FROM tb_bbs 
+	GROUP BY grpno
+)BB JOIN tb_bbs TB
+ON BB.grpno=TB.grpno 
+WHERE TB.indent=0
+ORDER BY TB.grpno DESC 
+;
+
+
+
+
+--★★★★★★★★★★★★★★★★
+
+-- rownum 순으로 페이징
+SELECT rnum, bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip
+FROM (
+	-- rownum 번호 매기기
+	SELECT bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip, rownum AS rnum
+	FROM (
+		-- CNT_TB & tb_bbs 원본 join: 새글만 select
+		SELECT TB.*, CNT_TB.cnt FROM (
+			-- CNT_TB: grpno별로 답글 count
+			SELECT grpno, COUNT(grpno)-1 AS cnt FROM tb_bbs 
+			GROUP BY grpno
+		)CNT_TB  JOIN  tb_bbs TB
+		ON CNT_TB.grpno=TB.grpno 
+		WHERE TB.indent=0
+		ORDER BY TB.grpno DESC 
+	)
+)
+WHERE rnum>=6 AND rnum<=10
+;
+
+--★★★★★★★★★★★★★★★★
+
+-- 검색할 시
+
+
+-- rownum 순으로 페이징
+SELECT rnum, bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip
+FROM (
+	-- rownum 번호 매기기
+	SELECT bbsno, wname, subject, content, passwd, readcnt, regdt, grpno, indent, ansnum, ip, rownum AS rnum
+	FROM (
+		-- CNT_TB & tb_bbs 원본 join: 새글만 select
+		SELECT TB.*, CNT_TB.cnt FROM (
+			-- CNT_TB: grpno별로 답글 count
+			SELECT grpno, COUNT(grpno)-1 AS cnt FROM tb_bbs 
+			GROUP BY grpno
+		)CNT_TB  JOIN  tb_bbs TB
+		ON CNT_TB.grpno=TB.grpno 
+		WHERE TB.indent=0 AND TB.subject LIKE '%테%'
+		ORDER BY TB.grpno DESC 
+	)
+)
+WHERE rnum>=2 AND rnum<=5
+;
+
+-- 댓글목록에서 검색	// %테%=4 나오게
+SELECT COUNT(*) AS cnt FROM tb_bbs 
+WHERE indent=0 AND subject LIKE '%테%' 
+;
+
+
+
+
+
 
 ---------- 삭제 ----------
 

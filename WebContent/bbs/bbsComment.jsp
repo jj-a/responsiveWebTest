@@ -10,11 +10,6 @@ try {
 	// throw new Exception("수리중");
 %>
 <h3><a href="bbsComment.jsp"> 게시판 (댓글 목록) </a></h3>
-	<p><h6><%
-	String ip=request.getRemoteAddr();
-	out.println(ip+" 님, 안녕하세요! ");
-	out.println("&nbsp;&nbsp;오늘의 방문자 수: "+dao.ipCheck(ip)+"<br> 카운트를 어떡해야하는걸까,,,");
-	%></h6></p>
 <p><a href="bbsList.jsp">[기존 게시판 목록]</a></p>
 	<table border="1" class="list">
 		<tr>
@@ -93,7 +88,7 @@ try {
 			<td class="list-no"><%=dto.getReadcnt()%></td>
 			<td class="list-ip">
 			<%	// IP 변환
-			ip=dto.getIp();
+			String ip=dto.getIp();
 			out.println(dao.ipConvent(ip));
 			%></td>
 		</tr>

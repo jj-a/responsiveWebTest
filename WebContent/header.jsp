@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<jsp:useBean id="visit" class="net.utility.Visit" scope="application"></jsp:useBean>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -7,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.005">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.007">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/css?family=Montserrat&after">
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
@@ -35,7 +36,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/bbs/bbsList.jsp">BOARD</a></li>
 					<li><a href="${pageContext.request.contextPath}#">NOTICE</a></li>
-					<li><a href="${pageContext.request.contextPath}#">LOGIN</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/loginForm.jsp">LOGIN</a></li>
 					<li><a href="${pageContext.request.contextPath}#">PHOTO</a></li>
 					<li><a href="${pageContext.request.contextPath}#">MAIL</a></li>
 					<li><a href="${pageContext.request.contextPath}#">BOARD(mvc)</a></li>
@@ -44,6 +45,17 @@
 			</div>
 		</div>
 	</nav>
+
+		<!-- visit-ip 방문자 IP -->
+	<div id="visit-ip">
+		<p>
+			<%
+				String visitip = request.getRemoteAddr();
+				out.println(visitip + " 님, 안녕하세요! ＼^0^/");
+				visit.ipCheck(visitip);
+			%>
+		</p>
+		</div>
 
 		<!-- clock-box 시계 -->
 	<div id="clock-box">
@@ -57,6 +69,8 @@
 				 -->
 		</form>
 	</div>
+
+	
 	<!--Main Category end -->
 
 

@@ -104,8 +104,8 @@ reply {
 }
 
 .container-fluid {
-	padding-top: 70px;
-	padding-bottom: 70px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 .navbar {
@@ -120,6 +120,28 @@ reply {
 
 .navbar-nav  li a:hover {
 	color: #1abc9c !important;
+}
+
+#visit-ip {
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	background-color: #f8f8f8;
+}
+
+#visit-ip p {
+	color:black; 
+	text-align:center;
+	margin: 0 auto;
+	padding-bottom: 20px;
+}
+
+#visit-counter {
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 30px;
+	text-align: center;
+	background-color: transparent;
 }
 
 #clock-box {
