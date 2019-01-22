@@ -37,6 +37,10 @@ CREATE TABLE member (
 
 -- 회원가입
 INSERT INTO member(id, passwd, mname, tel, email, zipcode, address1, address2, job, mlevel, mdate)
+VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, 'D1', sysdate)
+;
+
+INSERT INTO member(id, passwd, mname, tel, email, zipcode, address1, address2, job, mlevel, mdate)
 VALUES('soldesk', '12341234', '솔데스크', '010-1234-5678', 'soldesk@naver.com', '05123', '서울시 종로구 관철동', '코아빌딩 5층', 'A02', 'D1', sysdate)
 ;
 

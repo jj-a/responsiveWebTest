@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>idCheckForm.jsp</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.008">
+<%@ include file="../includeNewWin.jsp"%>
 <style></style>
 </head>
 <body>

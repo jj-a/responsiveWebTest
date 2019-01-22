@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>idCheckProc.jsp</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.008">
+<%@ include file="../includeNewWin.jsp"%>
 </head>
 <body>
 
