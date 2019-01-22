@@ -8,11 +8,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.007">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.009">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/css?family=Montserrat&after">
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/script.js?ver=1.001"></script>
+<script src="${pageContext.request.contextPath}/js/script.js?ver=1.005"></script>
 <script src="${pageContext.request.contextPath}/js/clock.js"></script>
 <script src="${pageContext.request.contextPath}/js/nodrag.js"></script>
 <style>

@@ -16,7 +16,7 @@
 		<%
 			}
 		%>
-		<p>Today Visit : <jsp:getProperty property="counter" name="visit" /></p>
+		<p>Total Visit : <jsp:getProperty property="counter" name="visit" /></p>
 	</div>
 
 	<p>

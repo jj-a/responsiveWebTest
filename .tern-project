@@ -6,6 +6,16 @@
     },
     "outline": {
       
+    },
+    "chrome-extension": {
+      
+    },
+    "cordovajs": {
+      
     }
-  }
+  },
+  "libs": [
+    "browser",
+    "jquery"
+  ]
 }

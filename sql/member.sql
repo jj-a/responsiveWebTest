@@ -2,7 +2,9 @@
 
 
 -- member 테이블 조회
-SELECT * FROM member;
+SELECT * FROM MEMBER
+ORDER BY id
+;
 
  
 -- 회원테이블 생성
@@ -21,7 +23,32 @@ CREATE TABLE member (
     PRIMARY KEY (id)
 );
 
--- 추가 테스트
-INSERT INTO member(id, passwd, mname, tel, email, zipcode, address1,address2, job, mlevel, mdate)
-VALUES('user1', '1234', '홍길동', '123-1234', '11@daum.net', '123-123','서울시 관악구 신림동', '코아빌딩5층' ,'회사원','D1', sysdate);
+
+   -- 회원 등급
+      . A*: 관리자 그룹
+      . B*: 중간 관리자 그룹
+      . C*: 우수 사용자 그룹
+      . D*: 일반 사용자 그룹
+      . E*: 비회원. guest 그룹
+      . F*: 탈퇴한 회원 그룹
+      . X*: 잠긴 계정, 일시 사용 정지
+      
+      
+
+-- 회원가입
+INSERT INTO member(id, passwd, mname, tel, email, zipcode, address1, address2, job, mlevel, mdate)
+VALUES('soldesk', '12341234', '솔데스크', '010-1234-5678', 'soldesk@naver.com', '05123', '서울시 종로구 관철동', '코아빌딩 5층', 'A02', 'D1', sysdate)
+;
+
+
+-- 아이디 중복확인
+SELECT COUNT(id) cnt FROM member
+WHERE id='soldesk'
+;
+
+-- 이메일 중복확인
+SELECT COUNT(email) cnt FROM member
+WHERE email='soldesk@naver.com'
+;
+
 
