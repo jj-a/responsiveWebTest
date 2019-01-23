@@ -2,7 +2,6 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 /*  default tag style  */
-
 body {
 	/*font: 20px Montserrat, sans-serif;*/
 	font: 20px 'Noto Sans KR';
@@ -23,13 +22,13 @@ th, td {
 	text-align: center;
 }
 
-h1,h2,h3 {
+h1, h2, h3 {
 	font-family: 'Noto Sans KR';
 	font-weight: 900;
 	margin-bottom: 30px;
 }
 
-h4,h5,h6 {
+h4, h5, h6 {
 	font-family: 'Noto Sans KR';
 	font-weight: 500;
 }
@@ -42,9 +41,7 @@ textarea {
 	resize: none;
 }
 
-
 /*  link style  */
-
 a:link {
 	color: black;
 	font-style: normal;
@@ -59,7 +56,7 @@ a:visited {
 
 a:hover {
 	color: lightpink;
-	font-style: normal; 
+	font-style: normal;
 	text-decoration: underline;
 }
 
@@ -74,16 +71,12 @@ h3 a:hover {
 	outline: none;
 }
 
-
 reply {
 	font-size: 50%;
 	font-weight: bold;
 }
 
-
-
 /*  class style  */
-
 .margin {
 	margin-bottom: 45px;
 }
@@ -135,10 +128,11 @@ reply {
 }
 
 #visit-ip p {
-	color:black; 
-	text-align:center;
+	font-size: 10pt; color : black;
+	text-align: center;
 	margin: 0 auto;
 	padding-bottom: 20px;
+	color: black;
 }
 
 #visit-counter {
@@ -153,6 +147,11 @@ reply {
 	display: block;
 	margin: 0 auto;
 	text-align: center;
+	opacity: 0.75;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .time {
@@ -169,10 +168,7 @@ reply {
 	cursor: default;
 }
 
-
 /*  list(bbs) class style  */
-
-
 .list-ip {
 	font-size: 1vw;
 }
@@ -183,7 +179,7 @@ reply {
 	border: 0px none;
 }
 
-.list td, .list th {                                                            
+.list td, .list th {
 	font-size: 65%;
 	padding: 5px 10px 5px 10px;
 }
@@ -212,15 +208,13 @@ reply {
 	width: 40%;
 	text-align: left;
 	min-width: 120px;
-	
 }
 
 td.list-subj.re a {
-	color: 	#ef998f;
+	color: #ef998f;
 }
 
 /*  writefrm(bbs) class style  */
-
 .writefrm {
 	width: 50%;
 	margin: 0 auto;
@@ -240,7 +234,6 @@ td.list-subj.re a {
 	/* th에 인접한 첫번째 td style */
 	text-align: left;
 }
-
 
 .search {
 	text-align: center;
@@ -265,4 +258,3 @@ td.list-subj.re a {
 .checkbox-line {
 	display: none;
 }
-

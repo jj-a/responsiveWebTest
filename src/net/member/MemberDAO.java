@@ -9,10 +9,9 @@ import net.utility.DBOpen;
 
 
 public class MemberDAO {
-	
 
 	// -- Object
-	
+
 	private DBOpen dbopen = null;
 	private DBClose dbclose = null;
 
@@ -20,24 +19,21 @@ public class MemberDAO {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	private StringBuilder sql = null;
-	
-	
+
 	// -- Constructor
-	
+
 	public MemberDAO() {
 		dbopen = new DBOpen();
 		dbclose = new DBClose();
 	}
 
-	
 	// -- Method
 	//////////////////////////////////////////////
-	
-	
+
 	public int duplecateID(String id) {
-		
-		int cnt=0;
-		
+
+		int cnt = 0;
+
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
@@ -50,10 +46,8 @@ public class MemberDAO {
 
 			if (rs.next()) {
 				cnt = rs.getInt("cnt");
-			}
-			else {
-				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
-				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			} else {
+				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
 			}
 
 		} catch (Exception e) {
@@ -64,12 +58,11 @@ public class MemberDAO {
 
 		return cnt;
 	} // duplecateID() end
-	
 
 	public int duplecateMail(String email) {
-		
-		int cnt=0;
-		
+
+		int cnt = 0;
+
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
@@ -82,10 +75,8 @@ public class MemberDAO {
 
 			if (rs.next()) {
 				cnt = rs.getInt("cnt");
-			}
-			else {
-				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
-				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			} else {
+				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
 			}
 
 		} catch (Exception e) {
@@ -96,9 +87,7 @@ public class MemberDAO {
 
 		return cnt;
 	} // duplecateID() end
-	
-	
-	
+
 	public int join(MemberDTO dto) {
 
 		int res = 0;
@@ -131,10 +120,80 @@ public class MemberDAO {
 		}
 
 		return res;
-		
-		
+
 	} // join() end
+
 	
+	
+	public String login(MemberDTO dto) {
+		
+		String mlevel=null;
+		
+		try {
+
+			con = dbopen.getConnection();
+
+			sql = new StringBuilder();
+			sql.append("SELECT mlevel FROM member ");
+			sql.append("WHERE id=? AND passwd=? AND mlevel IN('A1','B1','C1','D1') ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, dto.getId());
+			pstmt.setString(2, dto.getPasswd());
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				mlevel=rs.getString("mlevel");
+			} else {
+				throw new Exception("회원이 아니거나 회원등급이 적절하지 않거나 아이디/비밀번호 오류입니다.");
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return mlevel;
+
+	} // login() end
+
+	/*		// 작성중
+	
+	public String login(MemberDTO dto) {
+		
+		String mlevel=null;
+		
+		try {
+
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			
+			sql.append("SELECT mlevel FROM member ");
+			sql.append("WHERE id=? AND passwd=? AND mlevel IN('A1','B1','C1','D1') ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, dto.getId());
+			pstmt.setString(2, dto.getPasswd());
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				mlevel=rs.getString("mlevel");
+			} else {
+				throw new Exception("회원이 아니거나 회원등급이 적절하지 않거나 아이디/비밀번호 오류입니다.");
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return mlevel;
+
+	} // login() end
+	
+	*/
 	
 	
 }

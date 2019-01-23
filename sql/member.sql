@@ -56,3 +56,47 @@ WHERE email='soldesk@naver.com'
 ;
 
 
+-- 로그인 검사
+SELECT mlevel FROM member 
+WHERE id=? AND passwd=?
+AND mlevel IN('A1','B1','C1','D1')
+;
+
+SELECT mlevel FROM member 
+WHERE id='test2' AND passwd='testtest@'
+AND mlevel IN('A1','B1','C1','D1')
+;
+
+
+
+-- ** 로그인 실패 사유 분기 로직 **
+
+--MemberDTO dto= 사용자가 입력한 id, passwd
+
+-- 1) id정보 executeQuery
+SELECT id, passwd, mlevel FROM member 
+WHERE id=(dto.id)
+;
+-- rs.next=null이면 : 아이디 없음 (return 4)
+-- rs.next 있으면 : rs에서 passwd 가져옴 (next->)
+
+-- 2) if passwd 확인
+if(dto.passwd == rs.getString("passwd"))
+-- true: 비밀번호 일치 (next->)
+-- false: 비밀번호 틀림 (return 2)
+
+-- 3) if mlevel 확인 (switch?)
+if(rs.getString("mlevel") == {"A1","B1","C1","D1"})
+-- true: 회원등급 정상 = 로그인 성공 (return 1)
+else if(rs.getString("mlevel") == {"X1"})
+-- true: 사용중지 회원 = 로그인 실패 (return 3)
+-- false: 게스트, 탈퇴 회원 = 로그인 실패 (return 4)
+
+-- 4) return값에 따른 메시지
+-- 1: 로그인되었습니다.
+-- 2: 비밀번호가 틀렸습니다.
+-- 3: 일시적으로 사용정지된 계정입니다. 관리자에게 문의바랍니다.
+-- 4: 아이디가 없습니다.
+
+
+

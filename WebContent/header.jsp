@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.009">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.010">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/css?family=Montserrat&after">
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
@@ -51,7 +51,9 @@
 		<p>
 			<%
 				String visitip = request.getRemoteAddr();
-				out.println(visitip + " 님, 안녕하세요! ＼^0^/");
+				out.print(visitip + " 님, 안녕하세요! ＼^0^/");
+				if(visitip.equals("172.16.10.100")) out.print("");
+				else out.print("<br><span style='color:#999999;'>격렬하게 집에 가고싶다..</span>");
 				visit.ipCheck(visitip);
 			%>
 		</p>

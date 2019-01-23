@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./ssi.jsp"%>
+<%@ include file="../member/auth.jsp"%>
 <%@ include file="../header.jsp"%>
 
 <!-- Contents -->
@@ -82,8 +83,10 @@
 	<input type="hidden" name="nowPage" value="<%=nowPage%>">
 	<input type="button" value="목록" onclick="move(this.form,'bbsList.jsp');">
 	<input type="button" value="답변" onclick="move(this.form,'bbsReply.jsp')">
+	<% if(s_mlevel.equals("A1")){ %>
 	<input type="button" value="수정" onclick="move(this.form,'bbsUpdate.jsp')">
 	<input type="button" value="삭제" onclick="move(this.form,'bbsDelete.jsp?')">
+	<% } %>
 </form>
 <%
 	}

@@ -222,15 +222,26 @@ function memberCheck(f) {
 } // memberCheck() end
 
 
-function check(re, what, message) {
-    if(re.test(what.value)) {
-        return true;
-    }
-    alert(message);
-    what.value = "";
-    what.focus();
-    //return false;
-}
+function loginCheck(f){
+	// 로그인 유효성 검사
+
+	// 아이디 4~10글자 이내
+	if(id.length<4 || id.length>10){
+		alert("아이디는 4~10자 이내입니다.");
+		f.id.focus();
+		return false;
+	}
+
+	// 비밀번호 6~16글자 이내
+	if(passwd.length<6 || passwd.length>16){
+		alert("비밀번호는 6~16자 이내입니다.");
+		f.passwd.focus();
+		return false;
+	}
+	
+	return true;
+	
+} // loginCheck() end
 
 
 function move(f, file){
