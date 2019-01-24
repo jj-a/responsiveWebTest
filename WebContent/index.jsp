@@ -10,31 +10,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/css?family=Montserrat&after">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.01">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.013">
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/clock.js"></script>
-<style>
-#clock-box {
-	display: block;
-	margin: 0 auto;
-	text-align: center;
-}
-
-.time {
-	display: block; /* div option */
-	width: 100%;
-	line-height: 70px;
-	background-color: white;
-	color: black;
-	font-weight: bold;
-	font-size: 20pt;
-	text-align: center;
-	margin: 0 auto;
-	border: 0 none;
-	cursor: default;
-}
-</style>
+<script src="${pageContext.request.contextPath}/js/script.js?ver=1.005"></script>
 </head>
 
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">

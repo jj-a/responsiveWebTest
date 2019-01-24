@@ -3,6 +3,7 @@ package net.member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import net.utility.DBClose;
 import net.utility.DBOpen;
@@ -27,9 +28,11 @@ public class MemberDAO {
 		dbclose = new DBClose();
 	}
 
+	
 	// -- Method
 	//////////////////////////////////////////////
 
+	
 	public int duplecateID(String id) {
 
 		int cnt = 0;
@@ -57,7 +60,9 @@ public class MemberDAO {
 		}
 
 		return cnt;
-	} // duplecateID() end
+	} // duplecateID() end ////////////////////////////////////////////
+	
+	
 
 	public int duplecateMail(String email) {
 
@@ -86,7 +91,9 @@ public class MemberDAO {
 		}
 
 		return cnt;
-	} // duplecateID() end
+	} // duplecateID() end ////////////////////////////////////////////
+	
+	
 
 	public int join(MemberDTO dto) {
 
@@ -121,7 +128,7 @@ public class MemberDAO {
 
 		return res;
 
-	} // join() end
+	} // join() end ////////////////////////////////////////////
 
 	
 	
@@ -156,8 +163,9 @@ public class MemberDAO {
 
 		return mlevel;
 
-	} // login() end
+	} // login() end ////////////////////////////////////////////
 
+	
 	/*		// 작성중
 	
 	public String login(MemberDTO dto) {
@@ -191,9 +199,118 @@ public class MemberDAO {
 
 		return mlevel;
 
-	} // login() end
+	} // login() end ////////////////////////////////////////////
 	
 	*/
 	
+	public int recordCount() { // 회원수 카운트
+
+		int cnt=0;
+		
+		try {
+
+			con = dbopen.getConnection();
+
+			sql = new StringBuilder();
+			sql.append("SELECT COUNT(id) AS cnt FROM member ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				cnt=rs.getInt("cnt");
+			}
+
+		} catch (Exception e) {
+			System.out.println("*Error* 알 수 없는 오류 : "+e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return cnt;
+
+	} // recordCount() end ////////////////////////////////////////////
+
 	
+	
+	public synchronized ArrayList<MemberDTO> list(String col) {
+		
+		ArrayList<MemberDTO> list = null;
+		
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			sql.append("SELECT id, passwd, mname, tel, email, mdate, mlevel ");
+			sql.append("FROM member ");
+			
+			// 정렬 설정 (ID/이름/가입일 순)
+			if (col.equals("") || col.equals("id")) {
+				sql.append("ORDER BY id ASC ");
+			}else if (col.equals("mname")) {
+				sql.append("ORDER BY mname ASC ");
+			}else if (col.equals("mdate")) {
+				sql.append("ORDER BY mdate DESC ");
+			}
+
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				list = new ArrayList<>();
+				do {
+
+					MemberDTO dto = new MemberDTO();
+					dto.setId(rs.getString("id"));
+					dto.setPasswd(rs.getString("passwd"));
+					dto.setMname(rs.getString("mname"));
+					dto.setTel(rs.getString("tel"));
+					dto.setEmail(rs.getString("email"));
+					dto.setMdate(rs.getString("mdate"));
+					dto.setMlevel(rs.getString("mlevel"));
+					list.add(dto);
+
+				} while (rs.next());
+				
+			} else {
+				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("*Error* 자료 조회를 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return list;
+
+	} // list() end ////////////////////////////////////////////
+	
+	
+	public int levelChange(String id, String mlevel) {
+		
+		int res = 0;
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			sql.append("UPDATE member ");
+			sql.append("SET mlevel=? ");
+			sql.append("WHERE id=? ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, mlevel);
+			pstmt.setString(2, id);
+
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("*Error* 행 수정을 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt);
+		}
+		
+		return res;
+		
+	} // levelChange() end
+	
+
 }

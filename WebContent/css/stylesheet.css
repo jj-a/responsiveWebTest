@@ -4,9 +4,10 @@
 /*  default tag style  */
 body {
 	/*font: 20px Montserrat, sans-serif;*/
-	font: 20px 'Noto Sans KR';
-	line-height: 1.8;
+	font: 20px 'Noto Sans KR'; line-height : 1.8;
 	color: #555555;
+	line-height: 1.8;
+	margin: 0 auto;
 }
 
 div {
@@ -40,6 +41,28 @@ p {
 textarea {
 	resize: none;
 }
+
+input::placeholder {
+	color: #cccccc;
+}
+
+input:focus::placeholder {
+	color: transparent;
+}
+
+iframe {
+	width: 100%;
+	height: 100vh;
+	border: none;
+	scrolling: no; /* default: auto */
+	resize: none;
+	/*overflow: auto;*/
+}
+
+iframe>html>body {
+	margin: auto;
+}
+
 
 /*  link style  */
 a:link {
@@ -128,7 +151,8 @@ reply {
 }
 
 #visit-ip p {
-	font-size: 10pt; color : black;
+	font-size: 10pt;
+	color: black;
 	text-align: center;
 	margin: 0 auto;
 	padding-bottom: 20px;
@@ -147,7 +171,7 @@ reply {
 	display: block;
 	margin: 0 auto;
 	text-align: center;
-	opacity: 0.75;
+	opacity: 0.7;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -157,15 +181,51 @@ reply {
 .time {
 	display: block; /* div option */
 	width: 100%;
-	line-height: 70px;
+	line-height: 50px;
 	background-color: white;
 	color: black;
 	font-weight: bold;
-	font-size: 20pt;
+	font-size: 16pt;
 	text-align: center;
 	margin: 0 auto;
 	border: 0 none;
 	cursor: default;
+}
+
+/* administrator menu - iframe */
+.left-box {
+	background-color: transparent;
+	float: left;
+	width: 20%;
+	height: 100vh;
+	resize: none;
+	overflow: hidden;
+}
+
+.right-box {
+	background-color: transparent;
+	display: table;
+	float: right;
+	width: 80%;
+	height: 100vh;
+	resize: none;
+	overflow: hidden;
+}
+
+.top-box {
+	background-color: transparent;
+	width: 100%;
+	height: auto;
+	resize: none;
+	overflow: hidden;
+}
+
+.btm-box {
+	background-color: transparent;
+	width: 100%;
+	/*height: 300px;*/
+	resize: none;
+	overflow: hidden;
 }
 
 /*  list(bbs) class style  */

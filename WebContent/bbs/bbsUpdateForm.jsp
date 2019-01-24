@@ -8,7 +8,6 @@
 	int bbsno = Integer.parseInt(request.getParameter("bbsno"));
 	col=request.getParameter("col");
 	word=request.getParameter("word");
-	word=request.getParameter("nowpage");
 	
 	dto.setPasswd(passwd);
 	dto.setBbsno(bbsno);

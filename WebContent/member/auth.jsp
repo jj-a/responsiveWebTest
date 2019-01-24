@@ -11,7 +11,7 @@
 		if(session.getAttribute("s_id")==null || session.getAttribute("s_passwd")==null || session.getAttribute("s_mlevel")==null){
 			s_id="guest";
 			s_passwd="guest";
-			s_mlevel="E1";
+			s_mlevel="E1";		// 비회원 등급
 		}
 		else{
 			s_id=(String)session.getAttribute("s_id");
