@@ -16,8 +16,8 @@
 
 		if(isAdmin==false) {
 			out.println("<script>");
-			out.println("   alert('게시글은 관리자만 삭제할 수 있습니다.');");
-			out.print("  window.location='bbsList.jsp?col="+col+"&word="+word+"';");//페이지 이동      
+			out.println("alert('게시글은 관리자 IP에서만 삭제할 수 있습니다.');");
+			out.println("window.location='bbsList.jsp?col="+col+"&word="+word+"';");//페이지 이동      
 			out.println("</script>");
 		}
 		//

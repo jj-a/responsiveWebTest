@@ -5,7 +5,7 @@
 
 
 <div class="wrap">
-	<h3>회원등급 조정</h3>
+	<h3>회원목록</h3>
 	<p>전체 회원수: <%=dao.recordCount()%></p>
 
 	<table class="list">
@@ -17,14 +17,13 @@
 			<th>이메일</th>
 			<th>가입일</th>
 			<th>등급</th>
-			<th>등급 변경</th>
 		</tr>
 		<%
 			String col=Utility.checkNull(request.getParameter("col"));
 			ArrayList<MemberDTO> list = dao.list(col);
 			
 			if (list == null) {
-				out.println("<tr><td colspan='8'>자료 없음</td>");
+				out.println("<tr><td colspan='7'>자료 없음</td>");
 			} else {
 
 				// 데이터 로드
@@ -65,29 +64,13 @@
 			%>
 			(<%=dto.getMlevel()%>)
 			</td>
-			<td class="list-ip">
-				<%if(dto.getId().equals("admin")){
-					out.println("변경불가");
-				}else{%>
-				<form action="memLevelProc.jsp">
-					<input type="hidden" name="id" value="<%=dto.getId()%>">
-					<select name="mlevel" onchange="levelChange(this.form)">
-						<option value="B1" <%if(mlevel.equals("B1")) out.print("selected");%>>부관리자</option>
-						<option value="C1" <%if(mlevel.equals("C1")) out.print("selected");%>>우수회원</option>
-						<option value="D1" <%if(mlevel.equals("D1")) out.print("selected");%>>일반회원</option>
-						<option value="F1" <%if(mlevel.equals("F1")) out.print("selected");%>>탈퇴회원</option>
-						<option value="X1" <%if(mlevel.equals("X1")) out.print("selected");%>>휴면계정</option>
-					</select>
-				</form>
-			<% }%>
-			</td>
 		</tr>
 		<%
 				} // for end
 		%>
 		<tr>
-			<td colspan="8">
-				<form action="memLevel.jsp">
+			<td colspan="7">
+				<form action="memList.jsp">
 					<select name="col" onchange="sort(this.form)">
 						<option value="id" <% if(col.equals("")||col.equals("id")) out.print("selected"); %>>ID 순
 						<option value="mname" <% if(col.equals("mname")) out.print("selected"); %>>이름 순

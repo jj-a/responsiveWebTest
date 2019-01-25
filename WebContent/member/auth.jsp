@@ -17,6 +17,7 @@
 			s_id=(String)session.getAttribute("s_id");
 			s_passwd=(String)session.getAttribute("s_passwd");
 			s_mlevel=(String)session.getAttribute("s_mlevel");
+			
 		}
 		
 %>

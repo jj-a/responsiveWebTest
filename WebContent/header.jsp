@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="member/auth.jsp"%>
 <jsp:useBean id="visit" class="net.utility.Visit" scope="application"></jsp:useBean>
 <!DOCTYPE html>
 <html lang="ko">
@@ -36,7 +37,13 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/bbs/bbsList.jsp">BOARD</a></li>
 					<li><a href="${pageContext.request.contextPath}#">NOTICE</a></li>
-					<li><a href="${pageContext.request.contextPath}/member/loginForm.jsp">LOGIN</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/loginForm.jsp">
+					<%if (s_id.equals("guest") || s_passwd.equals("guest") || s_mlevel.equals("E1")) {%>
+					LOGIN
+					<%}else{%>
+					MYPAGE
+					<%}%>
+					</a></li>
 					<li><a href="${pageContext.request.contextPath}#">PHOTO</a></li>
 					<li><a href="${pageContext.request.contextPath}#">MAIL</a></li>
 					<li><a href="${pageContext.request.contextPath}#">BOARD(mvc)</a></li>

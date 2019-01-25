@@ -1,6 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../adminAuth.jsp"%>
 <base target="sub-content">
+<style>
+body, table, input {
+	font-size: 16px;
+}
+td {
+padding: 0 5px 0 5px;
+}
+</style>
 <form name="memfrm" method="post">
 <table>
 <tr>
@@ -12,7 +20,7 @@
     <input type="button" value="회원등급조정" onclick="move('memLevel.jsp')">
   </td>
   <td>    
-     <input type="button" value="회원삭제" onclick="move('memDel.jsp')">
+     <input type="button" value="회원삭제" onclick="move('memDelete.jsp')">
   </td>
 </tr>
 </table>
