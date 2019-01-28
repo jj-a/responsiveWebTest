@@ -40,7 +40,7 @@
 					MYPAGE
 					<%}%>
 					</a></li>
-					<li><a href="${pageContext.request.contextPath}#">PHOTO</a></li>
+					<li><a href="${pageContext.request.contextPath}/pds/pdsList.jsp">PHOTO</a></li>
 					<li><a href="${pageContext.request.contextPath}#">MAIL</a></li>
 					<li><a href="${pageContext.request.contextPath}#">BOARD(mvc)</a></li>
 					<li><a href="${pageContext.request.contextPath}#">LOGIN(mvc)</a></li>
@@ -114,10 +114,12 @@
 			<p>Today Visit : <jsp:getProperty property="counter" name="visit" /></p>
 		</div>
 	
+	<div id="copyright">
 		<p>
 			copyright <a href="<%=request.getContextPath()%>/index.jsp">myWeb</a> since 2019. All rights reserved. <br>이 사이트는 드래그 방지가 적용되어 있습니다. 소스 확인 및
 			디버깅 시 우클릭 or F12키를 이용해주세요.
 		</p>
+	</div>
 	</footer>
 
 </body>

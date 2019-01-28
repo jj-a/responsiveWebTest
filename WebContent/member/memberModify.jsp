@@ -9,11 +9,14 @@
 	// 수정화면이 나오기 전에 비밀번호 확인, 비회원 확인 
 	dto = dao.modify(s_id);
 
+
+	// form onsubmit에 memberCheck 부분에서 db에서 아이디 강제생성한 것들에 대해 id check(글자수,형식 제한...)가 들어가서 다음단계로 안넘어감
+
 %>
 
 
-<form name="modForm" method="post" action="modifyProc.jsp" onsubmit="return memberCheck(this)">
-	<input type="hidden" name="id" value="<%=request.getParameter("bbsno")%>">
+<form name="modForm" method="post" action="memberModifyProc.jsp" onsubmit="return memberCheck(this)">
+	<input type="hidden" name="id" value="<%=dto.getId()%>">
 	<span style="color: red; font-size: 11pt; text-align: right;">* : 필수입력</span> <br>
 	<table border="1" class="writefrm">
 		<tr>

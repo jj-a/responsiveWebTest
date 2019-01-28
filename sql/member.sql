@@ -100,3 +100,29 @@ else if(rs.getString("mlevel") == {"X1"})
 
 
 
+
+-- 회원 목록
+SELECT * FROM MEMBER 
+ORDER BY id ASC 
+;
+
+-- 회원수
+SELECT COUNT(id) FROM MEMBER 
+;
+
+-- 회원삭제
+DELETE FROM MEMBER 
+WHERE id=?
+;
+
+
+INSERT INTO member(id, passwd, mname, tel, email, zipcode, address1, address2, job, mlevel, mdate)
+VALUES('minsoo', 'wlsdkqkqh', 'jms', '010-6303-4090', 'jms213@naver.com',  '121808', '서울시 마포구 염리동', '487-2번지 2층 201호','A02', 'A1', sysdate)
+;
+
+
+INSERT INTO member(id, passwd, mname, tel, email, zipcode, address1, address2, job, mlevel, mdate)
+VALUES('test3', 'test', 'test', '010-7777-9999', 'test3@grr.la',  '12345', '', '','A04', 'D1', sysdate)
+;
+
+

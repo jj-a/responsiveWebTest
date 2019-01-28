@@ -371,19 +371,28 @@ public class MemberDAO {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
 			sql.append("UPDATE member ");
-			sql.append("SET passwd=?, mname=?, tel=?, email=?, zipcode=?, address1=?, address2=?, job=? ");
+			sql.append("SET mname=?, tel=?, email=?, zipcode=?, address1=?, address2=?, job=? ");
+			if(dto.getPasswd()==null) {	// passwd 수정할 시
+				sql.append(", passwd=? ");
+			}
 			sql.append("WHERE id=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, dto.getPasswd());
-			pstmt.setString(2, dto.getMname());
-			pstmt.setString(3, dto.getTel());
-			pstmt.setString(4, dto.getEmail());
-			pstmt.setString(5, dto.getZipcode());
-			pstmt.setString(6, dto.getAddress1());
-			pstmt.setString(7, dto.getAddress2());
-			pstmt.setString(8, dto.getJob());
-			pstmt.setString(9, dto.getId());
+
+			pstmt.setString(1, dto.getMname());
+			pstmt.setString(2, dto.getTel());
+			pstmt.setString(3, dto.getEmail());
+			pstmt.setString(4, dto.getZipcode());
+			pstmt.setString(5, dto.getAddress1());
+			pstmt.setString(6, dto.getAddress2());
+			pstmt.setString(7, dto.getJob());
+			if(dto.getPasswd()==null) {	// passwd 수정할 시
+				pstmt.setString(8, dto.getPasswd());
+				pstmt.setString(9, dto.getId());
+			}
+			else{	// 수정안할 시
+				pstmt.setString(8, dto.getId());
+			}
 
 			res = pstmt.executeUpdate();
 

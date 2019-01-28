@@ -35,7 +35,7 @@ function showtime() {
 	// OUTPUT EX > 2019.01.03 (목) PM 5:06
 	var now = "";
 
-	var weekName = [ "일", "월", "화", "수", "목", "금", "토" ];
+	var weekName = [ "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" ];
 	var yyyy = today.getFullYear();
 	var mm = today.getMonth() + 1;
 	mm = (mm < 10) ? ("0" + mm) : mm;
@@ -50,7 +50,7 @@ function showtime() {
 	var ss = today.getSeconds();
 	ss = (ss < 10) ? ("0" + ss) : ss;
 
-	now = yyyy + "." + mm + "." + dd + " (" + day + ") " + apm + " " + h + ":" + min + ":" + ss;
+	now = yyyy + "." + mm + "." + dd + " (" + day + ")  " + apm + " " + h + ":" + min + ":" + ss;
 
 	// 시계 출력
 	document.getElementById("clock").value = now;

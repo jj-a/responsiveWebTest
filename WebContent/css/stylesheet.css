@@ -17,10 +17,12 @@ div {
 
 table {
 	margin: auto;
+	/*border-collapse: collapse;*/
 }
 
 th, td {
 	text-align: center;
+	/*border-collapse: collapse;*/
 }
 
 h1, h2, h3 {
@@ -176,6 +178,10 @@ reply {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+#copyright p {
+	font-size: 1.6vw;
 }
 
 .time {
