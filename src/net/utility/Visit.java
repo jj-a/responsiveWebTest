@@ -63,8 +63,7 @@ public class Visit {
 				} catch (Exception e) {
 					;//error
 				}
-			}
-			
+			}			
 		}
 	}
 	
