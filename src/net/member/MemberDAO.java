@@ -27,9 +27,11 @@ public class MemberDAO {
 		dbclose = new DBClose();
 	}
 
+	
 	// -- Method
 	//////////////////////////////////////////////
 
+	
 	public int duplecateID(String id) {
 
 		int cnt = 0;
@@ -59,6 +61,8 @@ public class MemberDAO {
 		return cnt;
 	} // duplecateID() end ////////////////////////////////////////////
 
+	
+	
 	public int duplecateMail(String email) {
 
 		int cnt = 0;
@@ -88,6 +92,8 @@ public class MemberDAO {
 		return cnt;
 	} // duplecateID() end ////////////////////////////////////////////
 
+	
+	
 	public int join(MemberDTO dto) {
 
 		int res = 0;
@@ -123,6 +129,8 @@ public class MemberDAO {
 
 	} // join() end ////////////////////////////////////////////
 
+	
+	
 	public String login(MemberDTO dto) {
 
 		String mlevel = null;
@@ -156,6 +164,8 @@ public class MemberDAO {
 
 	} // login() end ////////////////////////////////////////////
 
+	
+	
 	/*
 	 * // 작성중
 	 * 
@@ -182,6 +192,8 @@ public class MemberDAO {
 	 * 
 	 */
 
+	
+	
 	public int recordCount() { // 회원수 카운트
 
 		int cnt = 0;
@@ -210,6 +222,8 @@ public class MemberDAO {
 
 	} // recordCount() end ////////////////////////////////////////////
 
+	
+	
 	public synchronized ArrayList<MemberDTO> list(String col) {
 
 		ArrayList<MemberDTO> list = null;
@@ -405,7 +419,112 @@ public class MemberDAO {
 		return res;
 
 	} // modifyProc() end ////////////////////////////////////////////
+	
+	
+	public MemberDTO findID(MemberDTO dto) {
+		
+		MemberDTO member=null;
 
+		try {
+
+			con = dbopen.getConnection();
+
+			sql = new StringBuilder();
+			sql.append("SELECT id FROM member ");
+			sql.append("WHERE mname=? AND tel=? AND email=? AND mlevel IN('A1','B1','C1','D1', 'X1') ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, dto.getMname());
+			pstmt.setString(2, dto.getTel());
+			pstmt.setString(3, dto.getEmail());
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				member=new MemberDTO();
+				member.setId(rs.getString("id"));
+			} else {
+				throw new Exception("회원이 아니거나 회원등급이 적절하지 않습니다.");
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return member;
+
+	} // findID() end ////////////////////////////////////////////
+	
+	
+	
+	public MemberDTO findPW(MemberDTO dto) {
+
+		MemberDTO member=null;
+		int res = 0;
+		String temppasswd="";
+
+		try {
+
+			temppasswd=randomPW();
+
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			
+			sql.append("UPDATE member ");
+			sql.append("SET passwd=? ");
+			sql.append("WHERE id=? AND mname=? AND tel=? AND email=? AND mlevel IN('A1','B1','C1','D1','X1') ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, temppasswd);
+			pstmt.setString(2, dto.getId());
+			pstmt.setString(3, dto.getMname());
+			pstmt.setString(4, dto.getTel());
+			pstmt.setString(5, dto.getEmail());
+			
+			System.out.println("입력값 검사: "+dto.toString());
+			
+			res = pstmt.executeUpdate();
+
+			if (res!=0) {
+				member=new MemberDTO();
+				member.setPasswd(temppasswd);
+				System.out.println("비밀번호 변경 후:  "+member.toString());
+			} else {
+				System.out.println("입력된 회원정보가 일치하지 않습니다.");
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return member;
+
+	} // findID() end ////////////////////////////////////////////
+
+	
+	private String randomPW() {
+	// 랜덤 비밀번호 (10자리) 생성
+        int index = 0;  
+        
+        // charset 규정에 맞게 바꾸기
+        char[] charSet = new char[] {  
+                '0','1','2','3','4','5','6','7','8','9'  
+                ,'A','B','C','D','E','F','G','H','I','J','K','L','M'  
+                ,'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'  
+                ,'a','b','c','d','e','f','g','h','i','j','k','l','m'  
+                ,'n','o','p','q','r','s','t','u','v','w','x','y','z'};  
+          
+        StringBuffer sb = new StringBuffer();  
+        for (int i=0; i<10; i++) {  
+            index=(int)(charSet.length * Math.random());  
+            sb.append(charSet[index]);  
+        }  
+          
+        return sb.toString();  
+	} // randomPW() end ////////////////////////////////////////////
 	
 	
 }

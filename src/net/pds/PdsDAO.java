@@ -9,7 +9,6 @@ import net.utility.DBClose;
 import net.utility.DBOpen;
 import net.utility.Utility;
 
-
 public class PdsDAO {
 
 	// -- Object
@@ -29,14 +28,12 @@ public class PdsDAO {
 		dbclose = new DBClose();
 	}
 
-	
 	// -- Method
 	//////////////////////////////////////////////
 
-
 	public boolean insert(PdsDTO dto) {
-		
-		int res=0;
+
+		int res = 0;
 
 		try {
 			con = dbopen.getConnection();
@@ -61,13 +58,13 @@ public class PdsDAO {
 			dbclose.close(con, pstmt);
 		}
 
-		if(res==0) return false;
-		else return true;
+		if (res == 0)
+			return false;
+		else
+			return true;
 
 	} // insert() end ////////////////////////////////////////////
-	
-	
-	
+
 	public synchronized ArrayList<PdsDTO> list() {
 
 		ArrayList<PdsDTO> list = null;
@@ -75,7 +72,7 @@ public class PdsDAO {
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			
+
 			sql.append("SELECT pdsno, wname, subject, regdate, passwd, readcnt, filename, filesize ");
 			sql.append("FROM tb_pds ");
 			sql.append("ORDER BY pdsno DESC ");
@@ -98,10 +95,8 @@ public class PdsDAO {
 					list.add(dto);
 
 				} while (rs.next());
-			}
-			else {
-				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
-				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			} else {
+				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
 			}
 
 		} catch (Exception e) {
@@ -111,27 +106,24 @@ public class PdsDAO {
 		}
 
 		return list;
-		
+
 	} // list() end ////////////////////////////////////////////
 
-	
-
 	public PdsDTO read(int pdsno) {
-		
+
 		PdsDTO dto = null;
 
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			
+
 			sql.append("SELECT pdsno, wname, subject, regdate, passwd, readcnt, filename, filesize ");
 			sql.append("FROM tb_pds ");
 			sql.append("WHERE pdsno=? ");
-			
+
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1, pdsno);
 			rs = pstmt.executeQuery();
-			
 
 			if (rs.next()) {
 				dto = new PdsDTO();
@@ -144,10 +136,8 @@ public class PdsDAO {
 				dto.setFilename(rs.getString("filename"));
 				dto.setFilesize(rs.getLong("filesize"));
 
-			}
-			else {
-				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
-				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			} else {
+				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
 			}
 
 		} catch (Exception e) {
@@ -159,8 +149,6 @@ public class PdsDAO {
 		return dto;
 
 	} // read() end ////////////////////////////////////////////
-	
-	
 
 	public int incrementCnt(int pdsno) {
 		// readcnt(조회수) 증가
@@ -176,7 +164,7 @@ public class PdsDAO {
 
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1, pdsno);
-			
+
 			res = pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -184,13 +172,11 @@ public class PdsDAO {
 		} finally {
 			dbclose.close(con, pstmt);
 		}
-		
+
 		return res;
 
 	} //incrementCnt() end ////////////////////////////////////////////
-	
 
-	
 	public PdsDTO update(PdsDTO dto) {
 
 		try {
@@ -206,7 +192,7 @@ public class PdsDAO {
 			pstmt.setInt(1, dto.getPdsno());
 			pstmt.setString(2, dto.getPasswd());
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				dto = new PdsDTO();
 				dto.setPdsno(rs.getInt("pdsno"));
@@ -215,11 +201,9 @@ public class PdsDAO {
 				dto.setPasswd(rs.getString("passwd"));
 				dto.setFilename(rs.getString("filename"));
 				dto.setRegdate(rs.getString("regdate"));
-			}
-			else {
-				 dto=null;
-				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
-				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			} else {
+				dto = null;
+				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
 			}
 
 		} catch (Exception e) {
@@ -231,13 +215,51 @@ public class PdsDAO {
 		return dto;
 
 	} // update() end ////////////////////////////////////////////
-	
 
-	public int updateProc(PdsDTO dto) {
-		
+	
+	public int updateProc(PdsDTO dto) {	// 수정 (파일수정X)
+
 		int res = 0;
 
 		try {
+			
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			sql.append("UPDATE tb_pds ");
+			sql.append("SET wname=?, subject=?, passwd=?, regdate=sysdate ");
+			sql.append("WHERE pdsno=? ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, dto.getWname());
+			pstmt.setString(2, dto.getSubject());
+			pstmt.setString(3, dto.getPasswd());
+			pstmt.setInt(4, dto.getPdsno());
+                   
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("*Error* 행 수정을 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt);
+		}
+
+		return res;
+	} // updateProc() end ////////////////////////////////////////////
+
+
+	
+	public int updateProc(PdsDTO dto, String saveDir) {	// 수정 (파일수정O)
+
+		int res = 0;
+
+		try {
+
+			String filename = "";
+			PdsDTO oldDTO = read(dto.getPdsno());
+			if (oldDTO != null) {
+				filename = oldDTO.getFilename();
+			}
+			
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
 			sql.append("UPDATE tb_pds ");
@@ -254,6 +276,13 @@ public class PdsDAO {
 
 			res = pstmt.executeUpdate();
 
+			if (res == 1) {
+				// 테이블에서 레코드가 성공적으로 삭제되면 서버 로컬 경로의 첨부파일도 삭제됨
+				Utility.deleteFile(saveDir, filename);
+			} else {
+				throw new Exception("삭제할 파일을 찾을 수 없습니다.");
+			}
+
 		} catch (Exception e) {
 			System.out.println("*Error* 행 수정을 실패했습니다. \n" + e);
 		} finally {
@@ -262,23 +291,23 @@ public class PdsDAO {
 
 		return res;
 	} // updateProc() end ////////////////////////////////////////////
-
-
+	
+	
 	
 	public int delete(int pdsno, String passwd, String saveDir) {
-		
+
 		int res = 0;
 
 		try {
-			String filename="";
-			PdsDTO oldDTO=read(pdsno);
-			if(oldDTO!=null) {
-				filename=oldDTO.getFilename();
+			String filename = "";
+			PdsDTO oldDTO = read(pdsno);
+			if (oldDTO != null) {
+				filename = oldDTO.getFilename();
 			}
-			
+
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			
+
 			sql.append("DELETE FROM tb_pds ");
 			sql.append("WHERE pdsno=?AND passwd=? ");
 
@@ -287,11 +316,11 @@ public class PdsDAO {
 			pstmt.setString(2, passwd);
 
 			res = pstmt.executeUpdate();
-			
-			if(res==1) {
+
+			if (res == 1) {
 				// 테이블에서 레코드가 성공적으로 삭제되면 서버 로컬 경로의 첨부파일도 삭제됨
-				Utility.deleteFile(saveDir,filename);
-			}else {
+				Utility.deleteFile(saveDir, filename);
+			} else {
 				throw new Exception("삭제할 파일을 찾을 수 없습니다.");
 			}
 
@@ -305,8 +334,4 @@ public class PdsDAO {
 
 	} // delete() end ////////////////////////////////////////////
 
-	
-	
-	
-	
 }

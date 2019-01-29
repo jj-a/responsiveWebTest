@@ -43,7 +43,6 @@ function bbsCheck(f) { // 답변형 게시판 유효성 검사
 }// bbsCheck() end
 
 
-
 function delPwCheck(f) {
 	var passwd = f.passwd.value;
 	passwd = passwd.trim();

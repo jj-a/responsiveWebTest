@@ -45,7 +45,7 @@
 					<%}%>
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/pds/pdsList.jsp">PHOTO</a></li>
-					<li><a href="${pageContext.request.contextPath}#">MAIL</a></li>
+					<li><a href="${pageContext.request.contextPath}/mail/mailForm.jsp">MAIL</a></li>
 					<li><a href="${pageContext.request.contextPath}#">BOARD(mvc)</a></li>
 					<li><a href="${pageContext.request.contextPath}#">LOGIN(mvc)</a></li>
 				</ul>

@@ -6,12 +6,20 @@
 <h3>회원정보 수정</h3>
 
 <%
+
+	if (s_id.equals("guest") || s_passwd.equals("guest") || s_mlevel.equals("E1")) {
+		// 비회원, 로그인 안한 경우
+%>
+		<script>
+		alert("로그인 후 접근 가능한 페이지입니다.");
+		location.href="${pageContext.request.contextPath}/member/loginForm.jsp";
+		</script>
+<%		
+	}else{
 	// 수정화면이 나오기 전에 비밀번호 확인, 비회원 확인 
 	dto = dao.modify(s_id);
 
-
 	// form onsubmit에 memberCheck 부분에서 db에서 아이디 강제생성한 것들에 대해 id check(글자수,형식 제한...)가 들어가서 다음단계로 안넘어감
-
 %>
 
 
@@ -149,6 +157,9 @@
 	<!-- ----- DAUM 우편번호 API 종료----- -->
 
 </form>
+<%
+}	// if~else (login check) end
+%>
 
 <!-- 본문 끝 -->
 <%@ include file="../footer.jsp"%>

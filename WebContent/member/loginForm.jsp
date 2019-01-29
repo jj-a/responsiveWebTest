@@ -39,7 +39,7 @@
 		<tr>
 			<td><input type="checkbox" name="c_id" value="SAVE" <%=checked%>> Save ID</td>
 			<td onclick="window.location='agreement.jsp'" onmouseover="style='cursor:pointer;'">JOIN</td>
-			<td onclick="window.location='#'" onmouseover="style='cursor:pointer;'">Find ID/PW</td>
+			<td onclick="window.location='findIdpw.jsp'" onmouseover="style='cursor:pointer;'">Find ID/PW</td>
 		</tr>
 	</table>
 </form>
