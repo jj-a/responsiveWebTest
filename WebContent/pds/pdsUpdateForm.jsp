@@ -27,7 +27,7 @@
 
 <h3><a href="pdsList.jsp"> 게시글 수정 </a></h3>
 
-<form name="frmData" method="post" enctype="multipart/form-data" action="pdsUpdateProc.jsp" onsubmit="return pdsCheck(this)">
+<form name="frmData" method="post" enctype="multipart/form-data" action="pdsUpdateProc.jsp" onsubmit="return pdsUdtCheck(this)">
 	<input type="hidden" name="pdsno" value="<%=pdsno%>">
 	<table border="1" class="writefrm">
 		<tr>

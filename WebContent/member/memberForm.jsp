@@ -26,7 +26,8 @@
 		</tr>
 		<tr>
 			<th>*이메일</th>
-			<td colspan="2"><input type="text" name="email" id="email" size="30" readonly> <input type="button" name="emailbt" value="Email 중복확인" onclick="emailCheck()">
+			<td colspan="2"><input type="text" name="email" id="email" size="30" readonly> 
+			<input type="button" name="emailbt" value="Email 중복확인" onclick="emailCheck()">
 			</td>
 		</tr>
 		<tr>
@@ -35,8 +36,11 @@
 		</tr>
 		<tr>
 			<th>우편번호</th>
-			<td colspan="2"><input type="text" name="zipcode" id="zipcode" size="7" readonly> <input type="button" value="주소찾기" onclick="DaumPostcode()">
+			<td>
+			<input type="text" name="zipcode" id="zipcode" size="7" readonly> 
+			<input type="button" value="주소찾기" onclick="DaumPostcode()">
 			</td>
+			<td><h6 style="margin:0 auto;">주소찾기 클릭하여 주소 입력</h6></td>
 		</tr>
 		<tr>
 			<th>주소</th>

@@ -35,7 +35,7 @@
 			out.print("<a href='loginForm.jsp'> [마이페이지] </a></p>");
 		} else {
 			out.print("<script>");
-			out.print("alert('게시글이 수정되었습니다.');");
+			out.print("alert('회원정보가 수정되었습니다.');");
 			out.print("window.location='loginForm.jsp';");//페이지 이동
 			out.print("</script>");
 		}

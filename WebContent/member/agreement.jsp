@@ -10,7 +10,7 @@
 -->
 <form action="memberForm.jsp" onsubmit="return send(this)">
 
-<table border="0" cellspacing="0" cellpadding="2"  align="center">
+<table class="writefrm" border="0" cellspacing="0" cellpadding="2"  align="center">
     <tr align="center" height="10"> 
         <td>
             <textarea cols="55" rows="14" readonly>Community 서비스약관 (2005. 7. 18 부터 유효)

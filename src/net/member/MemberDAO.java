@@ -386,7 +386,7 @@ public class MemberDAO {
 			sql = new StringBuilder();
 			sql.append("UPDATE member ");
 			sql.append("SET mname=?, tel=?, email=?, zipcode=?, address1=?, address2=?, job=? ");
-			if(dto.getPasswd()==null) {	// passwd 수정할 시
+			if(!dto.getPasswd().equals("")) {	// passwd 수정할 시
 				sql.append(", passwd=? ");
 			}
 			sql.append("WHERE id=? ");
@@ -400,7 +400,7 @@ public class MemberDAO {
 			pstmt.setString(5, dto.getAddress1());
 			pstmt.setString(6, dto.getAddress2());
 			pstmt.setString(7, dto.getJob());
-			if(dto.getPasswd()==null) {	// passwd 수정할 시
+			if(!dto.getPasswd().equals("")) {	// passwd 수정할 시
 				pstmt.setString(8, dto.getPasswd());
 				pstmt.setString(9, dto.getId());
 			}
@@ -419,6 +419,7 @@ public class MemberDAO {
 		return res;
 
 	} // modifyProc() end ////////////////////////////////////////////
+	
 	
 	
 	public MemberDTO findID(MemberDTO dto) {
@@ -504,6 +505,7 @@ public class MemberDAO {
 
 	} // findID() end ////////////////////////////////////////////
 
+	
 	
 	private String randomPW() {
 	// 랜덤 비밀번호 (10자리) 생성
