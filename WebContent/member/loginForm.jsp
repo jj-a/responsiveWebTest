@@ -57,7 +57,7 @@
 	</tr><tr>
 		<td onclick="window.location='logout.jsp'" onmouseover="style='cursor:pointer;'">LOGOUT</td>
 		<td onclick="window.location='memberModify.jsp'" onmouseover="style='cursor:pointer;'">회원정보수정</td>
-		<td onclick="window.location='withdrawal.jsp'" onmouseover="style='cursor:pointer;'">회원탈퇴</td>
+		<td onclick="window.location='withdraw.jsp'" onmouseover="style='cursor:pointer;'">회원탈퇴</td>
 	</tr>
 </table>
 <%

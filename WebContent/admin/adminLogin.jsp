@@ -6,6 +6,12 @@
 
 <div align="center">
 <h3><a href="#"> 관리자 페이지</a></h3>
+
+<%
+if(session.getAttribute("s_adm_id")==null || session.getAttribute("s_adm_passwd")==null || session.getAttribute("s_adm_mlevel")==null){
+	// 관리자 비로그인 상태일 때
+%>
+
 <form method="post" action="adminProc.jsp">
 <table class="writefrm" border=1>
 <tr>
@@ -28,6 +34,18 @@
 </table>
 </form>
 </div>
+
+<%
+}else {
+	// 관리자 로그인 상태일 때
+%>
+<script>
+alert("이미 관리자로 로그인 되어 있습니다.");
+history.back();
+</script>
+<%
+}
+%>
 
 <!-- Contents end -->
 

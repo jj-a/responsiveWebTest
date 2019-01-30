@@ -82,7 +82,7 @@
 	<input type="hidden" name="nowPage" value="<%=nowPage%>">
 	<input type="button" value="목록" onclick="move(this.form,'bbsList.jsp');">
 	<input type="button" value="답변" onclick="move(this.form,'bbsReply.jsp')">
-	<% if(s_mlevel.equals("A1")){ %>
+	<% if(s_mlevel.equals("A1") || s_mlevel.equals("B1")){ %>
 	<input type="button" value="수정" onclick="move(this.form,'bbsUpdate.jsp')">
 	<input type="button" value="삭제" onclick="move(this.form,'bbsDelete.jsp?')">
 	<% } %>

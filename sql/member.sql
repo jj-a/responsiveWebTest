@@ -126,3 +126,24 @@ VALUES('test3', 'test', 'test', '010-7777-9999', 'test3@grr.la',  '12345', '', '
 ;
 
 
+
+-- 멤버테이블 아이디 찾기
+SELECT id FROM member
+WHERE mname=? AND tel=? AND email=? AND mlevel IN('A1','B1','C1','D1','X1')
+;
+
+-- 멤버테이블 비밀번호 찾기
+SELECT passwd, email FROM member 
+WHERE id=? AND mname=? AND tel=? AND email=? AND mlevel IN('A1','B1','C1','D1','X1')
+;
+
+SELECT email FROM member 
+WHERE id='test3' AND mname='test' AND tel='010-7777-9999' AND email='test3@grr.la' AND mlevel IN('A1','B1','C1','D1','X1')
+;
+
+UPDATE member
+SET passwd=? 
+WHERE id=? AND mname=? AND tel=? AND email=? AND mlevel IN('A1','B1','C1','D1','X1')
+;
+
+

@@ -267,7 +267,7 @@ function memberUdtCheck(f) {
 		// 비밀번호=비번확인 일치여부
 		if(passwd!=repasswd){
 			alert("비밀번호 확인이 다릅니다. 다시 확인해주세요.");
-			f.passwd.focus();
+			f.repasswd.focus();
 			return false;
 		}
 	} // passwd check end
@@ -438,6 +438,40 @@ function pdsUdtCheck(f){
 	return true;
 	
 } // pdsUdtCheck() end
+
+
+function noticeCheck(f) {	// 공지사항 유효성 체크
+
+	// 제목 2자 이상 체크
+	var subject = f.subject.value;
+	subject = subject.trim();
+	if (subject.length < 2) {
+		alert("제목을 2자 이상 입력해주세요.");
+		f.subject.focus();
+		return false;
+	}
+
+	// 내용 유무 체크
+	var content = f.content.value;
+	content = content.trim();
+	if (content.length <= 0) {
+		alert("내용을 입력해주세요.");
+		f.content.focus();
+		return false;
+	}
+	
+	var msg="공지사항을 등록하시겠습니까?";
+	if(confirm(msg)) return true;
+	else return false;
+
+}// noticeCheck() end
+
+
+function delCheck(f){
+	var msg="삭제 후엔 다시 되돌릴 수 없습니다. 계속 진행하시겠습니까?";
+	if(confirm(msg)) return true;	// 확인 시 삭제 작업 수행
+	else return false;
+}
 
 
 function move(f, file){

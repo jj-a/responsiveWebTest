@@ -73,7 +73,7 @@
 	<input type="button" value="▼이전 게시물"  onclick="window.location='pdsRead.jsp?pdsno=<%=dto.getPdsno()-1%>';">
 	<input type="button" value="목록" onclick="move(this.form,'pdsList.jsp');">
 	<%
-		if (s_mlevel.equals("A1")) {
+		if (s_mlevel.equals("A1") || s_mlevel.equals("B1")) {
 	%>
 	<input type="button" value="수정" onclick="move(this.form,'pdsUpdate.jsp')"> 
 	<input type="button" value="삭제" onclick="move(this.form,'pdsDelete.jsp?')">

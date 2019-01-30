@@ -529,4 +529,35 @@ public class MemberDAO {
 	} // randomPW() end ////////////////////////////////////////////
 	
 	
+	
+	public int withdraw(MemberDTO dto) {
+		// 회원 탈퇴 (탈퇴회원 레벨로 변경)
+
+		int res=0;
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			sql.append("UPDATE member ");
+			sql.append("SET mlevel='F1' ");
+			sql.append("WHERE id=? AND passwd=? AND email=?  ");
+
+			pstmt = con.prepareStatement(sql.toString());
+
+			pstmt.setString(1, dto.getId());
+			pstmt.setString(2, dto.getPasswd());
+			pstmt.setString(3, dto.getEmail());
+
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("*Error* 행 수정을 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt);
+		}
+		
+		return res;
+	} // withdraw() end ////////////////////////////////////////////
+	
+	
 }

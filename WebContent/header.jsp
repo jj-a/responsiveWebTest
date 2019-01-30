@@ -36,7 +36,7 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/bbs/bbsList.jsp">BOARD</a></li>
-					<li><a href="${pageContext.request.contextPath}#">NOTICE</a></li>
+					<li><a href="${pageContext.request.contextPath}/notice/noticeList.jsp">NOTICE</a></li>
 					<li><a href="${pageContext.request.contextPath}/member/loginForm.jsp">
 					<%if (s_id.equals("guest") || s_passwd.equals("guest") || s_mlevel.equals("E1")) {%>
 					LOGIN
@@ -60,7 +60,7 @@
 				String visitip = request.getRemoteAddr();
 				out.print(visitip + " 님, 안녕하세요! ＼^0^/");
 				if(visitip.equals("172.16.10.100")) out.print("");
-				else out.print("<br><span style='color:#999999;'>격렬하게 집에 가고싶다..</span>");
+				else out.print("<br><span style='color:#999999;'>오늘은 수요일 크리스피도넛 1+1</span>");
 				visit.ipCheck(visitip);
 			%>
 		</p>

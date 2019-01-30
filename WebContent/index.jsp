@@ -32,7 +32,7 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${pageContext.request.contextPath}/bbs/bbsList.jsp">BOARD</a></li>
-					<li><a href="${pageContext.request.contextPath}#">NOTICE</a></li>
+					<li><a href="${pageContext.request.contextPath}/notice/noticeList.jsp">NOTICE</a></li>
 					<li><a href="${pageContext.request.contextPath}/member/loginForm.jsp">
 					<%if (s_id.equals("guest") || s_passwd.equals("guest") || s_mlevel.equals("E1")) {%>
 					LOGIN
