@@ -12,15 +12,18 @@ padding: 0 5px 0 5px;
 <form name="memfrm" method="post">
 <table>
 <tr>
-  <td><strong>회원 관리</strong></td>
+  <td><strong>공지사항 관리</strong></td>
   <td>
-    <input type="button" value="회원목록" onclick="move('memList.jsp')">
+    <input type="button" value="순서 조정" onclick="move('memList.jsp')">
   </td>
   <td>
-    <input type="button" value="회원등급조정" onclick="move('memLevel.jsp')">
+    <input type="button" value="공지사항 쓰기" onclick="move('notiWrite.jsp')">
+  </td>
+  <td>
+    <input type="button" value="공지사항 수정" onclick="move('notiUpdate.jsp')">
   </td>
   <td>    
-     <input type="button" value="회원삭제" onclick="move('memDelete.jsp')">
+     <input type="button" value="공지사항 삭제" onclick="move('notiDelete.jsp')">
   </td>
 </tr>
 </table>

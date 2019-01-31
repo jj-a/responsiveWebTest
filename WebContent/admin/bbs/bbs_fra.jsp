@@ -2,9 +2,8 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <%@ include file="../includeCss.jsp"%>
 
-
 <div class="top-box">
-	<%@ include file="./mem_menu.jsp"%>
+	<%@ include file="./bbs_menu.jsp"%>
 </div>
 
 <div class="btm-box">

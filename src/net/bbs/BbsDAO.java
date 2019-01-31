@@ -927,6 +927,44 @@ public class BbsDAO {
 
 	} // delete() end ////////////////////////////////////////////
 
+
+	
+	public int delete(String selectBbsno[]) {
+		// 관리자페이지에서 글 삭제 (다중삭제)
+
+		int res = 0;
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			
+			// Query 작성
+			String sqlstr="";
+			sqlstr+="DELETE FROM tb_bbs ";
+			sqlstr+="WHERE bbsno IN(";
+			sqlstr+=selectBbsno[0];
+			for(int i=1;i<selectBbsno.length;i++) {
+				sqlstr=sqlstr+", "+selectBbsno[i];	// checkbox에서 받은 값 꺼내오기
+			}
+			sqlstr+=") ";
+			
+			sql.append(sqlstr);
+			
+			pstmt = con.prepareStatement(sql.toString());
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("*Error* 행 삭제를 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt);
+		}
+
+		return res;
+
+	} // delete() end ////////////////////////////////////////////
+
+	
+	
 	
 	
 }

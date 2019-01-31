@@ -464,7 +464,48 @@ function noticeCheck(f) {	// 공지사항 유효성 체크
 	if(confirm(msg)) return true;
 	else return false;
 
-}// noticeCheck() end
+} // noticeCheck() end
+
+
+
+// 체크박스 선택 function
+
+function checkAll(frm, chkbox){
+	// 전체선택이 안되있으면 전체선택, 전체선택이 되어있으면 전체선택해제
+	var isChecked = frm.allchk.checked;
+	
+	if(isChecked){
+		uncheck_all(frm,chkbox);
+		frm.allchk.checked==false;
+	}
+	else{
+		check_all(frm,chkbox);
+		frm.allchk.checked==true;
+	}
+	/////////////////////안된다안된다안된다안된다안된다안된다안된다안된다안된다안된다안된다안된다
+	
+} // checkAll() end
+
+
+function check_all(frm, chkbox) {
+	for(i=0; i < frm.selectchk.length; i++) {
+		frm.chkbox[i].checked = true;
+	}
+} // check_all() end
+
+function uncheck_all(frm, chkbox) {
+	for(i=0; i < frm.selectchk.length; i++) {
+		frm.chkbox[i].checked = false;
+	}
+} // uncheck_all() end
+
+function count_check(frm, chkbox) {
+	var cnt = 0;
+	for(i=0; i < frm.chkbox.length; i++) {
+		if(frm.chkbox[i].checked) cnt++;
+	}
+	return cnt;
+} // count_check() end
 
 
 function move(f, file){

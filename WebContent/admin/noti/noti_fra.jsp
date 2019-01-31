@@ -4,7 +4,7 @@
 
 
 <div class="top-box">
-	<%@ include file="./mem_menu.jsp"%>
+	<%@ include file="./noti_menu.jsp"%>
 </div>
 
 <div class="btm-box">

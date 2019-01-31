@@ -5,14 +5,8 @@
 
 <!-- Contents -->
 
-<h3>
-	<a href="pdsList.jsp">포토갤러리</a>
-</h3>
-<p>
-	<a href="pdsForm.jsp">[사진올리기]</a>
-</p>
-
-
+<h3><a href="pdsList.jsp">포토갤러리</a></h3>
+<p><a href="pdsForm.jsp">[사진올리기]</a></p>
 
 <%
 	try {

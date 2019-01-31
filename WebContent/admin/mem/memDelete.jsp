@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../adminAuth.jsp"%>
 <%@ include file="../../member/ssi.jsp"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/stylesheet.css?ver=1.014">
+<%@ include file="../includeCss.jsp"%>
 
 <div class="wrap">
 	<h3>회원 삭제</h3>
