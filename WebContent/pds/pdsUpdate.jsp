@@ -9,11 +9,10 @@
 
 <form method="get" action="pdsUpdateForm.jsp" onsubmit="return upPwCheck(this)">
 	<input type="hidden" name="pdsno" value="<%=request.getParameter("pdsno")%>">
-	<!-- 
 	<input type="hidden" name="col" value="<%=request.getParameter("col")%>">
 	<input type="hidden" name="word" value="<%=request.getParameter("word")%>">
 	<input type="hidden" name="nowPage" value="<%=nowPage%>">
-	 -->
+	
 	<table class="writefrm" border=1>
 		<tr>
 			<td colspan="2">비밀번호를 입력해주세요.</td>

@@ -28,9 +28,11 @@ public class PdsDAO {
 		dbclose = new DBClose();
 	}
 
+	
 	// -- Method
 	//////////////////////////////////////////////
 
+	
 	public boolean insert(PdsDTO dto) {
 
 		int res = 0;
@@ -65,7 +67,10 @@ public class PdsDAO {
 
 	} // insert() end ////////////////////////////////////////////
 
+	
+	
 	public synchronized ArrayList<PdsDTO> list() {
+		// 일반 리스트
 
 		ArrayList<PdsDTO> list = null;
 
@@ -108,6 +113,132 @@ public class PdsDAO {
 		return list;
 
 	} // list() end ////////////////////////////////////////////
+	
+
+	
+	public ArrayList<PdsDTO> list(String col, String word, int nowPage, int recordPerPage) {
+		// 검색, 페이징 추가된 리스트
+		
+		ArrayList<PdsDTO> list = null;
+
+		// 10: 페이지당 출력할 레코드 갯수
+		int startRow = ((nowPage - 1) * recordPerPage) + 1; // (0 * 10) + 1 = 1, 11, 21
+		int endRow = nowPage * recordPerPage; // 1 * 10 = 10, 20, 30
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+
+			word = word.trim(); // 문자열 좌우 공백 제거
+
+			if (word.length() == 0) { // 검색을 안하는 경우
+				sql.append("SELECT pdsno, wname, subject, passwd, regdate, readcnt, filename, filesize, rnum ");
+				sql.append("FROM ( ");
+				sql.append("SELECT pdsno, wname, subject, passwd, regdate, readcnt, filename, filesize, rownum as rnum ");
+				sql.append("FROM ( ");
+				sql.append("SELECT pdsno, wname, subject, passwd, regdate, readcnt, filename, filesize ");
+				sql.append("FROM tb_pds ");
+				sql.append("ORDER BY pdsno DESC ");
+				sql.append(") ");
+				sql.append(") ");
+				sql.append("WHERE rnum >= " + startRow + " AND rnum <= " + endRow+" ");
+
+				pstmt = con.prepareStatement(sql.toString());
+
+			} else { // 검색을 하는 경우
+				sql.append("SELECT pdsno, wname, subject, passwd, regdate, readcnt, filename, filesize, rnum ");
+				sql.append("FROM (");
+				sql.append("SELECT pdsno, wname, subject, passwd, regdate, readcnt, filename, filesize, rownum as rnum ");
+				sql.append("FROM ( ");
+				sql.append("SELECT pdsno, wname, subject, passwd, regdate, readcnt, filename, filesize ");
+				sql.append("FROM tb_pds ");
+
+				//검색
+				if (word.length() >= 1) {
+					String search = " WHERE " + col + " LIKE '%" + word + "%' ";
+					sql.append(search);
+				}
+
+				sql.append("ORDER BY pdsno DESC ");
+				sql.append(") ");
+				sql.append(") ");
+				sql.append("WHERE rnum >= " + startRow + " AND rnum <= " + endRow + " ");
+
+				pstmt = con.prepareStatement(sql.toString());
+
+			}
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				list = new ArrayList<PdsDTO>();
+				PdsDTO dto = null; //레코드 1개보관
+				do {
+					dto = new PdsDTO();
+					dto.setPdsno(rs.getInt("pdsno"));
+					dto.setWname(rs.getString("wname"));
+					dto.setSubject(rs.getString("subject"));
+					dto.setPasswd(rs.getString("passwd"));
+					dto.setRegdate(rs.getString("regdate"));
+					dto.setReadcnt(rs.getInt("readcnt"));
+					dto.setFilename(rs.getString("filename"));
+					dto.setFilesize(rs.getLong("filesize"));
+					list.add(dto);
+				} while (rs.next());
+			} else {
+				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("*Error* 자료 조회를 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return list;
+
+	} // list(col,word,nowPage,recordPerPage) end ////////////////////////////////////////////
+	
+
+	
+	public int count(String col, String word) {
+		// 글수 확인 (전체글수/검색글수)
+
+		int cnt = 0;
+
+		try {
+			con = dbopen.getConnection();
+
+			sql = new StringBuilder();
+			sql.append("SELECT COUNT(*) AS cnt ");
+			sql.append("FROM tb_pds ");
+
+			if (word.length() >= 1) { // 검색어 유무 확인
+				String search = "";
+				if(col.equals("wname")) search+="WHERE wname LIKE '%"+word+"%' ";
+				else if(col.equals("subject")) search+="WHERE subject LIKE '%"+word+"%' ";
+				sql.append(search);
+			}
+
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			} else {
+				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("*Error* 글수 카운트를 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return cnt;
+	} // count() end ////////////////////////////////////////////
+
+	
 
 	public PdsDTO read(int pdsno) {
 
@@ -150,6 +281,8 @@ public class PdsDAO {
 
 	} // read() end ////////////////////////////////////////////
 
+	
+	
 	public int incrementCnt(int pdsno) {
 		// readcnt(조회수) 증가
 
@@ -177,6 +310,8 @@ public class PdsDAO {
 
 	} //incrementCnt() end ////////////////////////////////////////////
 
+	
+	
 	public PdsDTO update(PdsDTO dto) {
 
 		try {
@@ -216,6 +351,7 @@ public class PdsDAO {
 
 	} // update() end ////////////////////////////////////////////
 
+	
 	
 	public int updateProc(PdsDTO dto) {	// 수정 (파일수정X)
 
@@ -334,4 +470,5 @@ public class PdsDAO {
 
 	} // delete() end ////////////////////////////////////////////
 
+	
 }

@@ -7,10 +7,8 @@
 		int pdsno = Integer.parseInt(request.getParameter("pdsno"));
 		String passwd=request.getParameter("passwd").trim();
 		String saveDir=application.getRealPath("/upload");
-		/*
 		col=request.getParameter("col");
 		word=request.getParameter("word");
-		*/
 		
 		// 관리자만 삭제 권한 부여
 		String ip = request.getRemoteAddr(); // 클라이언트 PC의 IP
@@ -35,7 +33,7 @@
 		else {
 			out.print("<script>");
 			out.print("alert('게시글이 삭제되었습니다');");
-			out.print("window.location='pdsList.jsp?';");//페이지 이동      
+			out.print("window.location='pdsList.jsp?col="+col+"&word="+word+"';");//페이지 이동      
 			out.print("</script>");
 		}
 	%>

@@ -60,7 +60,7 @@
 				String visitip = request.getRemoteAddr();
 				out.print(visitip + " 님, 안녕하세요! ＼^0^/");
 				if(visitip.equals("172.16.10.100")) out.print("");
-				else out.print("<br><span style='color:#999999;'>오늘은 수요일 크리스피도넛 1+1</span>");
+				else out.print("<br><span style='color:#999999;'>2월이 오네요</span>");
 				visit.ipCheck(visitip);
 			%>
 		</p>

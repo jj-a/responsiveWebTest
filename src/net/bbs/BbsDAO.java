@@ -461,7 +461,6 @@ public class BbsDAO {
 				else if(col.equals("subj_cont")) search+="WHERE subject LIKE '%"+word+"%' OR content LIKE '%"+word+"%' ";
 				//search+="AND indent=0 ";	//	*** Comment.jsp에서 답글 숨기기 조건 --list에서는 안보이게
 				sql.append(search);
-				System.out.println("검색: 검색어가 있습니다.");
 			}
 			
 			pstmt=con.prepareStatement(sql.toString());
@@ -509,7 +508,6 @@ public class BbsDAO {
 				else if(col.equals("subj_cont")) search+="AND subject LIKE '%"+word+"%' OR content LIKE '%"+word+"%' ";
 				//search+="AND indent=0 ";	//	*** Comment.jsp에서 답글 숨기기 조건 --list에서는 안보이게
 				sql.append(search);
-				System.out.println("검색: 검색어가 있습니다.");
 			}
 			
 			pstmt=con.prepareStatement(sql.toString());

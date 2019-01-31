@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./ssi.jsp"%>
-<%@ include file="../admin/adminAuth.jsp"%>
 <%@ include file="../header.jsp"%>
 
 <!-- Contents -->
@@ -50,7 +49,7 @@
 	<input type="hidden" name="word" value="<%=word%>">
 	<input type="hidden" name="nowPage" value="<%=nowPage%>">
 	<input type="button" value="목록" onclick="move(this.form,'noticeList.jsp');">
-	<% if(s_adm_mlevel.equals("A1") || s_adm_mlevel.equals("B1")){ %>
+	<% if(s_mlevel.equals("A1") || s_mlevel.equals("B1")){ %>
 	<input type="button" value="수정" onclick="move(this.form,'noticeUpdateForm.jsp')">
 	<input type="button" value="삭제" onclick="move(this.form,'noticeDelete.jsp?')">
 	<% } %>

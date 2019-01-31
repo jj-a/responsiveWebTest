@@ -8,11 +8,10 @@
 
 <form method="post" action="pdsDeleteProc.jsp" onsubmit="return delPwCheck(this)">
 	<input type="hidden" name="pdsno" value="<%=request.getParameter("pdsno")%>">
-	<!-- 
 	<input type="hidden" name="col" value="<%=request.getParameter("col")%>">
 	<input type="hidden" name="word" value="<%=word%>">
 	<input type="hidden" name="nowPage" value="<%=nowPage%>">
-	 -->
+	
 	<table class="writefrm" border=1>
 		<tr>
 			<td colspan="2">비밀번호를 입력해주세요.</td>

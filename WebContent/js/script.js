@@ -467,13 +467,6 @@ function noticeCheck(f) {	// 공지사항 유효성 체크
 }// noticeCheck() end
 
 
-function delCheck(f){
-	var msg="삭제 후엔 다시 되돌릴 수 없습니다. 계속 진행하시겠습니까?";
-	if(confirm(msg)) return true;	// 확인 시 삭제 작업 수행
-	else return false;
-}
-
-
 function move(f, file){
 	f.action=file;
 	f.submit();

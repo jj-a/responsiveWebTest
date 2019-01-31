@@ -6,10 +6,9 @@
 <%
 	String passwd = request.getParameter("passwd").trim();
 	int pdsno = Integer.parseInt(request.getParameter("pdsno"));
-	/*
 	col=request.getParameter("col");
 	word=request.getParameter("word");
-	*/
+	
 	dto.setPasswd(passwd);
 	dto.setPdsno(pdsno);
 	
@@ -29,6 +28,9 @@
 
 <form name="frmData" method="post" enctype="multipart/form-data" action="pdsUpdateProc.jsp" onsubmit="return pdsUdtCheck(this)">
 	<input type="hidden" name="pdsno" value="<%=pdsno%>">
+	<input type="hidden" name="col" value="<%=col%>">
+	<input type="hidden" name="word" value="<%=word%>">
+	<input type="hidden" name="nowPage" value="<%=nowPage%>">
 	<table border="1" class="writefrm">
 		<tr>
 			<th colspan="2">파일 등록</th>

@@ -85,11 +85,12 @@ try {
 		<input type="text" name="word" class="search">
 		<input type="submit" value="검색" class="search">
 		</form>
-		
+		<% if(s_mlevel.equals("A1") || s_mlevel.equals("B1")){ %>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<div class="button-box">
 		<input type="button" value="글쓰기" class="button" onclick="window.location='noticeForm.jsp'">
 		</div>
+		<% } %>
 		</td></tr>
 		<%
 			} // else end

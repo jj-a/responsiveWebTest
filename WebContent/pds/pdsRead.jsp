@@ -18,7 +18,6 @@
 	} else {
 
 		int res = dao.incrementCnt(pdsno); // 조회수 증가
-		//int cnt = dao.replyCnt(pdsno); // 답글수 확인
 		String fileextend = dto.getFilename().substring(dto.getFilename().lastIndexOf(".") + 1);
 %>
 
@@ -64,12 +63,9 @@
 <p></p>
 <form name="" method="get" action="" onsubmit="">
 	<input type="hidden" name="pdsno" value="<%=dto.getPdsno()%>"> 
-	<!-- 
 	<input type="hidden" name="col" value="<%=col%>"> 
 	<input type="hidden" name="word" value="<%=word%>"> 
 	<input type="hidden" name="nowPage" value="<%=nowPage%>"> 
-	<input type="button" value="답변" onclick="move(this.form,'bbsReply.jsp')">
-	 -->
 	<input type="button" value="▼이전 게시물"  onclick="window.location='pdsRead.jsp?pdsno=<%=dto.getPdsno()-1%>';">
 	<input type="button" value="목록" onclick="move(this.form,'pdsList.jsp');">
 	<%

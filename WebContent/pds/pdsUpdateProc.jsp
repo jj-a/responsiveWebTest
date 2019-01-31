@@ -12,11 +12,6 @@
 	// -> filename이 있으면 updateProc()2로, 없으면 updateProc()1으로 진행
 	// -> updateProc()2로 진행시 메소드에서 기존파일 삭제 후, 현 페이지에서 새로운 파일 서버에 업로드
 
-	// ISSUE //
-	/*
-	
-	*/
-
 	request.setCharacterEncoding("UTF-8");
 	String path = application.getRealPath("upload");
 	//D:\java_1113\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\myweb\\upload
@@ -42,24 +37,21 @@
 		
 		String saveDir=application.getRealPath("/upload");
 
-		System.out.println("폼정보 불러오기전");
 
 		// 폼에서 입력받은 정보 불러오기 (파일정보 제외)
 		int pdsno = Integer.parseInt(multi.getParameter("pdsno"));
+		col = multi.getParameter("col");
+		word = multi.getParameter("word");
+		nowPage = Integer.parseInt(multi.getParameter("nowPage"));
 		String wname = multi.getParameter("wname").trim();
 		String subject = multi.getParameter("subject").trim();
-		//String filename = multi.getParameter("filename").trim();
 		String passwd = multi.getParameter("passwd").trim();
-
-
-		System.out.println("dto에 데이터 넣기전~");
 		
 		dto.setPdsno(pdsno);
 		dto.setWname(wname);
 		dto.setSubject(subject);
 		dto.setPasswd(passwd);
 
-		System.out.println("dto에 데이터 넣음");
 
 		////////////// 수정파일여부 체크
 
@@ -67,7 +59,6 @@
 		while (files.hasMoreElements()) {
 			////////////////// loop ///////////////////
 			
-				System.out.println("loop진입");
 
 			elemt = (String) files.nextElement();
 			file = multi.getFilesystemName(elemt);
@@ -107,8 +98,6 @@
 <!-- 반복구간 -->
 <%
 	////////////////////////////////////////수정파일있을때//////////////////////////////////
-	
-				System.out.println("반복반복구간");
 
 					dto.setFilename(filename);
 					res = dao.updateProc(dto);
@@ -139,8 +128,6 @@
 			}else{	// file==null
 			//////////////////파일이 없을때/////////////////////////
 			
-				System.out.println("file==null 접근");
-			
 				res = dao.updateProc(dto);
 				
 				if (res == 0) {
@@ -150,7 +137,7 @@
 				} else {
 					out.print("<script>");
 					out.print("alert('게시글이 수정되었습니다.');");
-					out.print("window.location='pdsList.jsp?';");//페이지 이동
+					out.print("window.location='pdsList.jsp?col="+col+"&word="+word+"&nowPage="+nowPage+"';");//페이지 이동
 					out.print("</script>");
 				}
 				
