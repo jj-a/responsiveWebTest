@@ -441,7 +441,7 @@ function pdsUdtCheck(f){
 
 
 function noticeCheck(f) {	// 공지사항 유효성 체크
-
+	
 	// 제목 2자 이상 체크
 	var subject = f.subject.value;
 	subject = subject.trim();
@@ -467,48 +467,68 @@ function noticeCheck(f) {	// 공지사항 유효성 체크
 } // noticeCheck() end
 
 
+// 관리자페이지에서 게시물 삭제
+function delAdmin(f) {
+	var chkbox=document.getElementsByName("selectchk");
+	var cnt=count_check(f,chkbox);
+	if(cnt==0){
+		alert("삭제할 게시물을 선택해주세요.");
+	}
+	else{
+		var message="선택한 게시물을 삭제하시겠습니까?";
+		if(confirm(message)) f.submit();
+	}
+}
+
+
 
 // 체크박스 선택 function
 
-function checkAll(frm, chkbox){
+function checkAll(frm){
 	// 전체선택이 안되있으면 전체선택, 전체선택이 되어있으면 전체선택해제
-	var isChecked = frm.allchk.checked;
+	var chkbox=document.getElementsByName("selectchk");
+	var isChecked=frm.allchk.checked;
 	
 	if(isChecked){
-		uncheck_all(frm,chkbox);
-		frm.allchk.checked==false;
+		check_all(frm,chkbox);
 	}
 	else{
-		check_all(frm,chkbox);
-		frm.allchk.checked==true;
+		uncheck_all(frm,chkbox);
 	}
-	/////////////////////안된다안된다안된다안된다안된다안된다안된다안된다안된다안된다안된다안된다
+	/////////////////////안된다안된다안된다안된다안된다안된s다안된다안된다안된다안된다안된다안된다
 	
 } // checkAll() end
 
 
 function check_all(frm, chkbox) {
-	for(i=0; i < frm.selectchk.length; i++) {
-		frm.chkbox[i].checked = true;
+	for(i=0; i < chkbox.length; i++) {
+		chkbox[i].checked = true;
 	}
 } // check_all() end
 
 function uncheck_all(frm, chkbox) {
 	for(i=0; i < frm.selectchk.length; i++) {
-		frm.chkbox[i].checked = false;
+		chkbox[i].checked = false;
 	}
 } // uncheck_all() end
 
 function count_check(frm, chkbox) {
 	var cnt = 0;
-	for(i=0; i < frm.chkbox.length; i++) {
-		if(frm.chkbox[i].checked) cnt++;
+	for(i=0; i < chkbox.length; i++) {
+		if(chkbox[i].checked) cnt++;
 	}
 	return cnt;
 } // count_check() end
+
 
 
 function move(f, file){
 	f.action=file;
 	f.submit();
 } // move() end
+
+// 현재페이지 파일명
+function getPagename(){
+	var pagename = document.URL.substring(document.URL.lastIndexOf("/") + 1, document.URL.length);
+	return pagename;
+} // getPagename() end

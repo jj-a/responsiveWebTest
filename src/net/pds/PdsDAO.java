@@ -469,6 +469,67 @@ public class PdsDAO {
 		return res;
 
 	} // delete() end ////////////////////////////////////////////
+	
+	
+	
+	public int delete(String selectPdsno[], String saveDir) {
+		// 관리자페이지에서 글 삭제 (다중삭제)
+
+		int res = 0;
+
+		try {
+			System.out.println(selectPdsno.length);
+			
+			String filename[]= new String[selectPdsno.length];
+			PdsDTO oldDTO=null;
+			// 삭제할 파일명 가져오기
+			for(int i=0; i<selectPdsno.length;i++) {
+				oldDTO = read(Integer.parseInt(selectPdsno[i]));
+				System.out.println(i+" / "+oldDTO.getFilename());
+				if (oldDTO != null) {
+					filename[i] = oldDTO.getFilename();
+				}
+			}
+			
+			System.out.println(filename.length);
+
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+
+			// Query 작성
+			String sqlstr="";
+			sqlstr+="DELETE FROM tb_pds ";
+			sqlstr+="WHERE pdsno IN(";
+			sqlstr+=selectPdsno[0];
+			for(int i=1;i<selectPdsno.length;i++) {
+				System.out.println("for접근?");
+				sqlstr=sqlstr+", "+selectPdsno[i];	// checkbox에서 받은 값 꺼내오기
+			}
+			sqlstr+=") ";
+			
+			sql.append(sqlstr);
+
+			pstmt = con.prepareStatement(sql.toString());
+			res = pstmt.executeUpdate();
+
+			if (res == 1) {
+				// 테이블에서 레코드가 성공적으로 삭제되면 서버 로컬 경로의 첨부파일도 삭제됨
+				for(int i=0; i<selectPdsno.length;i++) {
+					Utility.deleteFile(saveDir, filename[i]);
+				}
+			} else {
+				throw new Exception("삭제할 파일을 찾을 수 없습니다.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("*Error* 행 삭제를 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt);
+		}
+
+		return res;
+
+	} // delete() end ////////////////////////////////////////////
 
 	
 }

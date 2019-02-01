@@ -3,17 +3,30 @@
 <%@ include file="../header.jsp" %>
 
 <!-- Contents -->
-	<h3><a href="noticeList.jsp"> 공지사항 수정 </a></h3>
-	<p>&nbsp;</p>
-	<p><a href="noticeList.jsp">[글 목록]</a></p>
+
 	<%
-	
 		int noticeno = Integer.parseInt(request.getParameter("noticeno"));
 		col = request.getParameter("col");
 		word = request.getParameter("word");
 		String subject = request.getParameter("subject").trim();
 		String content = request.getParameter("content").trim();
+		System.out.println("업뎃proc: "+col+" "+word);
+	%>
+	
+<script>
+	function wherewego() {
+		//var pagename = getPagename();
+		//if (pagename == "adminStart.jsp") {
+		if(parent && parent!=this){
+			window.location.href = "../admin/noti/notiManagement.jsp?col="+col+"&word="+word;//+"&nowPage="+nowPage;
+		} else {
+			window.location = "noticeList.jsp?col="+col+"&word="+word+"&nowPage="+nowPage;
+		}
+	}
+</script>
 
+	<%
+	
 		dto.setNoticeno(noticeno);
 		dto.setSubject(subject);
 		dto.setContent(content);
@@ -25,10 +38,10 @@
 			out.print("<p><a href='javascript:history.back();'>[다시시도]</a>");
 			out.print("<a href='noticeList.jsp'> [글 목록] </a></p>");
 		} else {
-			out.print("<script>");
-			out.print("alert('게시글이 수정되었습니다.');");
-			out.print("  window.location='noticeList.jsp?col="+col+"&word="+word+"&nowPage="+nowPage+"';");//페이지 이동
-			out.print("</script>");
+			out.println("<script>");
+			out.println("alert('게시글이 수정되었습니다.');");
+			out.println("wherewego();");
+			out.println("</script>");
 		}
 	%>
 	

@@ -17,11 +17,9 @@
 		if(isAdmin==false) {
 			out.println("<script>");
 			out.println("alert('게시글은 관리자 IP에서만 삭제할 수 있습니다.');");
-			out.println("window.location='pdsList.jsp?';");//페이지 이동      
+			out.println("window.location='pdsList.jsp?';");//페이지 이동
 			out.println("</script>");
 		}
-		//
-		
 		
 		int res = dao.delete(pdsno, passwd, saveDir);
 

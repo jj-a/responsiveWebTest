@@ -3,18 +3,22 @@
 <%@ include file="../adminAuth.jsp"%>
 <%@ include file="../../notice/ssi.jsp"%>
 <%@ include file="../includeCss.jsp"%>
+<%@ include file="../includeJs.jsp"%>
 
 <div class="wrap">
-	<h3>게시물 삭제</h3>
+	<h3>공지사항</h3>
 		
-	<form action="notiDeleteProc.jsp">
+	
+	<form action="">
+		<input type="hidden" name="noticeno" value="">
 		<table class="list">
 			<tr>
-				<th class="list-ip"><input type="checkbox" name="allchk" value="allchk" onclick="checkAll(this.form, selectchk)"></th>
+				<th class="list-ip"><input type="checkbox" name="allchk" value="allchk" onclick="checkAll(this.form)"></th>
 				<th class="list-no">번호</th>
 				<th class="list-subj">제목</th>
 				<th class="list-name">작성자</th>
 				<th class="list-date">등록일</th>
+				<th class="list-date">수정</th>
 			</tr>
 			<%
 			
@@ -22,7 +26,7 @@
 				int totalRecord=dao.count(col, word);
 	
 				// 페이지당 게시글수
-				int recordPerPage=10;			
+				int recordPerPage=10;
 				
 				
 				// 전체 목록
@@ -30,14 +34,17 @@
 				
 				if (list == null) {
 					out.println("<tr>");
-					out.println("<tr><td colspan='5'>자료가 존재하지 않습니다.</td></tr>");
+					out.println("<tr><td colspan='6'>자료가 존재하지 않습니다.</td></tr>");
 					out.println("</tr>");
 				} else {
 					// 오늘 날짜를 yyyy-mm-dd 문자열로 저장
 					String today=Utility.getDate();
+
+					int noticeno[]=new int[list.size()];
 					
 					for (int i = 0; i < list.size(); i++) {
 						dto = list.get(i);		
+						noticeno[i]=dto.getNoticeno();
 			%>
 			<tr>
 				<td class="list-no"><input type="checkbox" name="selectchk" value=<%=dto.getNoticeno()%>></td>
@@ -53,19 +60,22 @@
 				</td>
 				<td class="list-name">관리자</td>
 				<td class="list-date"><%=dto.getRegdt().substring(0, 10)%></td>
+				<td class="list-date">
+						<input type="button" value="수정" onclick="notiUpd(this.form, getRowidx(this))">
+				</td>
 			</tr>
 			<%
 					} // for end
 					
 					// 글수 카운트
-					out.println("<tr><td colspan='5'>");
+					out.println("<tr><td colspan='6'>");
 					out.println(totalRecord+"개의 글이 있습니다.");
 					out.println("</td></tr>");
 			%>
-			<tr><td colspan="5">
+			<tr><td colspan="6">
 			<!-- 페이지 리스트 -->
 			<%
-			String paging=new Paging().paging(totalRecord,nowPage,recordPerPage,col,word,"noticeList.jsp");
+			String paging=new Paging().paging(totalRecord,nowPage,recordPerPage,col,word,"notiManagement.jsp");
 			out.print(paging);
 			 %>
 			</td></tr>
@@ -77,7 +87,7 @@
 	</form>
 		
 	<!-- 검색 시작 -->
-	<form method="get" action="noticeList.jsp" onsubmit="return searchCheck(this)" class="search" style="display:inline;'">
+	<form method="get" action="notiManagement.jsp" onsubmit="return searchCheck(this)" class="search" style="display:inline;'">
 	<select name="col">
 		<option value="subject">제목
 		<option value="content">내용
@@ -90,14 +100,31 @@
 </div>
 
 <script>
+
+
 	function sort(f) {
 		f.submit();
 	}
 	
 	function notiDel(f) {
+		f.action="notiDeleteProc.jsp";
 		var message="선택한 게시물을 삭제하시겠습니까?";
 		if(confirm(message)) f.submit();
 	}
+	
+	function notiUpd(f, row) {
+		var no = document.getElementsByTagName('tr')[row].children[1].childNodes[0].nodeValue;
+		alert(no);
+		f.noticeno.value=no;
+		f.action="notiUpdateForm.jsp?";
+		var message="선택한 게시물을 수정하시겠습니까?";
+		if(confirm(message)) f.submit();
+	}
+	
+	function getRowidx(e) {
+		return e.parentElement.parentElement.rowIndex;
+	}
+
 </script>
 
 

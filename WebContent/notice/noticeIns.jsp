@@ -8,6 +8,21 @@
 	// 1) 사용자가 입력한 정보를 변수에 저장
 	String subject = request.getParameter("subject").trim();
 	String content = request.getParameter("content").trim();
+%>
+	
+<script>
+	function wherewego() {
+		//var pagename = getPagename();
+		//if (pagename == "adminStart.jsp") {
+		if(parent && parent!=this){
+			window.location.href = "../admin/noti/notiManagement.jsp";
+		} else {
+			window.location = "noticeList.jsp";
+		}
+	}
+</script>
+
+<%
 
 	// 2) dto Object에 저장
 	dto.setSubject(subject);
@@ -20,12 +35,13 @@
 		out.print("공지사항 등록에 실패하였습니다.<br/>");
 		out.print("<a href='javascript:history.back();'>[다시시도]</a>");
 	} else {
-		out.print("<script>");
-		out.print("  alert('공지사항이 등록되었습니다.');");
-		out.print("  window.location='noticeList.jsp';");
-		out.print("</script>");
+		out.println("<script>");
+		out.println("alert('공지사항이 등록되었습니다.');");
+		out.println("wherewego();");
+		out.println("</script>");
 	}
 %>
+
 
 <!-- Contents end -->
 

@@ -3,7 +3,7 @@
 <%@ include file="../adminAuth.jsp"%>
 <%@ include file="../../bbs/ssi.jsp"%>
 <%@ include file="../includeCss.jsp"%>
-<script src="${pageContext.request.contextPath}/js/script.js?ver=1.005"></script>
+<%@ include file="../includeJs.jsp"%>
 
 <div class="wrap">
 	<h3>게시판</h3>
@@ -11,7 +11,7 @@
 	<form action="bbsDeleteProc.jsp">
 		<table class="list">
 			<tr>
-				<th class="list-ip"><input type="checkbox" name="allchk" value="allchk" onclick="checkAll(this.form, selectchk)"></th>
+				<th class="list-ip"><input type="checkbox" name="allchk" value="allchk" onclick="checkAll(this.form)"></th>
 				<th class="list-no">번호</th>
 				<th class="list-subj">제목</th>
 				<th class="list-name">작성자</th>
@@ -97,7 +97,7 @@
 	
 			%>
 		</table>
-	<input type="button" value="선택 삭제" onclick="bbsDel(this.form)">
+	<input type="button" value="선택 삭제" onclick="delAdmin(this.form)">
 	</form>			
 	
 		<!-- 검색 시작 -->

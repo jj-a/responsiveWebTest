@@ -16,6 +16,11 @@
 
 
 <script type="text/javascript">
+
+$(document).ready(function() { 
+	document.getElementById("ifr_subcontent").innerHTML = "상단의 메뉴를 클릭해주세요.";
+});
+
 	//<![CDATA[
 	function calcHeight() {
 		//find the height of the internal page

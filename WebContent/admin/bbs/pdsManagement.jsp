@@ -3,6 +3,7 @@
 <%@ include file="../adminAuth.jsp"%>
 <%@ include file="../../pds/ssi.jsp"%>
 <%@ include file="../includeCss.jsp"%>
+<%@ include file="../includeJs.jsp"%>
 
 <div class="wrap">
 	<h3>포토갤러리</h3>
@@ -11,7 +12,7 @@
 	
 		<table class="list">
 			<tr>
-				<td class="list-ip"><input type="checkbox" name="" value=""></td>
+				<td class="list-ip"><input type="checkbox" name="allchk" value="allchk" onclick="checkAll(this.form)"></td>
 				<td colspan="7"></td>
 			</tr>
 		<%
@@ -36,7 +37,7 @@
 		<!-- loop -->
 		<tbody style="border-top: 20px solid white;" onmouseover="style='cursor:pointer;'">
 			<tr>
-				<td rowspan="2" class="list-ip"><input type="checkbox" name="" value=""></td>
+				<td rowspan="2" class="list-ip"><input type="checkbox" name="selectchk" value=<%=dto.getPdsno()%>></td>
 				<th>no</th>
 				<td><%=dto.getPdsno()%></td>
 				<th>제목</th>
