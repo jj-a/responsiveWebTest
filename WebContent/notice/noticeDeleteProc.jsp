@@ -11,7 +11,7 @@
 		
 		// 관리자만 삭제 권한 부여
 		String ip = request.getRemoteAddr(); // 클라이언트 PC의 IP
-		boolean isAdmin=ip.equals("127.0.0.1");
+		boolean isAdmin=ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1");
 
 		if(isAdmin==false) {
 			out.println("<script>");

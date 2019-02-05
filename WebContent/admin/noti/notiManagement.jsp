@@ -10,7 +10,9 @@
 		
 	
 	<form action="">
-		<input type="hidden" name="noticeno" value="">
+		<input type="hidden" name="col" value=<%=col%>>
+		<input type="hidden" name="word" value=<%=word%>>
+		<input type="hidden" name="noticeno" value="">	<!-- ★★★★★★noticeno 값있으면 저장되게 수정하기 -->
 		<table class="list">
 			<tr>
 				<th class="list-ip"><input type="checkbox" name="allchk" value="allchk" onclick="checkAll(this.form)"></th>
@@ -114,9 +116,9 @@
 	
 	function notiUpd(f, row) {
 		var no = document.getElementsByTagName('tr')[row].children[1].childNodes[0].nodeValue;
-		alert(no);
+		//alert(no);
 		f.noticeno.value=no;
-		f.action="notiUpdateForm.jsp?";
+		f.action="notiUpdateForm.jsp?col=&word=";
 		var message="선택한 게시물을 수정하시겠습니까?";
 		if(confirm(message)) f.submit();
 	}

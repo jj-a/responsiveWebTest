@@ -10,15 +10,15 @@
 		word = request.getParameter("word");
 		String subject = request.getParameter("subject").trim();
 		String content = request.getParameter("content").trim();
-		System.out.println("업뎃proc: "+col+" "+word);
+		System.out.println("업뎃proc: "+col+" "+word);		//★★★
 	%>
 	
 <script>
-	function wherewego() {
+	function wherewego(col,word,nowPage) {
 		//var pagename = getPagename();
 		//if (pagename == "adminStart.jsp") {
 		if(parent && parent!=this){
-			window.location.href = "../admin/noti/notiManagement.jsp?col="+col+"&word="+word;//+"&nowPage="+nowPage;
+			window.location.href = "../admin/noti/notiManagement.jsp?col="+col+"&word="+word+"&nowPage="+nowPage;
 		} else {
 			window.location = "noticeList.jsp?col="+col+"&word="+word+"&nowPage="+nowPage;
 		}
@@ -40,8 +40,9 @@
 		} else {
 			out.println("<script>");
 			out.println("alert('게시글이 수정되었습니다.');");
-			out.println("wherewego();");
+			out.println("wherewego(\'"+col+"\',\'"+word+"\',"+nowPage+");");
 			out.println("</script>");
+			System.out.println();
 		}
 	%>
 	

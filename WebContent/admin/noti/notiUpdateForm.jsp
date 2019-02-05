@@ -13,7 +13,7 @@
 		int noticeno = Integer.parseInt(request.getParameter("noticeno"));
 		col=request.getParameter("col");
 		word=request.getParameter("word");
-		System.out.println("업뎃폼: "+col+" "+word);
+		System.out.println("업뎃폼: "+col+" "+word);	//★★★
 		
 		dto.setNoticeno(noticeno);
 		
