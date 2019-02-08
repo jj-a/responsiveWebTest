@@ -18,5 +18,16 @@
 		<session-timeout>600</session-timeout>
 	</session-config>
 	
+	<!-- MyController Servlet 등록 -->
+	<servlet>
+		<servlet-name>ControllerAction</servlet-name>
+		<servlet-class>net.controller.MyController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ControllerAction</servlet-name>
+		<url-pattern>/loginproc.do</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>
