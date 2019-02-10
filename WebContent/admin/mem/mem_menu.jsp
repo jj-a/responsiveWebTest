@@ -11,14 +11,12 @@ td {
 }
 </style>
 <form name="memfrm" method="post">
-	<table>
-		<tr>
-			<td><strong>회원 관리</strong></td>
-			<td><input type="button" value="회원목록" onclick="move('memList.jsp')"></td>
-			<td><input type="button" value="회원등급조정" onclick="move('memLevel.jsp')"></td>
-			<td><input type="button" value="회원삭제" onclick="move('memDelete.jsp')"></td>
-		</tr>
-	</table>
+	<div class="sub-menu">
+			<strong>회원 관리</strong>
+			<input type="button" value="회원목록" onclick="move('memList.jsp')">
+			<input type="button" value="회원등급조정" onclick="move('memLevel.jsp')">
+			<input type="button" value="회원삭제" onclick="move('memDelete.jsp')">
+	</div>
 </form>
 
 <script>

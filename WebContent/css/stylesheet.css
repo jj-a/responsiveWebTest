@@ -238,6 +238,10 @@ reply {
 	overflow: hidden;
 }
 
+.sub-menu {
+	display: inline-flex;
+}
+
 /*  list(bbs) class style  */
 .list-ip {
 	font-size: 1vw;

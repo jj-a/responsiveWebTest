@@ -10,7 +10,6 @@
 		word = request.getParameter("word");
 		String subject = request.getParameter("subject").trim();
 		String content = request.getParameter("content").trim();
-		System.out.println("업뎃proc: "+col+" "+word);		//★★★
 	%>
 	
 <script>

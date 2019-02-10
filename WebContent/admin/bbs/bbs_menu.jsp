@@ -11,13 +11,11 @@ td {
 }
 </style>
 <form name="memfrm" method="post">
-	<table>
-		<tr>
-			<td><strong>게시판 관리</strong></td>
-			<td><input type="button" value="게시판 글관리" onclick="move('bbsManagement.jsp')"></td>
-			<td><input type="button" value="갤러리 글관리" onclick="move('pdsManagement.jsp')"></td>
-		</tr>
-	</table>
+	<div class="sub-menu">
+			<strong>게시판 관리</strong>
+			<input type="button" value="게시판 글관리" onclick="move('bbsManagement.jsp')">
+			<input type="button" value="갤러리 글관리" onclick="move('pdsManagement.jsp')">
+	</div>
 </form>
 
 <script>
