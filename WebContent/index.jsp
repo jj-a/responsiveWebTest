@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="member/auth.jsp"%>
 <jsp:useBean id="visit" class="net.utility.Visit" scope="application"></jsp:useBean>
 <!DOCTYPE html>
@@ -42,8 +44,8 @@
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/pds/pdsList.jsp">PHOTO</a></li>
 					<li><a href="${pageContext.request.contextPath}/mail/mailForm.jsp">MAIL</a></li>
-					<li><a href="${pageContext.request.contextPath}#">BOARD(mvc)</a></li>
-					<li><a href="${pageContext.request.contextPath}#">LOGIN(mvc)</a></li>
+					<li><a href="${pageContext.request.contextPath}/bbs2/bbsList.do">BOARD(mvc)</a></li>
+					<li><a href="${pageContext.request.contextPath}/member2/loginForm.do">LOGIN(mvc)</a></li>
 				</ul>
 			</div>
 		</div>

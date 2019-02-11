@@ -22,12 +22,26 @@
 	<servlet>
 		<servlet-name>ControllerAction</servlet-name>
 		<servlet-class>net.controller.MyController</servlet-class>
+		<init-param>
+			<param-name>propertyConfig</param-name>
+			<param-value>D:/java_1113/workspace/myweb/WebContent/WEB-INF/command.properties</param-value>
+		</init-param>
 	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>ControllerAction</servlet-name>
-		<url-pattern>/loginproc.do</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 한글 필터 (UTF-8 Encoding) -->
+	<filter>
+		<filter-name>encode</filter-name>
+		<filter-class>net.utility.EncodeFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>encode</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	
 
 </web-app>

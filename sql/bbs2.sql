@@ -1,305 +1,38 @@
 -- bbs.sql
--- ´äº¯Çü °Ô½ÃÆÇ
+-- ë‹µë³€í˜• ê²Œì‹œíŒ
  
--- Å×ÀÌºí »ı¼º
-create table tb_bbs(
-  bbsno    number(5)       not null -- ÀÏ·Ã¹øÈ£ -99999~99999
- ,wname    varchar2(20)    not null -- ÀÛ¼ºÀÚ
- ,subject  varchar2(100)   not null -- ±ÛÁ¦¸ñ
- ,content  varchar2(2000)  not null -- ±Û³»¿ë
- ,passwd   varchar2(10)    not null -- ±Ûºñ¹Ğ¹øÈ£
- ,readcnt  number(5)       default 0 not null -- ±ÛÁ¶È¸¼ö
- ,regdt    date            default  sysdate -- ±ÛÀÛ¼ºÀÏ
- ,grpno    number(5)       not null  -- ±Û ±×·ì¹øÈ£
- ,indent   number(5)       default 0 -- µé¿©¾²±â
- ,ansnum   number(5)       default 0 -- ±Û¼ø¼­
- ,ip       varchar2(15)    not null -- ±Û IP
- ,primary key(bbsno)                --bbsno ±âº»Å° 
+-- í…Œì´ë¸” ìƒì„±
+create table board(
+  num          number         NOT NULL,
+  writer       varchar2(20)   NOT NULL,
+  email        varchar2(30),
+  subject      varchar2(50)   NOT NULL,
+  content      varchar2(2000) NOT NULL,
+  passwd       varchar2(10)   NOT NULL,
+  reg_date     date           NOT NULL,
+  readcount    number         default 0,
+  ref          number         NOT NULL,  -- ê·¸ë£¹ë²ˆí˜¸
+  re_step      number         NOT NULL,  -- ê¸€ìˆœì„œ
+  re_level     number         NOT NULL,  -- ë“¤ì—¬ì“°ê¸°
+  ip           varchar2(20)   NOT NULL,
+  PRIMARY KEY(num)  
 );
 
--- »õ±Û¾²±â
-bbsno : max(bbsno)+1
-wname, subject, content, passwd : »ç¿ëÀÚÀÔ·Â
-default °ª : readcnt, regdt, indent, ansnum
-grpno : max(bbsno)+1
-ip : request³»ºÎ°´Ã¼¿¡¼­ »ç¿ëÀÚPCÀÇ IPÁ¤º¸¸¦ °¡Á®¿È
 
--- ÇàÃß°¡ Å×½ºÆ®
+-- í–‰ì¶”ê°€ í…ŒìŠ¤íŠ¸
 insert into tb_bbs(bbsno, wname, subject, content, passwd, grpno, ip)
 values(
        (select nvl(max(bbsno),0)+1 from tb_bbs)
-      ,'¼ÕÈï¹Î'
-      ,'¿ÀÇÊ½ÂÄÚ¸®¾Æ'
-      ,'¹«±ÃÈ­ ²ÉÀÌ ÇÇ¾ú½À´Ï´Ù'
+      ,'ì†í¥ë¯¼'
+      ,'ì˜¤í•„ìŠ¹ì½”ë¦¬ì•„'
+      ,'ë¬´ê¶í™” ê½ƒì´ í”¼ì—ˆìŠµë‹ˆë‹¤'
       ,'1234'
       ,(select nvl(max(bbsno),0)+1 from tb_bbs)
       ,'127.0.0.1'
 );
 
--- ¸ñ·Ï
+-- ëª©ë¡
 select * from tb_bbs order by grpno desc, ansnum asc;
-
-
--- ±Û¸ñ·Ï(bbsList.jsp / list()ÇÔ¼ö)
-select bbsno, wname, subject, readcnt, indent, regdt
-from tb_bbs
-order by grpno desc, ansnum asc;
-
-
--- »ó¼¼º¸±â(bbsRead.jsp / read()ÇÔ¼ö)
-select bbsno, wname, subject, content, readcnt, grpno, ip, regdt
-from tb_bbs
-where bbsno = ?;
-
-
--- Á¶È¸¼ö Áõ°¡
-update tb_bbs
-set readcnt = readcnt + 1
-where bbsno = ?;
-
--- ´äº¯¾²±â
-1) ºÎ¸ğ±Û Á¤º¸ °¡Á®¿À±â (select¹®)
-select grpno, indent, ansnum
-from tb_bbs
-where bbsno=?
-
-2) ±Û¼ø¼­ ÀçÁ¶Á¤ (update¹®)
-update tb_bbs
-set ansnum = ansnum+1
-where grpno=1 and ansnum>=3
-
-3) ´äº¯±Û Ãß°¡ (insert¹®)
-insert into tb_bbs(bbsno,wname,subject,content,passwd,ip,grpno,indent,ansnum)
-values()
-
-
--- »èÁ¦
-delete from tb_bbs
-where passwd = ? and bbsno = ?;
-
-
--- ¼öÁ¤
--- ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏ¸é ¼öÁ¤ÇÏ°íÀÚ ÇÏ´Â ±ÛÀ» °¡Á®¿Í¼­
--- ¼öÁ¤Æû¿¡ Ãâ·ÂÇÏ°í
--- ÀÛ¼ºÀÚ, Á¦¸ñ, ³»¿ë, ºñ¹Ğ¹øÈ£¸¦ ¼öÁ¤ÇÑ´Ù
-
-1) bbsUpdate.jsp
-   ºñ¹Ğ¹øÈ£ ÀÔ·ÂÆû ÀÛ¼º
-
-2) bbsUpdateForm.jsp
-   ºñ¹Ğ¹øÈ£¿Í ±Û¹øÈ£°¡ ÀÏÄ¡ÇÏ´Â ±ÛÀ» DB °¡Á®¿À±â
-   select wname, subject, content, passwd
-   from tb_bbs
-   where passwd = ? and bbsno = ?
-
-3) 2)ÀÇ Á¤º¸¸¦ ¼öÁ¤Æû¿¡ Ãâ·Â
-
-4) bbsUpdateProc.jsp
-   »ç¿ëÀÚ°¡ ´Ù½Ã ÀÔ·ÂÇÑ ³»¿ëÀ» DB¿¡¼­ ¼öÁ¤ÇÏ±â
-   update tb_bbs
-   set wname=?, subject=?, content=?, passwd=?,ip=?
-   where bbsno=?
-   ¼öÁ¤ÀÌ ¿Ï·áµÇ¸é ¸ñ·ÏÆäÀÌÁö ÀÌµ¿
-
--- °Ë»ö
--- Á¦¸ñ¿¡ ¹«±ÃÈ­ ´Ü¾î°¡ ÀÖ´Â ·¹ÄÚµå °Ë»ö
-select *
-from tb_bbs
-where subject like '%¹«±ÃÈ­%';
-   
-   
--- ÆäÀÌÂ¡
--- rownum(ÁÙ¹øÈ£) È°¿ë
-
-1)
-select bbsno, subject, grpno, ansnum
-from tb_bbs
-order by grpno desc, ansnum asc;
-
-2) rownum Ãß°¡  -- ÁÙ¹øÈ£±îÁö Á¤·ÄµÊ
-select bbsno, subject, grpno, ansnum, rownum
-from tb_bbs
-order by grpno desc, ansnum asc;
-
-3) 1)ÀÇ SQL¹® ¼¿ÇÁÁ¶ÀÎ
-select AA.bbsno, AA.subject, AA.grpno, AA.ansnum, rownum
-from (
-      select bbsno, subject, grpno, ansnum
-      from tb_bbs
-      order by grpno desc, ansnum asc
-     ) AA;
-
-4) alias »ı·«°¡´É
-select bbsno, subject, grpno, ansnum, rownum
-from (
-      select bbsno, subject, grpno, ansnum
-      from tb_bbs
-      order by grpno desc, ansnum asc
-     );
-
-5) ÁÙ¹øÈ£ 1~3 °Ë»ö(1 ÆäÀÌÁö)
-select bbsno, subject, grpno, ansnum, rownum
-from (
-      select bbsno, subject, grpno, ansnum
-      from tb_bbs
-      order by grpno desc, ansnum asc
-     )
-where rownum >= 1 and rownum <= 3;
-
-
-6) ÁÙ¹øÈ£ 4~6 °Ë»ö(2 ÆäÀÌÁö) -> °Ë»ö¾ÈµÊ
-select bbsno, subject, grpno, ansnum, rownum
-from (
-      select bbsno, subject, grpno, ansnum
-      from tb_bbs
-      order by grpno desc, ansnum asc
-     )
-where rownum >= 4 and rownum <= 6;   
-
-
-7) ÁÙ¹øÈ£ 4~6 °Ë»ö(2 ÆäÀÌÁö)
-select bbsno, subject, grpno, ansnum, rnum
-from (
-      select bbsno, subject, grpno, ansnum, rownum as rnum
-      from (
-            select bbsno, subject, grpno, ansnum
-            from tb_bbs
-            order by grpno desc, ansnum asc
-           ) AA
-     )BB     
-where rnum >= 4 and rnum <= 6;     
-     
-     
-8) alias »ı·«°¡´É
-select bbsno, subject, grpno, ansnum, rnum
-from (
-      select bbsno, subject, grpno, ansnum, rownum as rnum
-      from (
-            select bbsno, subject, grpno, ansnum
-            from tb_bbs
-            order by grpno desc, ansnum asc
-           ) 
-     )     
-where rnum >= 4 and rnum <= 6; 
-
-
-9) ÆäÀÌÂ¡ + °Ë»ö
-   Á¦¸ñ¿¡ '¼Öµ¥½ºÅ©' °Ë»öÇØ¼­ 2ÆäÀÌÁö Ãâ·Â
-select bbsno, subject, grpno, ansnum, rnum
-from (
-      select bbsno, subject, grpno, ansnum, rownum as rnum
-      from (
-            select bbsno, subject, grpno, ansnum
-            from tb_bbs
-            where subject like '%¼Öµ¥½ºÅ©%'
-            order by grpno desc, ansnum asc
-           ) 
-     )     
-where rnum >= 4 and rnum <= 6;    
-----------------------------------------------
--- [´ñ±Û °¹¼ö ±¸ÇÏ±â]
--- Ãâ·Â°á°ú
-ºÎ¸ğ±ÛÁ¦¸ñ  ´äº¯°¹¼ö  Á¶È¸¼ö ÀÛ¼ºÀÚ ÀÛ¼ºÀÏ
-¾È³çÇÏ¼¼¿ä  (1)  
-±è¿¬¾Æ      (2)
-
---1)
-select subject, grpno, indent, ansnum
-from tb_bbs
-order by grpno desc;
-
---2) grpno°¡ µ¿ÀÏÇÑ ·¹ÄÚµå¸¦ ±×·ìÈ­ÇÏ°í
---   °¹¼ö¸¦ ±¸ÇÏ½Ã¿À
-select grpno, count(grpno) as cnt
-from tb_bbs
-group by grpno;
-
---3) 2)¿¡¼­ ³ª¿Â °¹¼ö´Â ºÎ¸ğ±Û+ÀÚ½Ä±Û ÀÌ¹Ç·Î
---   °¹¼ö¿¡¼­ -1À» ÇÑ´Ù
-select grpno, count(grpno)-1 as cnt
-from tb_bbs
-group by grpno;
-
--- 4) 3)ÀÇ ³í¸®ÀûÅ×ÀÌºí¿¡ ¼¿ÇÁÁ¶ÀÎÇØ¼­
---    ÃÖÃÊ ºÎ¸ğ±Û Á¦¸ñ °¡Á®¿À±â
-select BB.bbsno, BB.subject, AA.grpno, AA.cnt
-from (
-      select grpno, count(grpno)-1 as cnt
-      from tb_bbs
-      group by grpno
-     ) AA join tb_bbs BB
-on AA.grpno = BB.grpno
-where BB.indent = 0 --ÃÖÃÊ ºÎ¸ğ±Û
-order by grpno DESC
-
-
--- 5) bbsComment.jsp
---    ´ñ±Û°¹¼ö¸¦ ´ã±â À§ÇØ
---    BbsDTOÅ¬·¡½º¿¡ private int comment Ãß°¡ÇÏ°í, °¢ getter, setterÇÔ¼ö Ãß°¡
-    
-select bbsno, subject, wname, readcnt, regdt, grpno, cnt, rnum
-from (
-      select bbsno, subject, wname, readcnt, regdt, grpno, cnt, rownum as rnum
-      from(
-           select BB.bbsno, BB.subject, BB.wname, BB.readcnt, BB.regdt, AA.grpno, AA.cnt
-           from (
-                 select grpno, count(grpno)-1 as cnt
-                 from tb_bbs
-                 group by grpno
-                ) AA join tb_bbs BB
-          on AA.grpno = BB.grpno
-          where BB.indent = 0
-          order by grpno DESC
-     )
-)
-where rnum>=6 and rnum<=10
-
-
-
-select bbsno, subject, wname, readcnt, regdt, grpno, cnt, rnum
-from (
-      select bbsno, subject, wname, readcnt, regdt, grpno, cnt, rownum as rnum
-      from(
-           select BB.bbsno, BB.subject, BB.wname, BB.readcnt, BB.regdt, AA.grpno, AA.cnt
-           from (
-                 select grpno, count(grpno)-1 as cnt
-                 from tb_bbs
-                 group by grpno
-                ) AA join tb_bbs BB
-          on AA.grpno = BB.grpno
-          where BB.indent = 0
-          and subject like '%¿À%'
-          order by grpno DESC
-     )
-)
-where rnum>=2 and rnum<=3
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
