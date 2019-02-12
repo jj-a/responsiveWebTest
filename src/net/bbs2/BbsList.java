@@ -19,8 +19,8 @@ public class BbsList implements CommandAction {
 		total_cnt=dao.getArticleCount();
 		
 		// 페이징
-		int numPerPage=3;	// 한 페이지 당 레코드 개수
-		int pagePerBlock=10;	// 페이지 리스트
+		int numPerPage=10;	// 한 페이지 당 레코드 개수
+		int pagePerBlock=5;	// 페이지 리스트
 		
 		String pageNum=req.getParameter("pageNum");
 		if(pageNum==null) pageNum="1";
@@ -62,8 +62,6 @@ public class BbsList implements CommandAction {
 		req.setAttribute("startPage",new Integer(startPage));
 		req.setAttribute("endPage",new Integer(endPage));
 		req.setAttribute("articleList",articleList);
-		
-		//.....
 		
 		return "bbsList.jsp";
 		

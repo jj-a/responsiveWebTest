@@ -1128,7 +1128,7 @@ public class BoardDAO {
 					BoardDTO article = new BoardDTO(); // 한줄 저장
 					article.setNum(rs.getInt("num"));
 					article.setWriter(rs.getString("writer"));
-					article.setWriter(rs.getString("email"));
+					article.setEmail(rs.getString("email"));
 					article.setSubject(rs.getString("subject"));
 					article.setContent(rs.getString("content"));
 					article.setPasswd(rs.getString("passwd"));
@@ -1167,20 +1167,20 @@ public class BoardDAO {
 		try {
 			con = dbopen.getConnection();
 			//con=this.getConnection();
-			StringBuffer sql=new StringBuffer();
+			sql=new StringBuilder();
 			
 			sql.append("UPDATE board SET readcount=readcount+1 ");
 			sql.append("WHERE num=? ");
-			
+
 			pstmt = con.prepareStatement(sql.toString());
-			
 			pstmt.setInt(1,num);
 			pstmt.executeUpdate();
 			
 			sql.delete(0,sql.length());
 			sql.append("SELECT num, writer, email, subject, content, passwd, reg_date, readcount, ref, re_step, re_level, ip ");
-			sql.append("FROM board WHRE num=? ");
-			
+			sql.append("FROM board WHERE num=? ");
+
+			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1,num);
 			rs=pstmt.executeQuery();
 			
@@ -1188,7 +1188,7 @@ public class BoardDAO {
 				article=new BoardDTO();
 				article.setNum(rs.getInt("num"));
 				article.setWriter(rs.getString("writer"));
-				article.setWriter(rs.getString("email"));
+				article.setEmail(rs.getString("email"));
 				article.setSubject(rs.getString("subject"));
 				article.setContent(rs.getString("content"));
 				article.setPasswd(rs.getString("passwd"));
@@ -1213,7 +1213,115 @@ public class BoardDAO {
 		return article;
 		
 	} // getArticle() end ////////////////////////////////////////////
+
 	
+	
+	public BoardDTO loadArticle(BoardDTO dto) {
+
+		try {
+
+			con = dbopen.getConnection();
+
+			sql = new StringBuilder();
+			sql.append("SELECT num, writer, email, subject, content, passwd, reg_date, ip ");
+			sql.append("FROM board ");
+			sql.append("WHERE num=?AND passwd=? ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, dto.getNum());
+			pstmt.setString(2, dto.getPasswd());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				dto = new BoardDTO();
+				dto.setNum(rs.getInt("num"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setEmail(rs.getString("email"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setContent(rs.getString("content"));
+				dto.setPasswd(rs.getString("passwd"));
+				dto.setReg_date(rs.getTimestamp("reg_date"));
+				dto.setIp(rs.getString("ip"));
+			}
+			else {
+				 dto=null;
+				 throw new Exception("rs.next()가 제대로 동작하지 않습니다. "
+				 		+ "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("*Error* 수정할 자료가 존재하지 않거나 비밀번호 오류입니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt, rs);
+		}
+
+		return dto;
+
+	} // loadArticle() end ////////////////////////////////////////////
+	
+
+	
+	public int updateArticle(BoardDTO dto) {
+		
+		int res = 0;
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			sql.append("UPDATE board ");
+			sql.append("SET writer=?, email=?, subject=?, content=?, passwd=?, reg_date=?, ip=? ");
+			sql.append("WHERE num=? ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getEmail());
+			pstmt.setString(3, dto.getSubject());
+			pstmt.setString(4, dto.getContent());
+			pstmt.setString(5, dto.getPasswd());
+			pstmt.setTimestamp(6, dto.getReg_date());
+			pstmt.setString(7, dto.getIp());
+			pstmt.setInt(8, dto.getNum());
+
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("*Error* 행 수정을 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt);
+		}
+
+		return res;
+		
+	} // updateArticle() end ////////////////////////////////////////////
+
+
+
+	public int deleteArticle(BoardDTO dto) {
+		
+		int res = 0;
+
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			sql.append("DELETE FROM board ");
+			sql.append("WHERE num=?AND passwd=? ");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, dto.getNum());
+			pstmt.setString(2, dto.getPasswd());
+
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("*Error* 행 삭제를 실패했습니다. \n" + e);
+		} finally {
+			dbclose.close(con, pstmt);
+		}
+
+		return res;
+
+	} // deleteArticle() end ////////////////////////////////////////////
+
 	
 	
 }

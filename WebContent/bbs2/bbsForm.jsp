@@ -10,9 +10,9 @@
 <p><a href="bbsList.jsp">[글 목록]</a></p>
 
 <form method="post" name="writeform" action="./bbsinsert.do">
-<input type="hidden" name="num"      value="${num }">
-<input type="hidden" name="ref"      value="${ref }">
-<input type="hidden" name="re_step"  value="${re_step }">
+<input type="hidden" name="num" value="${num }">
+<input type="hidden" name="ref" value="${ref }">
+<input type="hidden" name="re_step" value="${re_step }">
 <input type="hidden" name="re_level" value="${re_level }">
 
 <table class="writefrm" width="450" border="1">

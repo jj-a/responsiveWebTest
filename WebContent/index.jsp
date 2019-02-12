@@ -44,8 +44,8 @@
 					</a></li>
 					<li><a href="${pageContext.request.contextPath}/pds/pdsList.jsp">PHOTO</a></li>
 					<li><a href="${pageContext.request.contextPath}/mail/mailForm.jsp">MAIL</a></li>
-					<li><a href="${pageContext.request.contextPath}/bbs2/bbsList.do">BOARD(mvc)</a></li>
-					<li><a href="${pageContext.request.contextPath}/member2/loginForm.do">LOGIN(mvc)</a></li>
+					<li><a href="${pageContext.request.contextPath}/bbs2/bbslist.do">BOARD(mvc)</a></li>
+					<li><a href="${pageContext.request.contextPath}/member2/loginform.do">LOGIN(mvc)</a></li>
 				</ul>
 			</div>
 		</div>
