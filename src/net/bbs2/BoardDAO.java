@@ -985,7 +985,7 @@ public class BoardDAO {
 	
 
 	
-	public void insertArticle(BoardDTO article) throws Exception{
+	public int insertArticle(BoardDTO article) throws Exception{
 		// 글 추가
 		
 		int num=article.getNum();
@@ -993,6 +993,7 @@ public class BoardDAO {
 		int re_step=article.getRe_step();
 		int re_level=article.getRe_level();
 		int number=0;
+		int res=0;
 
 		try {
 			con = dbopen.getConnection();	//DBOpen
@@ -1046,7 +1047,8 @@ public class BoardDAO {
 			pstmt.setInt(8,re_step);
 			pstmt.setInt(9,re_level);
 			pstmt.setString(10,article.getIp());
-			pstmt.executeUpdate();
+			
+			res=pstmt.executeUpdate();
 			
 
 		} catch (Exception e) {
@@ -1054,6 +1056,8 @@ public class BoardDAO {
 		} finally {
 			dbclose.close(con, pstmt, rs);
 		}
+		
+		return res;
 
 	}  // insertArticle() end ////////////////////////////////////////////
 	

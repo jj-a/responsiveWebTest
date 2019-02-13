@@ -29,7 +29,10 @@
 	<tr>
 		<th style="width: 10%;">IP</th>
 		<td colspan=2 style="width: 30%;" onclick="window.open('http://${article.ip}:9090/myweb/index.jsp')" onmouseover="style='cursor:pointer;'">
-			${article.ip}
+			<c:choose>
+				<c:when test="${article.ip=='127.0.0.1' || article.ip=='0:0:0:0:0:0:0:1'}">Admin</c:when>
+				<c:otherwise>${article.ip}</c:otherwise>
+			</c:choose>
 			<%	// IP 변환
 			//String ip=dto.getIp();
 			//out.println(dao.ipConvent(ip));
@@ -61,7 +64,10 @@
 	<tr>
 		<th colspan=2>IP</th>
 		<td colspan=6 onclick="window.open('http://${article.ip}:9090/myweb/index.jsp')">
-			${article.ip}
+			<c:choose>
+				<c:when test="${article.ip=='127.0.0.1' || article.ip=='0:0:0:0:0:0:0:1'}">Admin</c:when>
+				<c:otherwise>${article.ip}</c:otherwise>
+			</c:choose>
 			<%	// IP 변환
 			//ip=dto.getIp();
 			//out.println(dao.ipConvent(ip));

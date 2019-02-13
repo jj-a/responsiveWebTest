@@ -42,9 +42,9 @@
 </tr>
 <tr>
   <td colspan=2 bgcolor="{$value_c }" align="center">
-  <input type="submit" value="글쓰기">
-  <input type="reset"  value="취소">
-  <input type="button" value="목록보기" onClick="location.href='./bbslist.do'">
+  <input type="submit" value="등록">
+  <input type="reset"  value="지우기">
+  <input type="button" value="취소" onClick="location.href='./bbslist.do'">
   </td>
 </tr>
 </table>

@@ -3,7 +3,10 @@
 <%@ include file="../header.jsp"%>
 
 <!-- Contents -->
-<h3><a href="bbslist.do"> 게시글 수정/삭제 </a></h3>
+<h3><a href="bbslist.do"> 게시글 
+<c:if test="${page=='bbsmodiform'}">수정</c:if>
+<c:if test="${page=='bbsdelete'}">삭제</c:if>
+</a></h3>
 
 <form method="post" action="${page}.do" onsubmit="return pwCheck(this)">
 	<input type="hidden" name="num" value="${num }">

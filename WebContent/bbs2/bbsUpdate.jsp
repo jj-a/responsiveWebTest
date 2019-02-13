@@ -11,7 +11,7 @@
 	<c:when test="${article==null}">
 		<script>
 		alert("비밀번호가 일치하지 않습니다.");
-		window.location="bbscontent.do?num="+${num}+"nowPage="+${pageNum};
+		window.location="bbscontent.do?num="+${num}+"&pageNum="+${pageNum};
 		</script>
 	</c:when>
 	<c:otherwise>
@@ -26,7 +26,7 @@
 			</tr>
 			<tr>
 				<th>이메일</th>
-				<td><input type="text" value="${article.email}" name="email" maxlength="50" required autofocus></td>
+				<td><input type="text" value="${article.email}" name="email" maxlength="50" autofocus></td>
 			</tr>
 			<tr>
 				<th>제목</th>
@@ -44,7 +44,7 @@
 				<th>등록 IP</th>
 				<td>
 				<c:choose>
-					<c:when test="${article.ip=='127.0.0.1'}||${article.ip=='0:0:0:0:0:0:0:1'}">Admin</c:when>
+					<c:when test="${article.ip=='127.0.0.1' || article.ip=='0:0:0:0:0:0:0:1'}">Admin</c:when>
 					<c:otherwise>${article.ip}</c:otherwise>
 				</c:choose>
 				</td>
@@ -56,7 +56,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" value="수정"> 
-					<input type="button" value="취소" onclick="javascript:history.back()">
+					<input type="button" value="취소" onclick="location.href='./bbslist.do'">
 				</td>
 			</tr>
 		</table>

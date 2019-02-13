@@ -11,12 +11,12 @@
 	<c:when test="${res==0}">
 		<p>게시글 수정에 실패했습니다.</p>
 		<p><a href="javascript:history.back()"> [다시시도] </a>
-		<a href="bbslist.do?nowPage=${pageNum}"> [글 목록] </a></p>
+		<a href="bbslist.do?pageNum=${pageNum}"> [글 목록] </a></p>
 	</c:when>
 	<c:otherwise>
 		<script>
 		alert("게시글이 수정되었습니다.");
-		window.location="bbslist.do?nowPage="+${pageNum};
+		window.location="bbslist.do?pageNum="+${pageNum};
 		</script>
 	</c:otherwise>
 </c:choose>

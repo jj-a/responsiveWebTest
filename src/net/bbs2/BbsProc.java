@@ -7,13 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.action.CommandAction;
 
-public class BbsUpdate implements CommandAction {
+public class BbsProc implements CommandAction {
 
 	@Override
 	public String requestPro(HttpServletRequest req, HttpServletResponse resp) throws Throwable {
-
-		int num=Integer.parseInt(req.getParameter("num"));	// 글번호
-		String pageNum=req.getParameter("pageNum");	// 페이지번호
 		
 		BoardDTO article=new BoardDTO();
 		article.setNum(Integer.parseInt(req.getParameter("num")));
@@ -23,17 +20,20 @@ public class BbsUpdate implements CommandAction {
 		article.setContent(req.getParameter("content"));
 		article.setPasswd(req.getParameter("passwd"));
 		article.setReg_date(new Timestamp(System.currentTimeMillis()));
+		article.setRef(Integer.parseInt(req.getParameter("ref")));
+		article.setRe_step(Integer.parseInt(req.getParameter("re_step")));
+		article.setRe_level(Integer.parseInt(req.getParameter("re_level")));
 		article.setIp(req.getRemoteAddr());
 		
 		BoardDAO dao=new BoardDAO();
-		int res=dao.updateArticle(article);	// update 수행
-
-		req.setAttribute("num", new Integer(num));
-		req.setAttribute("pageNum",new Integer(pageNum));
-		req.setAttribute("res", new Integer(res));	// query 성공여부
-		req.setAttribute("action", "수정");
+		dao.insertArticle(article);
 		
-		return "bbsRedirect.jsp";	// updateProc.jsp
+		String root="myweb";
+		String msg="";
+		msg+="";
+		
+		req.setAttribute("msg",msg);
+		return "bbsResult.jsp";
 		
 	} // requestPro() end
 

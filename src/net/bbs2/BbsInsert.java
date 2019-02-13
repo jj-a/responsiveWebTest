@@ -11,6 +11,9 @@ public class BbsInsert implements CommandAction {
 
 	@Override
 	public String requestPro(HttpServletRequest req, HttpServletResponse resp) throws Throwable {
+
+		String pageNum=req.getParameter("pageNum");
+		if(pageNum==null) pageNum="1";
 		
 		BoardDTO article=new BoardDTO();
 		article.setNum(Integer.parseInt(req.getParameter("num")));
@@ -26,9 +29,13 @@ public class BbsInsert implements CommandAction {
 		article.setIp(req.getRemoteAddr());
 		
 		BoardDAO dao=new BoardDAO();
-		dao.insertArticle(article);
+		int res=dao.insertArticle(article);
 		
-		return "insertProc.jsp";
+		req.setAttribute("pageNum", new Integer(pageNum));
+		req.setAttribute("res", new Integer(res));	// query 성공여부
+		req.setAttribute("action", "등록");
+		
+		return "bbsRedirect.jsp";	// insertProc.jsp
 		
 	} // requestPro() end
 
