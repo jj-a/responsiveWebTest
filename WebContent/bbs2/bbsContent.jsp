@@ -84,10 +84,10 @@
 
 <input type="button" value="목록" onclick="location.href='./bbslist.do?pageNum=${pageNum}'">
 <input type="button" value="답변" onclick="location.href='./bbsform.do?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}'">
-<% if(s_mlevel.equals("A1") || s_mlevel.equals("B1")){ %>
+<c:if test="${sessionScope.s_mlevel!=null}">
 <input type="button" value="수정" onclick="location.href='./bbscheck.do?num=${article.num}&pageNum=${pageNum}&page=bbsmodiform'">
 <input type="button" value="삭제" onclick="location.href='./bbscheck.do?num=${article.num}&pageNum=${pageNum}&page=bbsdelete'">
-<% } %>
+</c:if>
 	
 <!-- Contents end -->
 

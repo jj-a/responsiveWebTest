@@ -13,7 +13,7 @@
 		<h3>아이디 중복확인 결과</h3>
 		<%
 			String id = request.getParameter("id").trim();
-			int cnt = dao.duplicateID(id);
+			int cnt = dao.duplecateID(id);
 			out.println("입력 ID: <strong>" + id + "</strong>");
 
 			if (cnt == 0) {

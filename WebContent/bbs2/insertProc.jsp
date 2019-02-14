@@ -4,7 +4,7 @@
 
 <!-- Contents -->
 
-<meta http-equiv="refresh" content="0;url=/myweb/bbs2/bbslist.do">
+<meta http-equiv="refresh" content="0;url=bbslist.do">
 
 <!-- Contents end -->
 

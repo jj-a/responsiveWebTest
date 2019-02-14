@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="ssi.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,7 +12,7 @@
 		<h3>이메일 중복확인 결과</h3>
 		<%
 			String email = request.getParameter("email").trim();
-			int cnt = dao.duplicateMail(email);
+			int cnt = dao.duplecateMail(email);
 			out.println("입력 이메일: <strong>" + email + "</strong>");
 
 			if (cnt == 0) {

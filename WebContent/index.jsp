@@ -45,7 +45,16 @@
 					<li><a href="${pageContext.request.contextPath}/pds/pdsList.jsp">PHOTO</a></li>
 					<li><a href="${pageContext.request.contextPath}/mail/mailForm.jsp">MAIL</a></li>
 					<li><a href="${pageContext.request.contextPath}/bbs2/bbslist.do">BOARD(mvc)</a></li>
-					<li><a href="${pageContext.request.contextPath}/member2/loginform.do">LOGIN(mvc)</a></li>
+					<li>
+					<c:choose>
+						<c:when test="${sessionScope.s_id==null}">
+						<a href="${pageContext.request.contextPath}/member2/loginform.do">LOGIN(mvc)</a>
+						</c:when>
+						<c:otherwise>
+						<a href="${pageContext.request.contextPath}/member2/mypage.do">MYPAGE(mvc)</a>
+						</c:otherwise>
+					</c:choose>
+					</li>
 				</ul>
 			</div>
 		</div>

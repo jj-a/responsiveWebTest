@@ -1,4 +1,4 @@
-package net.member;
+package net.member2;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,23 +31,25 @@ public class MemberDAO {
 	// -- Method
 	//////////////////////////////////////////////
 
-	
-	public int duplicateID(String id) {
+
+	public int duplicateCheck(String column, String value) {
+		// 아이디,이메일 중복확인
 
 		int cnt = 0;
 
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			sql.append("SELECT COUNT(id) cnt FROM member ");
-			sql.append("WHERE id=? ");
+			sql.append("SELECT COUNT("+column+") cnt FROM member ");
+			sql.append("WHERE "+column+"=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, id);
+			pstmt.setString(1, value);
 			rs = pstmt.executeQuery();
-
+			
 			if (rs.next()) {
 				cnt = rs.getInt("cnt");
+				System.out.println(cnt);
 			} else {
 				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
 			}
@@ -59,39 +61,9 @@ public class MemberDAO {
 		}
 
 		return cnt;
-	} // duplicateID() end ////////////////////////////////////////////
-
+		
+	} // duplicateCheck() end ////////////////////////////////////////////
 	
-	
-	public int duplicateMail(String email) {
-
-		int cnt = 0;
-
-		try {
-			con = dbopen.getConnection();
-			sql = new StringBuilder();
-			sql.append("SELECT COUNT(email) cnt FROM member ");
-			sql.append("WHERE email=? ");
-
-			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, email);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				cnt = rs.getInt("cnt");
-			} else {
-				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
-			}
-
-		} catch (Exception e) {
-			System.out.println("*Error* 아이디 중복 조회를 실패했습니다. \n" + e);
-		} finally {
-			dbclose.close(con, pstmt, rs);
-		}
-
-		return cnt;
-	} // duplicateID() end ////////////////////////////////////////////
-
 	
 	
 	public int join(MemberDTO dto) {
