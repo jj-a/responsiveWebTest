@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import net.utility.DBClose;
 import net.utility.DBOpen;
+import net.utility.Utility;
 
 public class MemberDAO {
 
@@ -67,6 +68,7 @@ public class MemberDAO {
 	
 	
 	public int join(MemberDTO dto) {
+		// 회원가입
 
 		int res = 0;
 
@@ -104,6 +106,7 @@ public class MemberDAO {
 	
 	
 	public String login(MemberDTO dto) {
+		// 로그인
 
 		String mlevel = null;
 
@@ -166,7 +169,8 @@ public class MemberDAO {
 
 	
 	
-	public int recordCount() { // 회원수 카운트
+	public int recordCount() { 
+		// 회원수 카운트
 
 		int cnt = 0;
 
@@ -197,6 +201,7 @@ public class MemberDAO {
 	
 	
 	public synchronized ArrayList<MemberDTO> list(String col) {
+		// 회원목록
 
 		ArrayList<MemberDTO> list = null;
 
@@ -250,6 +255,7 @@ public class MemberDAO {
 	
 	
 	public int levelChange(String id, String mlevel) {
+		// 회원등급 변경
 
 		int res = 0;
 
@@ -279,6 +285,7 @@ public class MemberDAO {
 	
 	
 	public int delete(String id) {
+		// 회원 영구 삭제
 
 		int res = 0;
 
@@ -305,35 +312,38 @@ public class MemberDAO {
 
 	
 	
-	public MemberDTO modify(String id) {
-
-		MemberDTO dto = new MemberDTO();
+	public MemberDTO loadInfo(MemberDTO member) {
+		// 회원정보 수정폼 로드
 
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
 			sql.append("SELECT id, passwd, mname, tel, email, zipcode, address1, address2, job, mlevel, mdate ");
 			sql.append("FROM member ");
-			sql.append("WHERE id=? ");
+			sql.append("WHERE id=? AND passwd=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, id);
+			pstmt.setString(1, member.getId());
+			pstmt.setString(2, member.getPasswd());
 			
 			rs = pstmt.executeQuery();
 			
+			member=new MemberDTO();
+			
 			if (rs.next()) {
-				dto.setId(rs.getString("id"));
-				dto.setPasswd(rs.getString("passwd"));
-				dto.setMname(rs.getString("mname"));
-				dto.setTel(rs.getString("tel"));
-				dto.setEmail(rs.getString("email"));
-				dto.setZipcode(rs.getString("zipcode"));
-				dto.setAddress1(rs.getString("address1"));
-				dto.setAddress2(rs.getString("address2"));
-				dto.setJob(rs.getString("job"));
-				dto.setMdate(rs.getString("mdate"));
+				member.setId(rs.getString("id"));
+				member.setPasswd(rs.getString("passwd"));
+				member.setMname(rs.getString("mname"));
+				member.setTel(rs.getString("tel"));
+				member.setEmail(rs.getString("email"));
+				member.setZipcode(Utility.checkNull(rs.getString("zipcode")));
+				member.setAddress1(Utility.checkNull(rs.getString("address1")));
+				member.setAddress2(Utility.checkNull(rs.getString("address2")));
+				member.setJob(rs.getString("job"));
+				member.setMdate(rs.getString("mdate"));
 
 			} else {
+				member=null;
 				throw new Exception("rs.next()가 제대로 동작하지 않습니다. " + "Check: Query가 제대로 들어갔는지, next()가 중복 사용된건 아닌지 확인해주세요.");
 			}
 
@@ -343,13 +353,14 @@ public class MemberDAO {
 			dbclose.close(con, pstmt, rs);
 		}
 
-		return dto;
+		return member;
 
-	} // modify() end ////////////////////////////////////////////
+	} // loadInfo() end ////////////////////////////////////////////
 	
 	
 
-	public int modifyProc(MemberDTO dto) {
+	public int modify(MemberDTO member) {
+		// 회원정보 수정
 
 		int res = 0;
 
@@ -358,26 +369,26 @@ public class MemberDAO {
 			sql = new StringBuilder();
 			sql.append("UPDATE member ");
 			sql.append("SET mname=?, tel=?, email=?, zipcode=?, address1=?, address2=?, job=? ");
-			if(!dto.getPasswd().equals("")) {	// passwd 수정할 시
+			if(!member.getPasswd().equals("")) {	// passwd 수정할 시
 				sql.append(", passwd=? ");
 			}
 			sql.append("WHERE id=? ");
 
 			pstmt = con.prepareStatement(sql.toString());
 
-			pstmt.setString(1, dto.getMname());
-			pstmt.setString(2, dto.getTel());
-			pstmt.setString(3, dto.getEmail());
-			pstmt.setString(4, dto.getZipcode());
-			pstmt.setString(5, dto.getAddress1());
-			pstmt.setString(6, dto.getAddress2());
-			pstmt.setString(7, dto.getJob());
-			if(!dto.getPasswd().equals("")) {	// passwd 수정할 시
-				pstmt.setString(8, dto.getPasswd());
-				pstmt.setString(9, dto.getId());
+			pstmt.setString(1, member.getMname());
+			pstmt.setString(2, member.getTel());
+			pstmt.setString(3, member.getEmail());
+			pstmt.setString(4, member.getZipcode());
+			pstmt.setString(5, member.getAddress1());
+			pstmt.setString(6, member.getAddress2());
+			pstmt.setString(7, member.getJob());
+			if(!member.getPasswd().equals("")) {	// passwd 수정할 시
+				pstmt.setString(8, member.getPasswd());
+				pstmt.setString(9, member.getId());
 			}
 			else{	// 수정안할 시
-				pstmt.setString(8, dto.getId());
+				pstmt.setString(8, member.getId());
 			}
 
 			res = pstmt.executeUpdate();
@@ -390,11 +401,12 @@ public class MemberDAO {
 
 		return res;
 
-	} // modifyProc() end ////////////////////////////////////////////
+	} // modify() end ////////////////////////////////////////////
 	
 	
 	
 	public MemberDTO findID(MemberDTO dto) {
+		// 아이디 찾기
 		
 		MemberDTO member=null;
 
@@ -432,6 +444,7 @@ public class MemberDAO {
 	
 	
 	public MemberDTO findPW(MemberDTO dto) {
+		// 비밀번호 찾기
 
 		MemberDTO member=null;
 		int res = 0;
@@ -455,14 +468,14 @@ public class MemberDAO {
 			pstmt.setString(4, dto.getTel());
 			pstmt.setString(5, dto.getEmail());
 			
-			System.out.println("입력값 검사: "+dto.toString());
+			//System.out.println("입력값 검사: "+dto.toString());
 			
 			res = pstmt.executeUpdate();
 
 			if (res!=0) {
 				member=new MemberDTO();
 				member.setPasswd(temppasswd);
-				System.out.println("비밀번호 변경 후:  "+member.toString());
+				//System.out.println("비밀번호 변경 후:  "+member.toString());
 			} else {
 				System.out.println("입력된 회원정보가 일치하지 않습니다.");
 			}

@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.action.CommandAction;
 
-public class MbPwCheck implements CommandAction {
+public class WithdrawCheck implements CommandAction {
 
 	@Override
 	public String requestPro(HttpServletRequest req, HttpServletResponse resp) throws Throwable {
-		
-		return "mbCheck.jsp";
+
+		return "withdrawCheck.jsp";
 		
 	} // requestPro() end
 

@@ -5,7 +5,7 @@
 <!-- Contents -->
 
 <c:choose>
-	<c:when test="${empty sessionScope.s_id}">
+	<c:when test="${sessionScope.s_id==null || sessionScope.s_mlevel=='E1' || sessionScope.s_mlevel=='F1'}">
 	<%-- 비회원, 로그인 안한 경우 --%>
 	<%
 			// cookie 불러오기
@@ -54,7 +54,7 @@
 			<td colspan="3"><h4>${sessionScope.s_id} 님</h4></td>
 		</tr><tr>
 			<td onclick="window.location='logout.do'" onmouseover="style='cursor:pointer;'">LOGOUT</td>
-			<td onclick="window.location='check.do?page=modiform'" onmouseover="style='cursor:pointer;'">회원정보수정</td>
+			<td onclick="window.location='check.do?page=modifyform'" onmouseover="style='cursor:pointer;'">회원정보수정</td>
 			<td onclick="window.location='check.do?page=withdraw'" onmouseover="style='cursor:pointer;'">회원탈퇴</td>
 		</tr>
 	</table>

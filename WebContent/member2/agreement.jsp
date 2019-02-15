@@ -1,24 +1,30 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../header.jsp"%>
 
-<!-- 본문시작 agreement.jsp-->
-<div style="text-align: center">* 회/원/약/관 *</div>
-<br>	    
-<!--
- onsubmit 이벤트는 form이 submit이 될 때 발생함.
- 실행된 함수가 false를 리턴하면 submit을 하지 않음.
--->
-<form action="joinform.do" onsubmit="return send(this)">
+<!-- Contents -->
 
-<table class="writefrm" border="0" cellspacing="0" cellpadding="2"  align="center">
-    <tr align="center" height="10"> 
-        <td>
-            <textarea cols="55" rows="14" readonly>Community 서비스약관 (2005. 7. 18 부터 유효)
+<c:choose>
+	<c:when test="${!(sessionScope.s_id==null || sessionScope.s_mlevel=='E1' || sessionScope.s_mlevel=='F1')}">
+		<script>
+			alert("로그인한 상태에선 회원가입을 할 수 없습니다.");
+			location.href = "${pageContext.request.contextPath}/member2/loginform.do";
+		</script>
+	</c:when>
+	<c:otherwise>
+
+		<div style="text-align: center">* 회/원/약/관 *</div>
+		<br>
+
+		<form action="joinform.do" onsubmit="return send(this)">
+
+			<table class="writefrm" border="0" cellspacing="0" cellpadding="2" align="center">
+				<tr align="center" height="10">
+					<td><textarea cols="55" rows="14" readonly>Community 서비스약관 (2018. 11. 13 부터 유효)
 
 제1조(목적 등)
 
  
-① Community (www.soldesk.co.kr) 서비스 약관(이하 "본 약관"이라 합니다)은 이용자가 ㈜ www_pilot(이하 "Community"이라 합니다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 합니다)를 이용함에 있 어 이용자와 "Community"의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
+① Community (www.soldesk.co.kr) 서비스 약관(이하 "본 약관"이라 합니다)은 이용자가 * * Jina * *(이하 "Community"이라 합니다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 합니다)를 이용함에 있 어 이용자와 "Community"의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
  
 ② 이용자가 되고자 하는 자가 "Community"이 정한 소정의 절차를 거쳐서 "등록하기" 단추를 누르면 본 약관에 동의하는 것 으로 간주합니다. 본 약관에 정하는 이외의 이용자와 "Community"의 권리, 의무 및 책임사항에 관해서는 전기통신사업법 기 타 대한민국의 관련 법령과 상관습에 의합니다. 
  
@@ -192,30 +198,32 @@
 
  
 본 약관은 2005. 7. 18. 부터 적용하고, 2004. 10. 11.부터 적용되던 종전의 약관은 본 약관으로 대체합니다. 
-            </textarea>
-        </td>
-    </tr>
-</table>
-<div style="text-align: center">
-  <input type="checkbox" name="agree"/> 약관에 동의합니다
-  <input type="submit" value="회원가입"/> 
-  <input type="button" value="취소" onclick="javascript:history.back();"/>
-</div>
-</form>
+            </textarea></td>
+				</tr>
+			</table>
+			<div style="text-align: center">
+				<input type="checkbox" name="agree"> 약관에 동의합니다. <input type="submit" value="회원가입"> <input type="button" value="취소"
+					onclick="javascript:history.back();"
+				>
+			</div>
+		</form>
 
-<script>
-function send(f){
-  if(f.agree.checked==true){
-	  return true;
-  }	else{
-	  alert("약관에 동의하신 후 회원가입이 가능합니다");
-	  return false;
-  }
-}//end
-</script>
+		<script>
+			function send(f) {
+				if (f.agree.checked == true) {
+					return true;
+				} else {
+					alert("약관에 동의하신 후 회원가입이 가능합니다");
+					return false;
+				}
+			}//end
+		</script>
+	</c:otherwise>
+</c:choose>
 
-<!-- 본문 끝 -->
-<%@ include file="../footer.jsp"%>			
+<!-- Contents end -->
+
+<%@ include file="../footer.jsp"%>
 
 
 

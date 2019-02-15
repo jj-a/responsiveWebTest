@@ -3,10 +3,11 @@
 
 <!-- Contents -->
 
-<h3>회원 ${action}</h3>
+
+<h3>회원 탈퇴</h3>
 
 <c:choose>
-	<c:when test="${sessionScope.s_id==null || sessionScope.s_mlevel=='E1' || sessionScope.s_mlevel=='F1'}">
+	<c:when test="${sessionScope.s_id==null || sessionScope.s_mlevel}">
 		<%-- 비회원, 로그인 안한 경우 --%>
 		<script>
 			alert("로그인 후 접근 가능한 페이지입니다.");
@@ -15,8 +16,10 @@
 	</c:when>
 	<c:otherwise>
 	
+	<%-- form onsubmit에 memberCheck 부분에서 db에서 아이디 강제생성한 것들에 대해 id check(글자수,형식 제한...)가 들어가서 다음단계로 안넘어감 --%>
+	
 	<div>
-	<form name="checkForm" method="post" action="${page}.do" <c:if test="${page=='withdraw'}">onsubmit="return withdrawCheck(this)"</c:if>>
+	<form name="withdrawForm" method="post" action="withdraw.do" onsubmit="return withdrawCheck(this)">
 		<table border="1" class="writefrm">
 			<tr>
 				<td colspan="3">회원가입 시 입력했던 정보를 입력해주세요.</td>
@@ -25,7 +28,6 @@
 				<th>비밀번호</th>
 				<td colspan="2"><input type="password" name="passwd" id="passwd" size="10" required></td>
 			</tr>
-			<c:if test="${page=='withdraw'}">
 			<tr>
 				<th>비밀번호 확인</th>
 				<td colspan="2"><input type="password" name="repasswd" id="repasswd" size="10" required></td>
@@ -35,9 +37,8 @@
 				<td colspan="2"><input type="text" name="email" id="email" size="30">			
 				</td>
 			</tr>
-			</c:if>
 			<tr>
-				<td colspan="3"><input type="submit" value="확인"> <input type="button" value="취소" onclick="history.back()"></td>
+				<td colspan="3"><input type="submit" value="탈퇴하기"> <input type="button" value="취소" onclick="history.back()"></td>
 			</tr>
 		</table>
 	</form>
@@ -54,15 +55,14 @@
 			f.repasswd.focus();
 			return false;
 		}
-
-		var msg = "정말로 회원탈퇴를 진행하시겠습니까? 탈퇴가 된 후엔 되돌릴 수 없으며 로그인이 해제됩니다.";
-		if (confirm(msg)) return true;
+		
+		var msg="정말로 회원탈퇴를 진행하시겠습니까? 탈퇴가 된 후엔 되돌릴 수 없으며 로그인이 해제됩니다.";
+		if(confirm(msg)) return true;
 		else return false;
-			
 	}
 	</script>
 
-	</c:otherwise>
+</c:otherwise>
 </c:choose>
 
 <!-- Contents end -->

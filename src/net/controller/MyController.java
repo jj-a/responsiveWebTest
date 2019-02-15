@@ -50,7 +50,7 @@ public class MyController extends HttpServlet {
 			
 			String key=(String)iter.next();
 			String value=pr.getProperty(key);
-			System.out.println(key+"/"+value);
+			//System.out.println(key+"/"+value);	// Property 출력
 			
 			try {
 				Class<?> commandClass=Class.forName(value);	// 문자열을 클래스로 생성

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.action.CommandAction;
 
-public class MbInsert implements CommandAction {
+public class MemberInsert implements CommandAction {
 
 	@Override
 	public String requestPro(HttpServletRequest req, HttpServletResponse resp) throws Throwable {
