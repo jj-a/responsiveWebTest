@@ -26,7 +26,7 @@ ORDER BY noticeno DESC
 
 -- 수정
 UPDATE tb_notice
-SET subject=? AND ccontent=? AND regdt=SYSDATE
+SET subject=? AND content=? AND regdt=SYSDATE
 WHERE noticeno=?
 ;
 
